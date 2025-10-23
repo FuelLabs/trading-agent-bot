@@ -5,7 +5,15 @@
     "outDir": "dist",
     "rootDir": ".",
     "strict": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "paths": {
+      "lib/o2-connector-ts": ["lib/o2-connector-ts/src/index.ts"],
+      "lib/o2-connector-ts/*": ["lib/o2-connector-ts/src/*"]
+    },
+    "skipLibCheck": true,
+    "moduleResolution": "node"
   },
-  "include": ["src", "lib/o2-connector-ts"]
+  "include": ["src", "lib/o2-connector-ts"],
+  "exclude": ["lib/o2-connector-ts/examples"]
 }
