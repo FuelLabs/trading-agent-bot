@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "install:all": "pnpm install && cd lib/o2-connector-ts && pnpm install && cd ../.."
   },
   "devDependencies": {
     "@types/node": "^24.9.1",

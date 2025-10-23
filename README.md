@@ -2,12 +2,23 @@
 
 This bot is used to mine volume on O2
 
+
+## Submodule Setup
+
+This project uses the [o2-connector-ts](https://github.com/fuel-infrastructure/o2-connector-ts) library as a git submodule in `lib/o2-connector-ts`.
+
+After cloning this repository, initialize and update submodules:
+
+```sh
+git submodule update --init --recursive
+```
+
 ## Run Locally
 
-1. Install dependencies:
+1. Install all dependencies (main project and submodule):
 
    ```sh
-   pnpm install
+   pnpm run install:all
    ```
 
 2. Build the project:
