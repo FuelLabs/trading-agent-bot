@@ -1,0 +1,3 @@
+[submodule "lib/o2-connector-ts"]
+	path = lib/o2-connector-ts
+	url = https://github.com/fuel-infrastructure/o2-connector-ts.git
