@@ -1,7 +1,9 @@
 import { loadConfig } from './config';
+import { createLogger } from './utils/logger';
 
+// Load configuration
 const configPath = process.env.CONFIG_PATH || 'config.yaml';
 const config = loadConfig(configPath);
 
-console.log('Loaded config:', config);
-console.log('Hello from Volume Mining Bot!');
+// Create logger
+const logger = createLogger(config.general?.log_level?.toLowerCase() || 'info');
