@@ -118,13 +118,12 @@ let staleQuantityToSell = new Decimal(0);
       // Wait order_interval_seconds
       await sleep(marketConfig.order_interval_seconds * 1000);
 
-      // Place sell order on O2. If we fail to sell, add the quantity to staleQuantityToSell to be sold in the next cycle.
+      // Place sell order on O2. If we fail to sell, add the quantity to staleQuantityToSell
       let sellOrderSuccess = false;
       try {
-        const sellQuantity = quantityDecimal.add(staleQuantityToSell).toString();
-        sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, sellQuantity, OrderSide.Sell);
+        sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell);
         logger.info(
-          `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${sellQuantity}`
+          `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity}`
         );
       } catch (err) {
         logger.error(
@@ -140,8 +139,34 @@ let staleQuantityToSell = new Decimal(0);
         return;
       }
 
-      // At this stage both orders were successful, including the selling of any stale quantity
-      staleQuantityToSell = new Decimal(0);
+      // Try to sell any stale quantity from previously failed sell orders in limited batches to not exhaust liquidity. We are assuming that the quantityDecimal is a reasonable batch size, otherwise, there is a misconfiguration.
+      while (staleQuantityToSell.greaterThan(0)) {
+        const batchQuantityToSellDecimal = Decimal.min(
+          staleQuantityToSell,
+          quantityDecimal
+        );
+        const batchQuantityToSell = batchQuantityToSellDecimal.toString();
+        let staleSellSuccess = false;
+        try {
+          staleSellSuccess = await o2Client.placeOrder(market, sellPrice, batchQuantityToSell, OrderSide.Sell);
+          logger.info(
+              `Stale sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${batchQuantityToSell}`
+          );
+          if (!staleSellSuccess) {
+            logger.warn(
+              `Stale sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Will retry in next cycle.`
+            );
+            break;
+          }
+          staleQuantityToSell = staleQuantityToSell.sub(batchQuantityToSellDecimal);
+        } catch (err) {
+          logger.error(
+            { err },
+            `Stale sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Will retry in next cycle.`
+          );
+          break;
+        }
+      }
     } catch (err) {
       logger.error(
         { err },
