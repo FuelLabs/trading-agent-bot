@@ -1,0 +1,20 @@
+# Use official Node.js image
+FROM node:25-alpine
+
+# Install pnpm
+RUN npm install -g pnpm
+
+WORKDIR /app
+
+COPY package.json tsconfig.json ./
+RUN pnpm install
+
+# Copy submodule and install its dependencies
+COPY lib/o2-connector-ts ./lib/o2-connector-ts
+RUN cd lib/o2-connector-ts && CI=true pnpm install && cd ../..
+
+COPY src ./src
+
+RUN pnpm run build
+
+CMD ["pnpm", "start"]

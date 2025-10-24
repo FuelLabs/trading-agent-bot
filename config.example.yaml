@@ -1,0 +1,20 @@
+general:
+  log_level: INFO # The logging level (e.g., DEBUG, INFO, WARNING, ERROR)
+  network_url: https://mainnet.fuel.network/v1/graphql # The URL of the Fuel network to connect to
+
+o2:
+  base_url: https://api.devnet.o2.app # The base URL for the O2 API
+
+  # o2 Market configuration
+  market:
+    market_id: "0x09c17f779eb0a7658424e48935b2bef24013766f8b3da757becb2264406f9e96" # Market ID
+    contract_id: "0x9ad52fb8a2be1c4603dfeeb8118a922c8cfafa8f260eeb41d68ade8d442be65b" # Contract ID of the market
+    base_symbol: ETH # Base symbol for the market
+    quote_symbol: USDC # Quote symbol for the market
+    order_usdc_value: 10 # Value of each buy/sell order in terms of USDC
+    order_interval_seconds: 5 # Interval between a single pair of buy and sell orders, in seconds
+    order_pairs_interval_seconds: 15 # Interval between multiple buy & sell order pairs, in seconds
+    bitget_symbol: ETH/USDC # Corresponding Bitget trading symbol to fetch price data for submitting orders on O2
+    convert_to_usdc: false # Whether to convert the Bitget price quotation to USDC. This is useful for O2 assets that do not have a USDC pair on Bitget. We will be assuming that the direct pair is with USDT and we will be using USDCUSDT to convert back to the USDC price.
+  account:
+    private_key: "<YOUR_PRIVATE_KEY_HERE>" # Private key for the volume mining bot

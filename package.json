@@ -1,0 +1,28 @@
+{
+  "name": "volume-mining-bot",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/src/index.js",
+    "format": "prettier --write . --ignore-path .prettierignore",
+    "install:all": "pnpm install && cd lib/o2-connector-ts && pnpm install && cd ../.."
+  },
+  "devDependencies": {
+    "@types/node": "^24.9.1",
+    "prettier": "^3.6.2",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "axios": "^1.12.2",
+    "ccxt": "^4.5.12",
+    "cron": "^4.3.3",
+    "decimal.js": "^10.6.0",
+    "ethers": "^6.15.0",
+    "fuels": "^0.101.3",
+    "pino": "^10.1.0",
+    "pino-pretty": "^13.1.2",
+    "yaml": "^2.8.1"
+  }
+}

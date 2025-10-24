@@ -1,0 +1,9 @@
+services:
+  volume-mining-bot:
+    build: .
+    container_name: volume-mining-bot
+    restart: unless-stopped
+    environment:
+      - CONFIG_PATH=/app/config.yaml
+    volumes:
+      - ./config.yaml:/app/config.yaml:ro
