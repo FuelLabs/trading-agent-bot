@@ -26,7 +26,7 @@ const config: BotConfig = loadConfig(configPath);
   // Initialize Bitget and O2 clients
   const bitgetClient = new BitgetClient();
   const o2Client = new O2Client(config.o2.base_url, config.general.network_url);
-  await o2Client.init(config.o2.account.private_key);
+  await o2Client.init(config.o2.account.private_key, config.o2.market.contract_id);
 
   // Worker function
   async function marketWorker(marketConfig: MarketConfig, isRunningRef: { value: boolean }) {

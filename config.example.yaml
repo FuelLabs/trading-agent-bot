@@ -7,7 +7,8 @@ o2:
 
   # o2 Market configuration
   market:
-    id: "0x9ebf0cd3e004f887ab4da0fe61d1412cc23ca11c3aa17f02a179d5ce5fd925c4" # Market ID
+    market_id: "0x09c17f779eb0a7658424e48935b2bef24013766f8b3da757becb2264406f9e96" # Market ID
+    contract_id: "0x9ad52fb8a2be1c4603dfeeb8118a922c8cfafa8f260eeb41d68ade8d442be65b" # Contract ID of the market
     base_symbol: ETH # Base symbol for the market
     quote_symbol: USDC # Quote symbol for the market
     order_usdc_value: 10 # Value of each buy/sell order in terms of USDC

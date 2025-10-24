@@ -18,7 +18,7 @@ export class O2Client {
     this.provider = new Provider(networkUrl);
   }
 
-  async init(privateKey: string) {
+  async init(privateKey: string, contractId: string) {
     if (!this.initialized) {
       await this.provider.init();
       this.wallet = Wallet.fromPrivateKey(privateKey, this.provider);
@@ -26,6 +26,7 @@ export class O2Client {
       await this.client.initTradeAccountManager({
         account: this.wallet as Account,
         signer: this.signer,
+        contractIds: [contractId],
       });
       this.initialized = true;
     }

@@ -4,7 +4,8 @@ export interface GeneralConfig {
 }
 
 export interface MarketConfig {
-  id: string;
+  market_id: string;
+  contract_id: string;
   base_symbol: string;
   quote_symbol: string;
   order_usdc_value: number;
