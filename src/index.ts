@@ -5,7 +5,7 @@ import { createLogger } from './utils/logger';
 import { CronJob } from 'cron';
 import { BotConfig, MarketConfig } from './types/config';
 import Decimal from 'decimal.js';
-import { OrderSide } from 'lib/o2-connector-ts';
+import { OrderSide } from '../lib/o2-connector-ts/src/index';
 
 // TODO: Tomorrow; What I am not sure about yet is the decimals calculations. Should we convert the price with decimals in mind? Also should decimals after float be considered? Bit confusing that part.
 // TODO: Also should we sell the exact quantity that was bought?
