@@ -12,10 +12,12 @@ export class O2Client {
   private signer!: FuelSessionSigner;
   private provider: Provider;
   private initialized: boolean = false;
+  private logger: pino.Logger;
 
-  constructor(baseUrl: string, networkUrl: string) {
+  constructor(baseUrl: string, networkUrl: string, logger: pino.Logger) {
     this.client = new RestAPI({ basePath: baseUrl });
     this.provider = new Provider(networkUrl);
+    this.logger = logger;
   }
 
   async init(privateKey: string, contractId: string) {
@@ -32,9 +34,9 @@ export class O2Client {
     }
   }
 
-  async getMarket(marketConfig: MarketConfig, logger: pino.Logger) {
+  async getMarket(marketConfig: MarketConfig) {
     if (!this.initialized) {
-      logger.error('O2Client not initialized. Call init() before using this method.');
+      this.logger.error('O2Client not initialized. Call init() before using this method.');
       throw new Error('O2Client not initialized');
     }
 
@@ -49,10 +51,9 @@ export class O2Client {
     price: string,
     quantity: string,
     side: OrderSide,
-    logger: pino.Logger
   ): Promise<boolean> {
     if (!this.initialized) {
-      logger.error('O2Client not initialized. Call init() before using this method.');
+      this.logger.error('O2Client not initialized. Call init() before using this method.');
       throw new Error('O2Client not initialized');
     }
 

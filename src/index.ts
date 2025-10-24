@@ -22,7 +22,7 @@ const config: BotConfig = loadConfig(configPath);
 
   // Initialize Bitget and O2 clients
   const bitgetClient = new BitgetClient();
-  const o2Client = new O2Client(config.o2.base_url, config.general.network_url);
+  const o2Client = new O2Client(config.o2.base_url, config.general.network_url, logger);
   await o2Client.init(config.o2.account.private_key, config.o2.market.contract_id);
 
   // Worker function
@@ -38,7 +38,7 @@ const config: BotConfig = loadConfig(configPath);
     logger.debug(`Starting worker for market ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
     try {
       // Fetch market object from O2
-      const market = await o2Client.getMarket(marketConfig, logger);
+      const market = await o2Client.getMarket(marketConfig);
       if (!market) {
         logger.error(`Market not found on O2: ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
         throw new Error('Market not found');
@@ -60,7 +60,10 @@ const config: BotConfig = loadConfig(configPath);
 
         logger.info(`Fetched Bitget price for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}: ${price}`);
       } catch (err) {
-        logger.error({ err }, `Failed to fetch Bitget price for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`);
+        logger.error(
+          { err },
+          `Failed to fetch Bitget price for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`
+        );
         return;
       }
 
@@ -90,7 +93,7 @@ const config: BotConfig = loadConfig(configPath);
       // Place buy order on O2
       let buyOrderSuccess = false;
       try {
-        buyOrderSuccess = await o2Client.placeOrder(market, buyPrice, quantity, OrderSide.Buy, logger);
+        buyOrderSuccess = await o2Client.placeOrder(market, buyPrice, quantity, OrderSide.Buy);
         logger.info(
           `Buy order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${buyPrice}, quantity ${quantity}`
         );
@@ -115,7 +118,7 @@ const config: BotConfig = loadConfig(configPath);
       let sellOrderSuccess = false;
       while (!sellOrderSuccess) {
         try {
-          sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell, logger);
+          sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell);
           logger.info(
             `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity}`
           );
