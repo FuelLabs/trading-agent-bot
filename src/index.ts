@@ -15,6 +15,9 @@ const USDC_USDT_SYMBOL = 'USDC/USDT';
 const configPath = process.env.CONFIG_PATH || 'config.yaml';
 const config: BotConfig = loadConfig(configPath);
 
+// This is a global variable that tracks quantities that we were unable to sell in previous attempts and need to be added to the next sell order.
+let staleQuantityToSell = new Decimal(0);
+
 // Main logic
 (async () => {
   // Create logger
@@ -83,12 +86,13 @@ const config: BotConfig = loadConfig(configPath);
 
       // Calculate quantity based on order_usdc_value, price, and base/quote decimals
       const usdcValue = new Decimal(marketConfig.order_usdc_value);
-      const quantity = calculateBaseQuantity(
+      const quantityDecimal = calculateBaseQuantity(
         usdcValue,
         price,
         market.base.decimals,
         market.base.max_precision
-      ).toString();
+      )
+      const quantity = quantityDecimal.toString();
 
       // Place buy order on O2
       let buyOrderSuccess = false;
@@ -114,30 +118,30 @@ const config: BotConfig = loadConfig(configPath);
       // Wait order_interval_seconds
       await sleep(marketConfig.order_interval_seconds * 1000);
 
-      // Place sell order on O2. We need to be able to sell our previously bought assets before proceeding.
+      // Place sell order on O2. If we fail to sell, add the quantity to staleQuantityToSell to be sold in the next cycle.
       let sellOrderSuccess = false;
-      while (!sellOrderSuccess) {
-        try {
-          sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell);
-          logger.info(
-            `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity}`
-          );
-        } catch (err) {
-          logger.error(
-            { err },
-            `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Retrying.`
-          );
-          await sleep(500); // Wait half a second before retrying
-          continue;
-        }
-        if (!sellOrderSuccess) {
-          logger.error(
-            `Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}, Retrying.`
-          );
-          await sleep(500); // Wait half a second before retrying
-          continue;
-        }
+      try {
+        const sellQuantity = quantityDecimal.add(staleQuantityToSell).toString();
+        sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, sellQuantity, OrderSide.Sell);
+        logger.info(
+          `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${sellQuantity}`
+        );
+      } catch (err) {
+        logger.error(
+          { err },
+          `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Quantity will be added to the next cycle. Skipping this cycle.`
+        );
+        staleQuantityToSell = staleQuantityToSell.add(quantityDecimal);
+        return;
       }
+      if (!sellOrderSuccess) {
+        logger.error(`Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Quantity will be added to the next cycle. Skipping this cycle.`);
+        staleQuantityToSell = staleQuantityToSell.add(quantityDecimal);
+        return;
+      }
+
+      // At this stage both orders were successful, including the selling of any stale quantity
+      staleQuantityToSell = new Decimal(0);
     } catch (err) {
       logger.error(
         { err },
