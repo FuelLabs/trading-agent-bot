@@ -51,15 +51,16 @@ const config: BotConfig = loadConfig(configPath);
 
         // If there is no direct Bitget market, convert to USDC
         if (marketConfig.convert_to_usdc) {
+          logger.debug('Converting price to USDC using USDC/USDT pair');
           const usdc_usdt_price = await bitgetClient.fetchPrice(USDC_USDT_SYMBOL);
 
           // Use Decimal.js for conversion
           price = price.div(usdc_usdt_price);
         }
 
-        logger.info(`Fetched Bitget price for ${marketConfig.bitget_symbol}: ${price}`);
+        logger.info(`Fetched Bitget price for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}: ${price}`);
       } catch (err) {
-        logger.error({ err }, `Failed to fetch Bitget price for ${marketConfig.bitget_symbol}. Skipping this cycle.`);
+        logger.error({ err }, `Failed to fetch Bitget price for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`);
         return;
       }
 
