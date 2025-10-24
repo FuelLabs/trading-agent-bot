@@ -7,7 +7,7 @@ o2:
 
   # o2 Market configuration
   market:
-    id: 0x9ebf0cd3e004f887ab4da0fe61d1412cc23ca11c3aa17f02a179d5ce5fd925c4 # Market ID
+    id: "0x9ebf0cd3e004f887ab4da0fe61d1412cc23ca11c3aa17f02a179d5ce5fd925c4" # Market ID
     base_symbol: ETH # Base symbol for the market
     quote_symbol: USDC # Quote symbol for the market
     order_usdc_value: 10 # Value of each buy/sell order in terms of USDC
@@ -16,4 +16,4 @@ o2:
     bitget_symbol: ETH/USDC # Corresponding Bitget trading symbol to fetch price data for submitting orders on O2
     convert_to_usdc: false # Whether to convert the Bitget price quotation to USDC. This is useful for O2 assets that do not have a USDC pair on Bitget. We will be assuming that the direct pair is with USDT and we will be using USDCUSDT to convert back to the USDC price.
   account:
-    private_key: <YOUR_PRIVATE_KEY_HERE> # Private key for the volume mining bot
+    private_key: "<YOUR_PRIVATE_KEY_HERE>" # Private key for the volume mining bot
