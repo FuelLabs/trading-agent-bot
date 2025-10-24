@@ -25,11 +25,11 @@ const logger = createLogger(config.general?.log_level?.toLowerCase() || 'info');
 const bitgetClient = new BitgetClient();
 const o2Client = new O2Client(config.o2.base_url, config.o2.account.private_key);
 
-// Worker function for each market
+// Worker function
 async function marketWorker(marketConfig: MarketConfig, isRunningRef: { value: boolean }) {
   if (isRunningRef.value) {
     logger.warn(
-      `Previous job still running for market ${marketConfig.base_symbol}/${marketConfig.quote_symbol}, skipping this tick.`
+      `Previous job still running for market ${marketConfig.base_symbol}/${marketConfig.quote_symbol}, skipping this cycle.`
     );
     return;
   }
@@ -41,7 +41,7 @@ async function marketWorker(marketConfig: MarketConfig, isRunningRef: { value: b
     const market = await o2Client.getMarket(marketConfig);
     if (!market) {
       logger.error(`Market not found on O2: ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
-      return;
+      throw new Error('Market not found');
     }
 
     // Fetch Bitget price
@@ -123,6 +123,12 @@ async function marketWorker(marketConfig: MarketConfig, isRunningRef: { value: b
         continue;
       }
     }
+  } catch (err) {
+    logger.error(
+      { err },
+      `Unexpected error in market worker for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`
+    );
+    throw err;
   } finally {
     isRunningRef.value = false;
   }
@@ -132,25 +138,20 @@ async function marketWorker(marketConfig: MarketConfig, isRunningRef: { value: b
   }
 }
 
-// Start a cron job for each market
-if (config.o2?.markets && Array.isArray(config.o2.markets)) {
-  config.o2.markets.forEach((marketConfig: MarketConfig) => {
-    const interval = Number(marketConfig.order_pairs_interval_seconds);
-    const cronPattern = `*/${interval} * * * * *`;
-    const isRunningRef = { value: false };
-    new CronJob(
-      cronPattern,
-      () => {
-        marketWorker(marketConfig, isRunningRef);
-      },
-      null,
-      true,
-      'UTC'
-    );
-    logger.info(
-      `Scheduled cron job for O2 market ${marketConfig.base_symbol}/${marketConfig.quote_symbol} with interval ${marketConfig.order_pairs_interval_seconds} seconds.`
-    );
-  });
-} else {
-  logger.warn('No markets found with correct structure in config.');
-}
+// Start a cron job for market
+const marketConfig = config.o2.market;
+const interval = Number(marketConfig.order_pairs_interval_seconds);
+const cronPattern = `*/${interval} * * * * *`;
+const isRunningRef = { value: false };
+new CronJob(
+  cronPattern,
+  () => {
+    marketWorker(marketConfig, isRunningRef);
+  },
+  null,
+  true,
+  'UTC'
+);
+logger.info(
+  `Scheduled cron job for O2 market ${marketConfig.base_symbol}/${marketConfig.quote_symbol} with interval ${marketConfig.order_pairs_interval_seconds} seconds.`
+);

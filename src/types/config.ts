@@ -19,7 +19,7 @@ export interface O2AccountConfig {
 
 export interface O2Config {
   base_url: string;
-  markets: MarketConfig[];
+  market: MarketConfig;
   account: O2AccountConfig;
 }
 
