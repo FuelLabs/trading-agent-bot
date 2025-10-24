@@ -115,7 +115,7 @@ const config: BotConfig = loadConfig(configPath);
       // Wait order_interval_seconds
       await sleep(marketConfig.order_interval_seconds * 1000);
 
-      // Place sell order on O2. If we fail to sell, add the quantity to staleQuantityToSell
+      // Place sell order on O2.
       let sellOrderSuccess = false;
       try {
         sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell);
