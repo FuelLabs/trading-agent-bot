@@ -1,5 +1,6 @@
 general:
   log_level: INFO # The logging level (e.g., DEBUG, INFO, WARNING, ERROR)
+  network_url: https://mainnet.fuel.network/v1/graphql # The URL of the Fuel network to connect to
 
 o2:
   base_url: https://api.devnet.o2.app # The base URL for the O2 API

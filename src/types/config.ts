@@ -1,5 +1,6 @@
 export interface GeneralConfig {
   log_level: string;
+  network_url: string;
 }
 
 export interface MarketConfig {
