@@ -139,11 +139,11 @@ let staleQuantityToSell = new Decimal(0);
         return;
       }
 
-      // Try to sell any stale quantity from previously failed sell orders in limited batches to not exhaust liquidity. We are assuming that the quantityDecimal is a reasonable batch size, otherwise, there is a misconfiguration.
+      // Try to sell any stale quantity from previously failed sell orders in limited batches to not exhaust liquidity. We are using quantityDecimal/2 as a potential batch size to make sure to cater for reduction in selling quantity due to exchange fees.
       while (staleQuantityToSell.greaterThan(0)) {
         const batchQuantityToSellDecimal = Decimal.min(
           staleQuantityToSell,
-          quantityDecimal
+          quantityDecimal.div(new Decimal(2))
         );
         const batchQuantityToSell = batchQuantityToSellDecimal.toString();
         let staleSellSuccess = false;
