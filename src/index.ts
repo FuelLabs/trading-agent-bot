@@ -6,10 +6,7 @@ import { CronJob } from 'cron';
 import { BotConfig, MarketConfig } from './types/config';
 import Decimal from 'decimal.js';
 import { OrderSide } from '../lib/o2-connector-ts/src/index';
-
-// TODO: Tomorrow; What I am not sure about yet is the decimals calculations. Should we convert the price with decimals in mind? Also should decimals after float be considered? Bit confusing that part.
-// TODO: Also should we sell the exact quantity that was bought?
-// TODO: DEBUG Everything one by one.
+import { scaleUpAndTruncateToInt, calculateBaseQuantity } from './utils/numbers';
 
 // Constants
 const USDC_USDT_SYMBOL = 'USDC/USDT';
@@ -56,8 +53,8 @@ const config: BotConfig = loadConfig(configPath);
         if (marketConfig.convert_to_usdc) {
           const usdc_usdt_price = await bitgetClient.fetchPrice(USDC_USDT_SYMBOL);
 
-          // Use Decimal.js for conversion and preserve quote asset decimals
-          price = new Decimal(price).div(usdc_usdt_price).toDecimalPlaces(market.quote.decimals);
+          // Use Decimal.js for conversion
+          price = price.div(usdc_usdt_price);
         }
 
         logger.info(`Fetched Bitget price for ${marketConfig.bitget_symbol}: ${price}`);
@@ -67,18 +64,27 @@ const config: BotConfig = loadConfig(configPath);
       }
 
       // Increase buy price by 10% to make sure order is filled
-      const buyPrice = price.mul(1.1).toDecimalPlaces(market.quote.decimals).toString();
+      const buyPrice = scaleUpAndTruncateToInt(
+        price.mul(1.1),
+        market.quote.decimals,
+        market.quote.max_precision
+      ).toString();
 
       // Decrease sell price by 10% to make sure order is filled
-      const sellPrice = price.mul(0.9).toDecimalPlaces(market.quote.decimals).toString();
+      const sellPrice = scaleUpAndTruncateToInt(
+        price.mul(0.9),
+        market.quote.decimals,
+        market.quote.max_precision
+      ).toString();
 
       // Calculate quantity based on order_usdc_value, price, and base/quote decimals
       const usdcValue = new Decimal(marketConfig.order_usdc_value);
-      const quantity = usdcValue
-        .div(price)
-        .mul(new Decimal(10).pow(market.base.decimals))
-        .toDecimalPlaces(market.base.decimals)
-        .toString();
+      const quantity = calculateBaseQuantity(
+        usdcValue,
+        price,
+        market.base.decimals,
+        market.base.max_precision
+      ).toString();
 
       // Place buy order on O2
       let buyOrderSuccess = false;
@@ -148,6 +154,7 @@ const config: BotConfig = loadConfig(configPath);
   const interval = Number(marketConfig.order_pairs_interval_seconds);
   const cronPattern = `*/${interval} * * * * *`;
   const isRunningRef = { value: false };
+
   new CronJob(
     cronPattern,
     () => {
