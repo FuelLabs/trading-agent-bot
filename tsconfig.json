@@ -12,7 +12,8 @@
       "lib/o2-connector-ts/*": ["lib/o2-connector-ts/src/*"]
     },
     "skipLibCheck": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "sourceMap": true
   },
   "include": ["src", "lib/o2-connector-ts"],
   "exclude": ["lib/o2-connector-ts/examples"]
