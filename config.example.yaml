@@ -12,8 +12,8 @@ o2:
     base_symbol: ETH # Base symbol for the market
     quote_symbol: USDC # Quote symbol for the market
     order_usdc_value: 10 # Value of each buy/sell order in terms of USDC
-    order_interval_seconds: 1 # Interval between a single pair of buy and sell orders, in seconds
-    order_pairs_interval_seconds: 10 # Interval between multiple buy & sell order pairs, in seconds
+    order_interval_seconds: 5 # Interval between a single pair of buy and sell orders, in seconds
+    order_pairs_interval_seconds: 15 # Interval between multiple buy & sell order pairs, in seconds
     bitget_symbol: ETH/USDC # Corresponding Bitget trading symbol to fetch price data for submitting orders on O2
     convert_to_usdc: false # Whether to convert the Bitget price quotation to USDC. This is useful for O2 assets that do not have a USDC pair on Bitget. We will be assuming that the direct pair is with USDT and we will be using USDCUSDT to convert back to the USDC price.
   account:
