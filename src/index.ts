@@ -9,7 +9,7 @@ import { OrderSide } from '../lib/o2-connector-ts/src/index';
 import { scaleUpAndTruncateToInt, calculateBaseQuantity } from './utils/numbers';
 
 // Constants
-const USDC_USDT_SYMBOL = 'USDC/USDT';
+const USDC_USDT_SYMBOL = 'USDC/USDT'; // Symbol for USDC/USDT pair on Bitget
 
 // Load configuration
 const configPath = process.env.CONFIG_PATH || 'config.yaml';
@@ -69,14 +69,14 @@ const config: BotConfig = loadConfig(configPath);
 
       // Increase buy price by 10% to make sure order is filled
       const buyPrice = scaleUpAndTruncateToInt(
-        price.mul(1.1),
+        price.mul(1 + marketConfig.price_adjustment_factor),
         market.quote.decimals,
         market.quote.max_precision
       ).toString();
 
       // Decrease sell price by 10% to make sure order is filled
       const sellPrice = scaleUpAndTruncateToInt(
-        price.mul(0.9),
+        price.mul(1 - marketConfig.price_adjustment_factor),
         market.quote.decimals,
         market.quote.max_precision
       ).toString();

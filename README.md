@@ -1,20 +1,35 @@
-# volume-mining-bot
 
-This bot is used to mine volume on O2
+# Volume Mining Bot
 
-## Submodule Setup
+This bot is designed to generate trading volume on the O2 platform.
 
-This project uses the [o2-connector-ts](https://github.com/fuel-infrastructure/o2-connector-ts) library as a git submodule in `lib/o2-connector-ts`.
+## Overview
 
-After cloning this repository, initialize and update submodules:
+The bot operates as follows:
+
+1. Every `order_pairs_interval_seconds`:
+   - Fetch the current price for the O2 market from Bitget.
+   - Calculate the buy price: `buy_price = bitget_price * (1 + price_adjustment_factor)`.
+   - Calculate the sell price: `sell_price = bitget_price * (1 - price_adjustment_factor)`.
+   - Place a buy order at the calculated buy price.
+   - Wait for `order_interval_seconds`.
+   - Place a sell order at the calculated sell price.
+
+## Setup
+
+This project uses the [o2-connector-ts](https://github.com/fuel-infrastructure/o2-connector-ts) library as a git submodule, located in `lib/o2-connector-ts`.
+
+After cloning this repository, initialize and update the submodules:
 
 ```sh
 git submodule update --init --recursive
 ```
 
-## Run Locally
+Next, add a `config.yaml` file to the root directory. Use `config.example.yaml` as a template for your configuration.
 
-1. Install all dependencies (main project and submodule):
+## Running Locally
+
+1. Install all dependencies for both the main project and the submodule:
 
    ```sh
    pnpm run install:all
@@ -26,25 +41,26 @@ git submodule update --init --recursive
    pnpm run build
    ```
 
-3. Run the bot:
+3. Start the bot:
+
    ```sh
    pnpm start
    ```
 
 ---
 
-## Run with Docker
+## Running with Docker
 
-1. Start the bot with Docker Compose:
+Ensure you have Docker and Docker Compose installed on your system. Then, build and run the Docker container:
 
-   ```sh
-   docker-compose up --build -d
-   ```
-
-2. Stop the bot:
+1. Start the bot using Docker Compose:
 
    ```sh
-   docker-compose down
+   docker compose up --build -d
    ```
 
-This will build and run the volume mining bot inside a Docker container. Make sure you have Docker and Docker Compose installed on your system.
+2. To stop the bot:
+
+   ```sh
+   docker compose down
+   ```
