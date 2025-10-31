@@ -18,7 +18,7 @@ o2:
     quote_symbol: USDC # Quote symbol for the market.
     order_usdc_value: 10 # Value of each buy/sell order in terms of USDC.
     order_interval_seconds: 1 # Interval between a single buy and sell order, in seconds.
-    order_pairs_interval_seconds: 2 # Interval between multiple buy & sell order pairs, in seconds. Can only be an integer.
+    order_pairs_interval_seconds: 2.5 # Interval between multiple buy & sell order pairs, in seconds.
     bitget_symbol: ETH/USDC # Corresponding Bitget trading symbol. This is used to determine the price of orders on O2. NOTE: Format should always be `BASE/QUOTE`.
     convert_to_usdc: false # Whether to convert the Bitget price quotation to USDC. This is useful for O2 assets that do not have a USDC pair on Bitget. Ex. To get the price of FUEL/USDC we need to fetch the price of FUEL/USDT and USDT/USDC from Bitget as FUEL/USDC is not supported.
     price_adjustment_factor: 0.1 # A factor to adjust the price fetched from Bitget. For example, a value of 0.05 increases the order buy price by 5% and decreases the order sell price by 5%.

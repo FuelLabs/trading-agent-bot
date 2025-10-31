@@ -2,7 +2,6 @@ import { loadConfig } from './config';
 import { BitgetClient } from './bitget';
 import { O2Client } from './o2';
 import { createLogger } from './utils/logger';
-import { CronJob } from 'cron';
 import { BotConfig, MarketConfig } from './types/config';
 import Decimal from 'decimal.js';
 import { OrderSide } from '../lib/o2-connector-ts/src/index';
@@ -146,28 +145,36 @@ const config: BotConfig = loadConfig(configPath);
     } finally {
       isRunningRef.value = false;
     }
+  }
 
-    function sleep(ms: number) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  // Custom scheduler that supports fractional seconds
+  async function startScheduler(marketConfig: MarketConfig, intervalSeconds: number, isRunningRef: { value: boolean }) {
+    logger.info(
+      `Starting scheduler for O2 market ${marketConfig.base_symbol}/${marketConfig.quote_symbol} with interval ${intervalSeconds} seconds.`
+    );
+
+    const sleepMs = intervalSeconds * 1000;
+
+    while (true) {
+      // Start the job without awaiting it (non-blocking)
+      marketWorker(marketConfig, isRunningRef).catch(err => {
+        logger.error({ err }, "Error in scheduled job execution");
+      });
+      
+      // Timer starts immediately, regardless of job completion
+      await sleep(sleepMs);
     }
   }
 
-  // Start a cron job for market
+  // Start the scheduler for the market
   const marketConfig = config.o2.market;
-  const interval = Number(marketConfig.order_pairs_interval_seconds);
-  const cronPattern = `*/${interval} * * * * *`;
+  const intervalSeconds = Number(marketConfig.order_pairs_interval_seconds);
   const isRunningRef = { value: false };
 
-  new CronJob(
-    cronPattern,
-    () => {
-      marketWorker(marketConfig, isRunningRef);
-    },
-    null,
-    true,
-    'UTC'
-  );
-  logger.info(
-    `Scheduled cron job for O2 market ${marketConfig.base_symbol}/${marketConfig.quote_symbol} with interval ${marketConfig.order_pairs_interval_seconds} seconds.`
-  );
+  // Start the scheduler (non-blocking)
+  startScheduler(marketConfig, intervalSeconds, isRunningRef);
 })();
