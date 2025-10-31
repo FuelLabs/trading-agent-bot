@@ -15,7 +15,7 @@ o2:
     market_id: "0x09c17f779eb0a7658424e48935b2bef24013766f8b3da757becb2264406f9e96" # Market ID
     contract_id: "0x9ad52fb8a2be1c4603dfeeb8118a922c8cfafa8f260eeb41d68ade8d442be65b" # Contract ID of the market
     base_symbol: ETH # Base symbol for the market.
-    quote_symbol: USDC # Quote symbol for the market. The quote asset should always be USDC as O2 doesn't support other quote assets.
+    quote_symbol: USDC # Quote symbol for the market.
     order_usdc_value: 10 # Value of each buy/sell order in terms of USDC.
     order_interval_seconds: 1 # Interval between a single buy and sell order, in seconds.
     order_pairs_interval_seconds: 2 # Interval between multiple buy & sell order pairs, in seconds. Can only be an integer.
