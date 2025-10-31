@@ -81,6 +81,8 @@ const config: BotConfig = loadConfig(configPath);
         market.quote.max_precision
       ).toString();
 
+      logger.info(`Final buy/sell prices: ${new Decimal(buyPrice).toString()}/${new Decimal(sellPrice).toString()} with adjustment ${marketConfig.price_adjustment_factor}`);
+
       // Calculate quantity based on order_usdc_value, price, and base/quote decimals
       const usdcValue = new Decimal(marketConfig.order_usdc_value);
       const quantityDecimal = calculateBaseQuantity(
@@ -94,9 +96,10 @@ const config: BotConfig = loadConfig(configPath);
       // Place buy order on O2
       let buyOrderSuccess = false;
       try {
+        const start = Date.now();
         buyOrderSuccess = await o2Client.placeOrder(market, buyPrice, quantity, OrderSide.Buy);
         logger.info(
-          `Buy order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${buyPrice}, quantity ${quantity}`
+          `Buy order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${buyPrice}, quantity ${quantity} with latency ${Date.now() - start} ms`
         );
       } catch (err) {
         logger.error(
@@ -118,9 +121,10 @@ const config: BotConfig = loadConfig(configPath);
       // Place sell order on O2.
       let sellOrderSuccess = false;
       try {
+        const start = Date.now();
         sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell);
         logger.info(
-          `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity}`
+          `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity} with latency ${Date.now() - start} ms`
         );
       } catch (err) {
         logger.error(
