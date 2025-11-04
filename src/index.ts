@@ -103,15 +103,13 @@ const config: BotConfig = loadConfig(configPath);
       } catch (err) {
         logger.error(
           { err },
-          `Buy order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`
+          `Buy order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Trying the sell anyways.`
         );
-        return;
       }
       if (!buyOrderSuccess) {
         logger.error(
-          `Buy order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}, will retry next cycle.`
+          `Buy order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Trying the sell anyways.`
         );
-        return;
       }
 
       // Wait order_interval_seconds
@@ -128,13 +126,11 @@ const config: BotConfig = loadConfig(configPath);
       } catch (err) {
         logger.error(
           { err },
-          `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`
+          `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`
         );
-        return;
       }
       if (!sellOrderSuccess) {
-        logger.error(`Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`);
-        return;
+        logger.error(`Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
       }
     } catch (err) {
       logger.error(
