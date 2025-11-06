@@ -2,7 +2,6 @@ import { loadConfig } from './config';
 import { BitgetClient } from './bitget';
 import { O2Client } from './o2';
 import { createLogger } from './utils/logger';
-import { CronJob } from 'cron';
 import { BotConfig, MarketConfig } from './types/config';
 import Decimal from 'decimal.js';
 import { OrderSide } from '../lib/o2-connector-ts/src/index';
@@ -81,6 +80,8 @@ const config: BotConfig = loadConfig(configPath);
         market.quote.max_precision
       ).toString();
 
+      logger.info(`Final buy/sell prices: ${new Decimal(buyPrice).toString()}/${new Decimal(sellPrice).toString()} with adjustment ${marketConfig.price_adjustment_factor}`);
+
       // Calculate quantity based on order_usdc_value, price, and base/quote decimals
       const usdcValue = new Decimal(marketConfig.order_usdc_value);
       const quantityDecimal = calculateBaseQuantity(
@@ -94,22 +95,21 @@ const config: BotConfig = loadConfig(configPath);
       // Place buy order on O2
       let buyOrderSuccess = false;
       try {
+        const start = Date.now();
         buyOrderSuccess = await o2Client.placeOrder(market, buyPrice, quantity, OrderSide.Buy);
         logger.info(
-          `Buy order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${buyPrice}, quantity ${quantity}`
+          `Buy order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${buyPrice}, quantity ${quantity} with latency ${Date.now() - start} ms`
         );
       } catch (err) {
         logger.error(
           { err },
-          `Buy order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`
+          `Buy order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Trying the sell anyways.`
         );
-        return;
       }
       if (!buyOrderSuccess) {
         logger.error(
-          `Buy order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}, will retry next cycle.`
+          `Buy order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Trying the sell anyways.`
         );
-        return;
       }
 
       // Wait order_interval_seconds
@@ -118,20 +118,19 @@ const config: BotConfig = loadConfig(configPath);
       // Place sell order on O2.
       let sellOrderSuccess = false;
       try {
+        const start = Date.now();
         sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell);
         logger.info(
-          `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity}`
+          `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity} with latency ${Date.now() - start} ms`
         );
       } catch (err) {
         logger.error(
           { err },
-          `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`
+          `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`
         );
-        return;
       }
       if (!sellOrderSuccess) {
-        logger.error(`Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Skipping this cycle.`);
-        return;
+        logger.error(`Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
       }
     } catch (err) {
       logger.error(
@@ -142,28 +141,36 @@ const config: BotConfig = loadConfig(configPath);
     } finally {
       isRunningRef.value = false;
     }
+  }
 
-    function sleep(ms: number) {
-      return new Promise((resolve) => setTimeout(resolve, ms));
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
+  // Custom scheduler that supports fractional seconds
+  async function startScheduler(marketConfig: MarketConfig, intervalSeconds: number, isRunningRef: { value: boolean }) {
+    logger.info(
+      `Starting scheduler for O2 market ${marketConfig.base_symbol}/${marketConfig.quote_symbol} with interval ${intervalSeconds} seconds.`
+    );
+
+    const sleepMs = intervalSeconds * 1000;
+
+    while (true) {
+      // Start the job without awaiting it (non-blocking)
+      marketWorker(marketConfig, isRunningRef).catch(err => {
+        logger.error({ err }, "Error in scheduled job execution");
+      });
+      
+      // Timer starts immediately, regardless of job completion
+      await sleep(sleepMs);
     }
   }
 
-  // Start a cron job for market
+  // Start the scheduler for the market
   const marketConfig = config.o2.market;
-  const interval = Number(marketConfig.order_pairs_interval_seconds);
-  const cronPattern = `*/${interval} * * * * *`;
+  const intervalSeconds = Number(marketConfig.order_pairs_interval_seconds);
   const isRunningRef = { value: false };
 
-  new CronJob(
-    cronPattern,
-    () => {
-      marketWorker(marketConfig, isRunningRef);
-    },
-    null,
-    true,
-    'UTC'
-  );
-  logger.info(
-    `Scheduled cron job for O2 market ${marketConfig.base_symbol}/${marketConfig.quote_symbol} with interval ${marketConfig.order_pairs_interval_seconds} seconds.`
-  );
+  // Start the scheduler (non-blocking)
+  startScheduler(marketConfig, intervalSeconds, isRunningRef);
 })();
