@@ -4,7 +4,7 @@ import { O2Client } from './o2';
 import { createLogger } from './utils/logger';
 import { BotConfig, MarketConfig } from './types/config';
 import Decimal from 'decimal.js';
-import { OrderSide } from '../lib/o2-connector-ts/src/index';
+import { OrderSide } from '../lib/index';
 import { scaleUpAndTruncateToInt, calculateBaseQuantity } from './utils/numbers';
 
 // Constants

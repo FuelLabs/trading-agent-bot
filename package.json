@@ -6,10 +6,11 @@
     "build": "tsc",
     "start": "tsc && node dist/src/index.js",
     "format": "prettier --write . --ignore-path .prettierignore",
-    "install:all": "pnpm install && cd lib/o2-connector-ts && pnpm install && cd ../.."
+    "install:all": "pnpm install"
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
+    "@types/ws": "^8.18.1",
     "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
@@ -18,10 +19,14 @@
     "axios": "^1.12.2",
     "ccxt": "^4.5.12",
     "decimal.js": "^10.6.0",
+    "dotenv": "^17.2.1",
     "ethers": "^6.15.0",
     "fuels": "^0.102.0",
     "pino": "^10.1.0",
+    "pino-loki": "^2.6.0",
     "pino-pretty": "^13.1.2",
+    "prettier": "^3.6.2",
+    "ws": "^8.18.3",
     "yaml": "^2.8.1"
   }
 }

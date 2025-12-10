@@ -1,3 +1,0 @@
-[submodule "lib/o2-connector-ts"]
-	path = lib/o2-connector-ts
-	url = git@github.com:FuelLabs/o2-connector-ts.git
