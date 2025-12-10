@@ -80,16 +80,13 @@ const config: BotConfig = loadConfig(configPath);
         market.quote.max_precision
       ).toString();
 
-      logger.info(`Final buy/sell prices: ${new Decimal(buyPrice).toString()}/${new Decimal(sellPrice).toString()} with adjustment ${marketConfig.price_adjustment_factor}`);
+      logger.info(
+        `Final buy/sell prices: ${new Decimal(buyPrice).toString()}/${new Decimal(sellPrice).toString()} with adjustment ${marketConfig.price_adjustment_factor}`
+      );
 
       // Calculate quantity based on order_usdc_value, price, and base/quote decimals
       const usdcValue = new Decimal(marketConfig.order_usdc_value);
-      const quantityDecimal = calculateBaseQuantity(
-        usdcValue,
-        price,
-        market.base.decimals,
-        market.base.max_precision
-      )
+      const quantityDecimal = calculateBaseQuantity(usdcValue, price, market.base.decimals, market.base.max_precision);
       const quantity = quantityDecimal.toString();
 
       // Place buy order on O2
@@ -124,10 +121,7 @@ const config: BotConfig = loadConfig(configPath);
           `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity} with latency ${Date.now() - start} ms`
         );
       } catch (err) {
-        logger.error(
-          { err },
-          `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`
-        );
+        logger.error({ err }, `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
       }
       if (!sellOrderSuccess) {
         logger.error(`Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
@@ -157,10 +151,10 @@ const config: BotConfig = loadConfig(configPath);
 
     while (true) {
       // Start the job without awaiting it (non-blocking)
-      marketWorker(marketConfig, isRunningRef).catch(err => {
-        logger.error({ err }, "Error in scheduled job execution");
+      marketWorker(marketConfig, isRunningRef).catch((err) => {
+        logger.error({ err }, 'Error in scheduled job execution');
       });
-      
+
       // Timer starts immediately, regardless of job completion
       await sleep(sleepMs);
     }

@@ -1,6 +1,6 @@
 import { RestAPI } from '../lib/o2-connector-ts/src/rest-api/client';
 import { FuelSessionSigner } from '../lib/o2-connector-ts/src/rest-api/signers/fuel-signer';
-import { Action, OrderType, OrderSide, MarketResponse as Market } from '../lib/o2-connector-ts/src/rest-api/types';
+import { OrderType, OrderSide, MarketResponse as Market } from '../lib/o2-connector-ts/src/rest-api/types';
 import type { Account } from '../lib/o2-connector-ts/node_modules/fuels';
 import { MarketConfig } from './types/config';
 import { Wallet, Provider } from 'fuels';
@@ -41,17 +41,10 @@ export class O2Client {
     }
 
     const markets: Market[] = (await (await this.client.getMarkets()).data()).markets;
-    return markets.find(
-      (m: Market) => m.market_id === marketConfig.market_id
-    );
+    return markets.find((m: Market) => m.market_id === marketConfig.market_id);
   }
 
-  async placeOrder(
-    market: Market,
-    price: string,
-    quantity: string,
-    side: OrderSide,
-  ): Promise<boolean> {
+  async placeOrder(market: Market, price: string, quantity: string, side: OrderSide): Promise<boolean> {
     if (!this.initialized) {
       this.logger.error('O2Client not initialized. Call init() before using this method.');
       throw new Error('O2Client not initialized');
@@ -61,10 +54,9 @@ export class O2Client {
       market,
       actions: [
         {
-          type: Action.CreateOrder,
-          payload: {
-            type: OrderType.Spot,
+          CreateOrder: {
             side,
+            order_type: OrderType.Spot,
             price,
             quantity,
           },
