@@ -6,7 +6,7 @@
     "build": "tsc",
     "start": "node dist/src/index.js",
     "format": "prettier --write . --ignore-path .prettierignore",
-    "install:all": "pnpm install && cd lib/o2-connector-ts && pnpm install && cd ../.."
+    "install:all": "pnpm install && cd lib/o2-connector-ts && yarn install && cd ../.."
   },
   "devDependencies": {
     "@types/node": "^24.9.1",
