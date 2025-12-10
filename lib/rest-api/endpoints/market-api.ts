@@ -6,8 +6,8 @@ import type {
   GetTickerResponse,
   GetSummaryRequest,
   GetSummaryResponse,
-} from "../types";
-import { sendRequest } from "../utils/httpRequest";
+} from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class MarketApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -17,7 +17,7 @@ export class MarketApi {
   }
 
   public async getMarkets(): Promise<RestApiResponse<MarketsResponse>> {
-    return await sendRequest<MarketsResponse>(this.configuration, "/v1/markets", "GET", {});
+    return await sendRequest<MarketsResponse>(this.configuration, '/v1/markets', 'GET', {});
   }
 
   public async getTicker(requestParameters: GetTickerRequest): Promise<RestApiResponse<GetTickerResponse>> {
@@ -30,7 +30,7 @@ export class MarketApi {
 
     // Construct the full endpoint path with the query string.
     const endpointWithParams = `/v1/markets/ticker?${params.toString()}`;
-    return await sendRequest<GetTickerResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetTickerResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 
   public async getSummary(requestParameters: GetSummaryRequest): Promise<RestApiResponse<GetSummaryResponse>> {
@@ -43,6 +43,6 @@ export class MarketApi {
 
     // Construct the full endpoint path with the query string.
     const endpointWithParams = `/v1/markets/summary?${params.toString()}`;
-    return await sendRequest<GetSummaryResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetSummaryResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 }

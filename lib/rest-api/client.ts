@@ -1,22 +1,22 @@
-import { B256Address, Address } from "fuels";
+import { B256Address, Address } from 'fuels';
 
-import { AccountApi } from "./endpoints/account-api";
-import { SessionApi } from "./endpoints/session-api";
-import { MarketApi } from "./endpoints/market-api";
-import { BarsApi } from "./endpoints/bars-api";
-import { HealthApi } from "./endpoints/health-api";
-import { BalanceApi } from "./endpoints/balance-api";
-import { TradesApi } from "./endpoints/trades-api";
-import { DepthApi } from "./endpoints/depth-api";
-import { OrdersApi } from "./endpoints/orders-api";
-import { OrderApi } from "./endpoints/order-api";
-import { TradeAccountManager } from "./trade-account";
+import { AccountApi } from './endpoints/account-api';
+import { SessionApi } from './endpoints/session-api';
+import { MarketApi } from './endpoints/market-api';
+import { BarsApi } from './endpoints/bars-api';
+import { HealthApi } from './endpoints/health-api';
+import { BalanceApi } from './endpoints/balance-api';
+import { TradesApi } from './endpoints/trades-api';
+import { DepthApi } from './endpoints/depth-api';
+import { OrdersApi } from './endpoints/orders-api';
+import { OrderApi } from './endpoints/order-api';
+import { TradeAccountManager } from './trade-account';
 
-import { sendRequest } from "./utils/httpRequest";
-import { encodeActions } from "./utils/o2-encoders";
+import { sendRequest } from './utils/httpRequest';
+import { encodeActions } from './utils/o2-encoders';
 
-import { OrderBook } from "../types/contracts/OrderBook";
-import type { SessionInput } from "../types/contracts/TradeAccount";
+import { OrderBook } from '../types/contracts/OrderBook';
+import type { SessionInput } from '../types/contracts/TradeAccount';
 
 import {
   ConfigurationRestAPI,
@@ -47,7 +47,7 @@ import {
   SessionSubmitTransactionResponse,
   SessionActionBatch,
   MarketId,
-} from "./types";
+} from './types';
 
 export class RestAPI {
   private configuration: ConfigurationRestAPI;
@@ -97,7 +97,7 @@ export class RestAPI {
       if (!tradeAccountManager.contractIds) {
         tradeAccountManager.contractIds = [];
       }
-      tradeAccountManager.contractIds.push(tradeAccountManager.tradeAccountId)
+      tradeAccountManager.contractIds.push(tradeAccountManager.tradeAccountId);
     }
 
     this.tradeAccountManager = new TradeAccountManager(tradeAccountManager);
@@ -107,7 +107,7 @@ export class RestAPI {
 
     const expiry = Date.now() + 30 * 24 * 60 * 60 * 1000; // 30 days
     if (!tradeAccountManager.contractIds) {
-      throw new Error("contractIds must be defined");
+      throw new Error('contractIds must be defined');
     }
     await this.createSession({ contractIds: tradeAccountManager.contractIds, expiry });
   }
@@ -121,8 +121,8 @@ export class RestAPI {
    */
   sendRequest<T>(
     endpoint: string,
-    method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH",
-    params: Record<string, unknown> = {},
+    method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH',
+    params: Record<string, unknown> = {}
   ): Promise<RestApiResponse<T>> {
     return sendRequest<T>(this.configuration, endpoint, method, params);
   }
@@ -136,7 +136,7 @@ export class RestAPI {
    * @param requestParameters - The user wallet address.
    */
   public async createTradingAccount(
-    requestParameters: CreateTradingAccountRequest,
+    requestParameters: CreateTradingAccountRequest
   ): Promise<RestApiResponse<CreateTradingAccountResponse>> {
     return await this.accountApi.createTradingAccount(requestParameters);
   }
@@ -148,7 +148,7 @@ export class RestAPI {
   public async createSession(requestParameters: CreateSessionRequest): Promise<RestApiResponse<SessionInput>> {
     const params = await this.tradeAccountManager.api_CreateSessionParams(
       requestParameters.contractIds,
-      requestParameters.expiry,
+      requestParameters.expiry
     );
     let session = await this.accountApi.createSession(params, this.tradeAccountManager.ownerAddress.toString());
     this.tradeAccountManager.setSession(await session.data());
@@ -163,7 +163,7 @@ export class RestAPI {
    * @param requestParameters - The actions on the orderbook.
    */
   public async sessionSubmitTransaction(
-    requestParameters: SessionActionBatch,
+    requestParameters: SessionActionBatch
   ): Promise<RestApiResponse<SessionSubmitTransactionResponse>> {
     // Convert actions to contract calls
     const encodedActions = await encodeActions(
@@ -176,7 +176,7 @@ export class RestAPI {
         quoteDecimals: requestParameters.market.quote.decimals,
       },
       requestParameters.actions,
-      this.tradeAccountManager.defaultGasLimit,
+      this.tradeAccountManager.defaultGasLimit
     );
 
     // Convert to API readable
@@ -197,7 +197,7 @@ export class RestAPI {
         min_gas_limit: payload.min_gas_limit,
         collect_orders: true,
       },
-      this.tradeAccountManager.ownerAddress.toString(),
+      this.tradeAccountManager.ownerAddress.toString()
     );
 
     this.tradeAccountManager.incrementNonce();
@@ -266,7 +266,7 @@ export class RestAPI {
    * @param requestParameters - The market ID, contract address, direction, and count of trades to retrieve.
    */
   public async getTradesByAccount(
-    requestParameters: GetTradesByAccountRequest,
+    requestParameters: GetTradesByAccountRequest
   ): Promise<RestApiResponse<GetTradesByAccountResponse>> {
     if (requestParameters.contract === undefined) {
       requestParameters.contract = this.tradeAccountManager.contractId.toString();

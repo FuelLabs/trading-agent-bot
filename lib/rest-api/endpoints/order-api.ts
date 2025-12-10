@@ -1,5 +1,5 @@
-import type { ConfigurationRestAPI, RestApiResponse, GetOrderRequest, GetOrderResponse } from "../types";
-import { sendRequest } from "../utils/httpRequest";
+import type { ConfigurationRestAPI, RestApiResponse, GetOrderRequest, GetOrderResponse } from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class OrderApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -18,6 +18,6 @@ export class OrderApi {
 
     // Construct the full endpoint path with the query string.
     const endpointWithParams = `/v1/order?${params.toString()}`;
-    return await sendRequest<GetOrderResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetOrderResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 }

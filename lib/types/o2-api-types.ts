@@ -1,4 +1,4 @@
-import { Enum } from "./contracts/common";
+import { Enum } from './contracts/common';
 
 export type Identity = Enum<{
   Address: string;
@@ -8,7 +8,7 @@ export type Identity = Enum<{
 export interface Trade {
   price: string;
   quantity: string;
-  side: "buy" | "sell";
+  side: 'buy' | 'sell';
   timestamp: string;
   total: string;
   trade_id: string;
@@ -44,7 +44,7 @@ export interface Order {
   price_fill: string;
   quantity: string;
   quantity_fill: string;
-  side: "buy" | "sell";
+  side: 'buy' | 'sell';
   timestamp: string;
 }
 

@@ -1,4 +1,4 @@
-import { WebSocket } from "ws";
+import { WebSocket } from 'ws';
 import {
   WsClientOptions,
   WsEventMap,
@@ -9,7 +9,7 @@ import {
   SubscribeDepthParams,
   SubscribeDepthViewParams,
   Logger,
-} from "./types";
+} from './types';
 
 type Listener<T> = (data: T) => void;
 
@@ -33,10 +33,10 @@ export class WsClient {
     this.closed = false;
     this.ws = new WebSocket(this.url);
 
-    this.ws.on("open", () => this.logger.log("[WS] Connected"));
-    this.ws.on("close", () => this.handleClose());
-    this.ws.on("error", (err) => this.emit("error", err));
-    this.ws.on("message", (data) => this.handleMessage(data.toString()));
+    this.ws.on('open', () => this.logger.log('[WS] Connected'));
+    this.ws.on('close', () => this.handleClose());
+    this.ws.on('error', (err) => this.emit('error', err));
+    this.ws.on('message', (data) => this.handleMessage(data.toString()));
 
     return this;
   }
@@ -50,27 +50,27 @@ export class WsClient {
   // ------- Subscriptions -------
 
   subscribeBalances(params: SubscribeBalancesParams): this {
-    this.send({ action: "subscribe_balances", ...params });
+    this.send({ action: 'subscribe_balances', ...params });
     return this;
   }
 
   subscribeTrades(params: SubscribeTradesParams): this {
-    this.send({ action: "subscribe_trades", ...params });
+    this.send({ action: 'subscribe_trades', ...params });
     return this;
   }
 
   subscribeOrders(params: SubscribeOrdersParams): this {
-    this.send({ action: "subscribe_orders", ...params });
+    this.send({ action: 'subscribe_orders', ...params });
     return this;
   }
 
   subscribeDepth(params: SubscribeDepthParams): this {
-    this.send({ action: "subscribe_depth", ...params });
+    this.send({ action: 'subscribe_depth', ...params });
     return this;
   }
 
   subscribeDepthView(params: SubscribeDepthViewParams): this {
-    this.send({ action: "subscribe_depth_view", ...params });
+    this.send({ action: 'subscribe_depth_view', ...params });
     return this;
   }
 
@@ -109,12 +109,12 @@ export class WsClient {
         this.emit(msg.action, msg);
       }
     } catch (err) {
-      this.emit("error", err as Error);
+      this.emit('error', err as Error);
     }
   }
 
   private handleClose(): void {
-    this.logger.log("[WS] Disconnected");
+    this.logger.log('[WS] Disconnected');
     if (this.reconnect && !this.closed) {
       setTimeout(() => this.connect(), this.reconnectDelay);
     }

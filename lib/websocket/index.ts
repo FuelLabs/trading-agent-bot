@@ -1,2 +1,2 @@
-export { WsClient } from "./wsClient";
-export * from "./types";
+export { WsClient } from './wsClient';
+export * from './types';

@@ -10,28 +10,28 @@ import {
   ZeroBytes32,
   AbstractContract,
   hexlify,
-} from "fuels";
-import { toUtf8Bytes } from "ethers";
+} from 'fuels';
+import { toUtf8Bytes } from 'ethers';
 
-import type { OrderTypeInput, OrderBook } from "../../types/contracts/OrderBook";
-import type { IdentityInput } from "../../types/contracts/TradeAccount";
-import type { BigInterish, OrderBookConfig, SessionAction, SessionCallContractArg } from "../types";
-import { OrderType, OrderSide, CreateOrderAction } from "../types";
-import { Identity } from "../../types";
+import type { OrderTypeInput, OrderBook } from '../../types/contracts/OrderBook';
+import type { IdentityInput } from '../../types/contracts/TradeAccount';
+import type { BigInterish, OrderBookConfig, SessionAction, SessionCallContractArg } from '../types';
+import { OrderType, OrderSide, CreateOrderAction } from '../types';
+import { Identity } from '../../types';
 
 export function createCallToSign(
   nonce: BigInterish,
   chainId: BigInterish,
-  invocationScope: FunctionInvocationScope<any>,
+  invocationScope: FunctionInvocationScope<any>
 ) {
   const callConfig = invocationScope.getCallConfig();
-  if (callConfig.func.jsonFn.inputs[0].name !== "signature") {
+  if (callConfig.func.jsonFn.inputs[0].name !== 'signature') {
     throw new Error(
-      "TradeAccountManager.createCallToSign can only be used for functions with signature as the first argument",
+      'TradeAccountManager.createCallToSign can only be used for functions with signature as the first argument'
     );
   }
   let argBytes = callConfig.func.encodeArguments(callConfig.args);
-  const [option] = new BigNumberCoder("u64").decode(argBytes.slice(0, 8), 0);
+  const [option] = new BigNumberCoder('u64').decode(argBytes.slice(0, 8), 0);
   if (!option.eq(0)) {
     argBytes = argBytes.slice(8 + 64);
   } else {
@@ -39,9 +39,9 @@ export function createCallToSign(
   }
   const funcNameBytes = toUtf8Bytes(callConfig.func.jsonFn.name);
   const finalBytes = concat([
-    new BigNumberCoder("u64").encode(bn(nonce.toString())),
-    new BigNumberCoder("u64").encode(bn(chainId.toString())),
-    new BigNumberCoder("u64").encode(funcNameBytes.length),
+    new BigNumberCoder('u64').encode(bn(nonce.toString())),
+    new BigNumberCoder('u64').encode(bn(chainId.toString())),
+    new BigNumberCoder('u64').encode(funcNameBytes.length),
     funcNameBytes,
     argBytes,
   ]);
@@ -53,11 +53,11 @@ export async function encodeActions(
   orderBook: OrderBook,
   orderBookConfig: OrderBookConfig,
   actions: SessionAction[] = [],
-  gasLimit: BN,
+  gasLimit: BN
 ): Promise<{ invokeScopes: Array<FunctionInvocationScope<any>>; actions: SessionAction[] }> {
   const invokeScopes: Array<FunctionInvocationScope<any>> = [];
   const newActions: Array<SessionAction> = [];
-  if (actions.some((action) => "CreateOrder" in action)) {
+  if (actions.some((action) => 'CreateOrder' in action)) {
     invokeScopes.push(orderBook.functions.settle_balance(tradeAccountIdentity));
     newActions.push({
       SettleBalance: {
@@ -67,13 +67,13 @@ export async function encodeActions(
   }
 
   for (const action of actions) {
-    if ("CreateOrder" in action) {
+    if ('CreateOrder' in action) {
       invokeScopes.push(createOrderInvokeScope(action, orderBook, orderBookConfig, gasLimit));
       newActions.push(action);
-    } else if ("CancelOrder" in action) {
+    } else if ('CancelOrder' in action) {
       invokeScopes.push(orderBook.functions.cancel_order(action.CancelOrder.order_id));
       newActions.push(action);
-    } else if ("SettleBalance" in action) {
+    } else if ('SettleBalance' in action) {
       invokeScopes.push(orderBook.functions.settle_balance(tradeAccountIdentity));
       newActions.push({
         SettleBalance: {
@@ -102,9 +102,9 @@ function getBits(bits: B256Address | Address) {
 
 function getOption(args?: Uint8Array) {
   if (args) {
-    return concat([new BigNumberCoder("u64").encode(1), args]);
+    return concat([new BigNumberCoder('u64').encode(1), args]);
   }
-  return new BigNumberCoder("u64").encode(0);
+  return new BigNumberCoder('u64').encode(0);
 }
 
 function createOrderArgs(createOrder: CreateOrderAction, bookConfig: OrderBookConfig, gasLimit: BN) {
@@ -124,7 +124,7 @@ function createOrderArgs(createOrder: CreateOrderAction, bookConfig: OrderBookCo
       break;
     case OrderType.Limit:
     default:
-      throw new Error("unsupported order type");
+      throw new Error('unsupported order type');
   }
 
   return {
@@ -143,7 +143,7 @@ function createOrderArgs(createOrder: CreateOrderAction, bookConfig: OrderBookCo
           createOrder.CreateOrder.side,
           createOrder.CreateOrder.price,
           createOrder.CreateOrder.quantity,
-          bookConfig.baseDecimals,
+          bookConfig.baseDecimals
         ),
       },
       gasLimit: gasLimit,
@@ -188,18 +188,18 @@ export function createCallContractArg(invocationScope: FunctionInvocationScope<a
 }
 
 export function removeBits(data: any, convertToHex: boolean = false) {
-  if (data && typeof data === "object") {
+  if (data && typeof data === 'object') {
     if (data.bits) {
       return data.bits;
     }
     for (const key in data) {
-      if ("bits" in data[key]) {
+      if ('bits' in data[key]) {
         const value = data[key].bits;
         data[key] = value;
         if (convertToHex && value instanceof Array) {
           data[key] = hexlify(Uint8Array.from(value));
         }
-      } else if (typeof data[key] === "object") {
+      } else if (typeof data[key] === 'object') {
         return removeBits(data[key], convertToHex);
       }
     }
@@ -214,12 +214,10 @@ export function identityInputToIdentity(identityInput: IdentityInput): Identity 
   if (identityInput.ContractId) {
     return { ContractId: identityInput.ContractId.bits };
   }
-  throw new Error("Invalid identity input");
+  throw new Error('Invalid identity input');
 }
 
-export function hexPad(
-  hex: string | null | undefined = ''
-): `0x${string}` | null {
+export function hexPad(hex: string | null | undefined = ''): `0x${string}` | null {
   if (hex === undefined || hex === null || hex === '') {
     return null;
   }
@@ -235,7 +233,7 @@ function createOrderInvokeScope(
   createOrder: CreateOrderAction,
   orderBook: OrderBook,
   orderBookConfig: OrderBookConfig,
-  gasLimit: BN,
+  gasLimit: BN
 ) {
   const { call_data, call_params } = createOrderArgs(createOrder, orderBookConfig, gasLimit);
   return orderBook.functions.create_order(call_data).callParams(call_params);
@@ -244,15 +242,15 @@ function createOrderInvokeScope(
 function callContractToBytes(callContractArg: SessionCallContractArg): Uint8Array {
   return concat([
     callContractArg.contractId,
-    new BigNumberCoder("u64").encode(arrayify(callContractArg.functionSelector).length),
+    new BigNumberCoder('u64').encode(arrayify(callContractArg.functionSelector).length),
     callContractArg.functionSelector,
-    new BigNumberCoder("u64").encode(callContractArg.amount),
+    new BigNumberCoder('u64').encode(callContractArg.amount),
     arrayify(callContractArg.assetId),
-    new BigNumberCoder("u64").encode(callContractArg.gas),
+    new BigNumberCoder('u64').encode(callContractArg.gas),
     getOption(
       callContractArg.args
-        ? concat([new BigNumberCoder("u64").encode(callContractArg.args?.length || 0), callContractArg.args])
-        : undefined,
+        ? concat([new BigNumberCoder('u64').encode(callContractArg.args?.length || 0), callContractArg.args])
+        : undefined
     ),
   ]);
 }

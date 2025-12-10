@@ -1,5 +1,5 @@
-import type { ConfigurationRestAPI, RestApiResponse, GetBarsRequest, GetBarsResponse } from "../types";
-import { sendRequest } from "../utils/httpRequest";
+import type { ConfigurationRestAPI, RestApiResponse, GetBarsRequest, GetBarsResponse } from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class BarsApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -17,12 +17,12 @@ export class BarsApi {
     }
 
     // For CountBack, "from" should be same as "to"
-    if ("count_back" in requestParameters) {
-      params.append("from", String(requestParameters.to));
+    if ('count_back' in requestParameters) {
+      params.append('from', String(requestParameters.to));
     }
 
     // Construct the full endpoint path with the query string.
     const endpointWithParams = `/v1/bars?${params.toString()}`;
-    return await sendRequest<GetBarsResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetBarsResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 }

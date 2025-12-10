@@ -1,11 +1,11 @@
-import { RawAxiosRequestConfig } from "axios";
-import type { Account, B256Address, Address, BN, AbstractContract } from "fuels";
-import { BigNumberish } from "ethers";
+import { RawAxiosRequestConfig } from 'axios';
+import type { Account, B256Address, Address, BN, AbstractContract } from 'fuels';
+import { BigNumberish } from 'ethers';
 
-import { Enum } from "../types/contracts/common";
-import type { SignatureInput } from "../types/contracts/TradeAccount";
+import { Enum } from '../types/contracts/common';
+import type { SignatureInput } from '../types/contracts/TradeAccount';
 
-import type { Trade, Identity, DepthOrder, Order, OrderBookBalance } from "../types";
+import type { Trade, Identity, DepthOrder, Order, OrderBookBalance } from '../types';
 
 // ------- General Rest API -------
 
@@ -77,7 +77,7 @@ export class ConfigurationRestAPI {
 
     this.baseOptions = {
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     };
   }
@@ -99,12 +99,12 @@ export interface SessionSigner {
 }
 
 export enum Action {
-  CreateOrder = "create_order",
-  CancelOrder = "cancel_order",
-  GetBars = "get_bars",
-  GetTrades = "get_trades",
-  GetDepth = "depth",
-  GetTradesByAccount = "get_trades_by_account",
+  CreateOrder = 'create_order',
+  CancelOrder = 'cancel_order',
+  GetBars = 'get_bars',
+  GetTrades = 'get_trades',
+  GetDepth = 'depth',
+  GetTradesByAccount = 'get_trades_by_account',
 }
 
 export type API_Signature = Enum<{
@@ -139,16 +139,16 @@ export type TradeAccountManagerConfig = {
 // ------- OrderBook Types -------
 
 export enum OrderType {
-  Spot = "Spot",
-  Market = "Market",
-  Limit = "Limit",
-  FillOrKill = "FillOrKill",
-  PostOnly = "PostOnly",
+  Spot = 'Spot',
+  Market = 'Market',
+  Limit = 'Limit',
+  FillOrKill = 'FillOrKill',
+  PostOnly = 'PostOnly',
 }
 
 export enum OrderSide {
-  Buy = "Buy",
-  Sell = "Sell",
+  Buy = 'Buy',
+  Sell = 'Sell',
 }
 
 export type OrderBookConfig = {
@@ -379,24 +379,24 @@ export type GetSummaryResponse = Summary[];
 // ------- Bars API Types -------
 
 export enum BarResolution {
-  OneSecond = "1s",
-  OneMinute = "1m",
-  TwoMinutes = "2m",
-  ThreeMinutes = "3m",
-  FiveMinutes = "5m",
-  FifteenMinutes = "15m",
-  ThirtyMinutes = "30m",
-  OneHour = "1h",
-  TwoHours = "2h",
-  FourHours = "4h",
-  SixHours = "6h",
-  EightHours = "8h",
-  TwelveHours = "12h",
-  OneDay = "1d",
-  ThreeDays = "3d",
-  OneWeek = "1w",
-  OneMonth = "1M",
-  ThreeMonths = "3M",
+  OneSecond = '1s',
+  OneMinute = '1m',
+  TwoMinutes = '2m',
+  ThreeMinutes = '3m',
+  FiveMinutes = '5m',
+  FifteenMinutes = '15m',
+  ThirtyMinutes = '30m',
+  OneHour = '1h',
+  TwoHours = '2h',
+  FourHours = '4h',
+  SixHours = '6h',
+  EightHours = '8h',
+  TwelveHours = '12h',
+  OneDay = '1d',
+  ThreeDays = '3d',
+  OneWeek = '1w',
+  OneMonth = '1M',
+  ThreeMonths = '3M',
 }
 
 export interface GetBarsCountBack {
@@ -450,7 +450,7 @@ export interface GetBalanceResponse {
 
 export interface GetTradesRequest {
   market_id: string;
-  direction?: "asc" | "desc";
+  direction?: 'asc' | 'desc';
   count?: number;
 }
 
@@ -463,12 +463,12 @@ export interface GetTradesResponse {
 export interface GetTradesByAccountRequest {
   market_id: string;
   contract?: string;
-  direction?: "asc" | "desc";
+  direction?: 'asc' | 'desc';
   count: number;
 }
 
 export interface AccountTrade extends Trade {
-  trader_side: "taker" | "maker";
+  trader_side: 'taker' | 'maker';
 }
 
 export interface GetTradesByAccountResponse {
@@ -499,7 +499,7 @@ export interface GetOrdersRequest {
   market_id: string;
   contract?: string;
   count: number;
-  direction: "asc" | "desc";
+  direction: 'asc' | 'desc';
   is_open: boolean;
 }
 

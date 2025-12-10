@@ -10,7 +10,7 @@
   Fuel-Core version: 0.47.1
 */
 
-import { Contract as __Contract, Interface } from "fuels";
+import { Contract as __Contract, Interface } from 'fuels';
 import type {
   Provider,
   Account,
@@ -20,112 +20,112 @@ import type {
   BN,
   FunctionFragment,
   InvokeFunction,
-} from "fuels";
+} from 'fuels';
 
-import type { Option } from "./common";
+import type { Option } from './common';
 
 const abi = {
-  programType: "contract",
-  specVersion: "1.1",
-  encodingVersion: "1",
+  programType: 'contract',
+  specVersion: '1.1',
+  encodingVersion: '1',
   concreteTypes: [
     {
-      type: "()",
-      concreteTypeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      type: '()',
+      concreteTypeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
     },
     {
-      type: "bool",
-      concreteTypeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      type: 'bool',
+      concreteTypeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
     },
     {
-      type: "enum std::option::Option<u64>",
-      concreteTypeId: "d852149004cc9ec0bbe7dc4e37bffea1d41469b759512b6136f2e865a4c06e7d",
+      type: 'enum std::option::Option<u64>',
+      concreteTypeId: 'd852149004cc9ec0bbe7dc4e37bffea1d41469b759512b6136f2e865a4c06e7d',
       metadataTypeId: 0,
-      typeArguments: ["1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0"],
+      typeArguments: ['1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0'],
     },
     {
-      type: "u64",
-      concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      type: 'u64',
+      concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
     },
   ],
   metadataTypes: [
     {
-      type: "enum std::option::Option",
+      type: 'enum std::option::Option',
       metadataTypeId: 0,
       components: [
         {
-          name: "None",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'None',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
         {
-          name: "Some",
+          name: 'Some',
           typeId: 1,
         },
       ],
       typeParameters: [1],
     },
     {
-      type: "generic T",
+      type: 'generic T',
       metadataTypeId: 1,
     },
   ],
   functions: [
     {
-      name: "has",
+      name: 'has',
       inputs: [
         {
-          name: "price",
-          concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'price',
+          concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
-      output: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      output: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "min",
+      name: 'min',
       inputs: [],
-      output: "d852149004cc9ec0bbe7dc4e37bffea1d41469b759512b6136f2e865a4c06e7d",
+      output: 'd852149004cc9ec0bbe7dc4e37bffea1d41469b759512b6136f2e865a4c06e7d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "set",
+      name: 'set',
       inputs: [
         {
-          name: "price",
-          concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'price',
+          concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "unset",
+      name: 'unset',
       inputs: [
         {
-          name: "price",
-          concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'price',
+          concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },

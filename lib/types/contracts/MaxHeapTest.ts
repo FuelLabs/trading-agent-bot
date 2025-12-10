@@ -10,7 +10,7 @@
   Fuel-Core version: 0.47.1
 */
 
-import { Contract as __Contract, Interface } from "fuels";
+import { Contract as __Contract, Interface } from 'fuels';
 import type {
   Provider,
   Account,
@@ -20,133 +20,133 @@ import type {
   BN,
   FunctionFragment,
   InvokeFunction,
-} from "fuels";
+} from 'fuels';
 
-import type { Option } from "./common";
+import type { Option } from './common';
 
 const abi = {
-  programType: "contract",
-  specVersion: "1.1",
-  encodingVersion: "1",
+  programType: 'contract',
+  specVersion: '1.1',
+  encodingVersion: '1',
   concreteTypes: [
     {
-      type: "()",
-      concreteTypeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      type: '()',
+      concreteTypeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
     },
     {
-      type: "bool",
-      concreteTypeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      type: 'bool',
+      concreteTypeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
     },
     {
-      type: "enum std::option::Option<u8>",
-      concreteTypeId: "2da102c46c7263beeed95818cd7bee801716ba8303dddafdcd0f6c9efda4a0f1",
+      type: 'enum std::option::Option<u8>',
+      concreteTypeId: '2da102c46c7263beeed95818cd7bee801716ba8303dddafdcd0f6c9efda4a0f1',
       metadataTypeId: 0,
-      typeArguments: ["c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b"],
+      typeArguments: ['c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b'],
     },
     {
-      type: "u64",
-      concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      type: 'u64',
+      concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
     },
     {
-      type: "u8",
-      concreteTypeId: "c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b",
+      type: 'u8',
+      concreteTypeId: 'c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b',
     },
   ],
   metadataTypes: [
     {
-      type: "enum std::option::Option",
+      type: 'enum std::option::Option',
       metadataTypeId: 0,
       components: [
         {
-          name: "None",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'None',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
         {
-          name: "Some",
+          name: 'Some',
           typeId: 1,
         },
       ],
       typeParameters: [1],
     },
     {
-      type: "generic T",
+      type: 'generic T',
       metadataTypeId: 1,
     },
   ],
   functions: [
     {
-      name: "is_empty",
+      name: 'is_empty',
       inputs: [],
-      output: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      output: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "len",
+      name: 'len',
       inputs: [],
-      output: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      output: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "peek",
+      name: 'peek',
       inputs: [],
-      output: "2da102c46c7263beeed95818cd7bee801716ba8303dddafdcd0f6c9efda4a0f1",
+      output: '2da102c46c7263beeed95818cd7bee801716ba8303dddafdcd0f6c9efda4a0f1',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "pop",
+      name: 'pop',
       inputs: [],
-      output: "2da102c46c7263beeed95818cd7bee801716ba8303dddafdcd0f6c9efda4a0f1",
+      output: '2da102c46c7263beeed95818cd7bee801716ba8303dddafdcd0f6c9efda4a0f1',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "push",
+      name: 'push',
       inputs: [
         {
-          name: "value",
-          concreteTypeId: "c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b",
+          name: 'value',
+          concreteTypeId: 'c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "remove",
+      name: 'remove',
       inputs: [
         {
-          name: "val",
-          concreteTypeId: "c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b",
+          name: 'val',
+          concreteTypeId: 'c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b',
         },
       ],
-      output: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      output: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },

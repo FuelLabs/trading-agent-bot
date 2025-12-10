@@ -1,5 +1,5 @@
-import type { ConfigurationRestAPI, RestApiResponse, GetDepthRequest, GetDepthResponse } from "../types";
-import { sendRequest } from "../utils/httpRequest";
+import type { ConfigurationRestAPI, RestApiResponse, GetDepthRequest, GetDepthResponse } from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class DepthApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -17,6 +17,6 @@ export class DepthApi {
     }
 
     const endpointWithParams = `/v1/depth?${params.toString()}`;
-    return await sendRequest<GetDepthResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetDepthResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 }

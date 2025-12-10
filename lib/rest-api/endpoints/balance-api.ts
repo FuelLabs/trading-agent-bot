@@ -1,5 +1,5 @@
-import type { ConfigurationRestAPI, RestApiResponse, GetBalanceRequest, GetBalanceResponse } from "../types";
-import { sendRequest } from "../utils/httpRequest";
+import type { ConfigurationRestAPI, RestApiResponse, GetBalanceRequest, GetBalanceResponse } from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class BalanceApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -17,6 +17,6 @@ export class BalanceApi {
     }
 
     const endpointWithParams = `/v1/balance?${params.toString()}`;
-    return await sendRequest<GetBalanceResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetBalanceResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 }

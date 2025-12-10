@@ -10,7 +10,7 @@
   Fuel-Core version: 0.47.1
 */
 
-import { Contract as __Contract, Interface } from "fuels";
+import { Contract as __Contract, Interface } from 'fuels';
 import type {
   Provider,
   Account,
@@ -21,9 +21,9 @@ import type {
   FunctionFragment,
   InvokeFunction,
   StrSlice,
-} from "fuels";
+} from 'fuels';
 
-import type { Enum } from "./common";
+import type { Enum } from './common';
 
 export type LocationInput = Enum<{ Earth: BigNumberish; Mars: undefined }>;
 export type LocationOutput = Enum<{ Earth: BN; Mars: void }>;
@@ -66,254 +66,254 @@ export type LargeContractConfigurables = Partial<{
 }>;
 
 const abi = {
-  programType: "contract",
-  specVersion: "1.1",
-  encodingVersion: "1",
+  programType: 'contract',
+  specVersion: '1.1',
+  encodingVersion: '1',
   concreteTypes: [
     {
-      type: "()",
-      concreteTypeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      type: '()',
+      concreteTypeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
     },
     {
-      type: "(bool, u64)",
-      concreteTypeId: "c998ca9a5f221fe7b5c66ae70c8a9562b86d964408b00d17f883c906bc1fe4be",
+      type: '(bool, u64)',
+      concreteTypeId: 'c998ca9a5f221fe7b5c66ae70c8a9562b86d964408b00d17f883c906bc1fe4be',
       metadataTypeId: 0,
     },
     {
-      type: "[bool; 3]",
-      concreteTypeId: "4926d35d1a5157936b0a29bc126b8aace6d911209a5c130e9b716b0c73643ea6",
+      type: '[bool; 3]',
+      concreteTypeId: '4926d35d1a5157936b0a29bc126b8aace6d911209a5c130e9b716b0c73643ea6',
       metadataTypeId: 2,
     },
     {
-      type: "[u64; 3]",
-      concreteTypeId: "776fb5a3824169d6736138565fdc20aad684d9111266a5ff6d5c675280b7e199",
+      type: '[u64; 3]',
+      concreteTypeId: '776fb5a3824169d6736138565fdc20aad684d9111266a5ff6d5c675280b7e199',
       metadataTypeId: 3,
     },
     {
-      type: "b256",
-      concreteTypeId: "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b",
+      type: 'b256',
+      concreteTypeId: '7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b',
     },
     {
-      type: "bool",
-      concreteTypeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      type: 'bool',
+      concreteTypeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
     },
     {
-      type: "enum Location",
-      concreteTypeId: "6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb",
+      type: 'enum Location',
+      concreteTypeId: '6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb',
       metadataTypeId: 4,
     },
     {
-      type: "str[4]",
-      concreteTypeId: "94f0fa95c830be5e4f711963e83259fe7e8bc723278ab6ec34449e791a99b53a",
+      type: 'str[4]',
+      concreteTypeId: '94f0fa95c830be5e4f711963e83259fe7e8bc723278ab6ec34449e791a99b53a',
     },
     {
-      type: "struct Person",
-      concreteTypeId: "a6b272bcf0f572840e2cc1241bdcf8d42db51eeb1aead750c8e608160f83f926",
+      type: 'struct Person',
+      concreteTypeId: 'a6b272bcf0f572840e2cc1241bdcf8d42db51eeb1aead750c8e608160f83f926',
       metadataTypeId: 6,
     },
     {
-      type: "struct SimpleStruct",
-      concreteTypeId: "75f7f7a06026cab5d7a70984d1fde56001e83505e3a091ff9722b92d7f56d8be",
+      type: 'struct SimpleStruct',
+      concreteTypeId: '75f7f7a06026cab5d7a70984d1fde56001e83505e3a091ff9722b92d7f56d8be',
       metadataTypeId: 7,
     },
     {
-      type: "u16",
-      concreteTypeId: "29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef",
+      type: 'u16',
+      concreteTypeId: '29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef',
     },
     {
-      type: "u256",
-      concreteTypeId: "1b5759d94094368cfd443019e7ca5ec4074300e544e5ea993a979f5da627261e",
+      type: 'u256',
+      concreteTypeId: '1b5759d94094368cfd443019e7ca5ec4074300e544e5ea993a979f5da627261e',
     },
     {
-      type: "u32",
-      concreteTypeId: "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc",
+      type: 'u32',
+      concreteTypeId: 'd7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc',
     },
     {
-      type: "u64",
-      concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      type: 'u64',
+      concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
     },
     {
-      type: "u8",
-      concreteTypeId: "c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b",
+      type: 'u8',
+      concreteTypeId: 'c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b',
     },
   ],
   metadataTypes: [
     {
-      type: "(_, _)",
+      type: '(_, _)',
       metadataTypeId: 0,
       components: [
         {
-          name: "__tuple_element",
-          typeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+          name: '__tuple_element',
+          typeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
         },
         {
-          name: "__tuple_element",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: '__tuple_element',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "[_; 2]",
+      type: '[_; 2]',
       metadataTypeId: 1,
       components: [
         {
-          name: "__array_element",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: '__array_element',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "[_; 3]",
+      type: '[_; 3]',
       metadataTypeId: 2,
       components: [
         {
-          name: "__array_element",
-          typeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+          name: '__array_element',
+          typeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
         },
       ],
     },
     {
-      type: "[_; 3]",
+      type: '[_; 3]',
       metadataTypeId: 3,
       components: [
         {
-          name: "__array_element",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: '__array_element',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "enum Location",
+      type: 'enum Location',
       metadataTypeId: 4,
       components: [
         {
-          name: "Earth",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'Earth',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
         {
-          name: "Mars",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'Mars',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
       ],
     },
     {
-      type: "str",
+      type: 'str',
       metadataTypeId: 5,
     },
     {
-      type: "struct Person",
+      type: 'struct Person',
       metadataTypeId: 6,
       components: [
         {
-          name: "name",
+          name: 'name',
           typeId: 5,
         },
         {
-          name: "age",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'age',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
         {
-          name: "alive",
-          typeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+          name: 'alive',
+          typeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
         },
         {
-          name: "location",
+          name: 'location',
           typeId: 4,
         },
         {
-          name: "some_tuple",
+          name: 'some_tuple',
           typeId: 0,
         },
         {
-          name: "some_array",
+          name: 'some_array',
           typeId: 1,
         },
         {
-          name: "some_b256",
-          typeId: "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b",
+          name: 'some_b256',
+          typeId: '7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b',
         },
       ],
     },
     {
-      type: "struct SimpleStruct",
+      type: 'struct SimpleStruct',
       metadataTypeId: 7,
       components: [
         {
-          name: "a",
-          typeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+          name: 'a',
+          typeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
         },
         {
-          name: "b",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'b',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
   ],
   functions: [
     {
-      name: "assert_configurables",
+      name: 'assert_configurables',
       inputs: [],
-      output: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      output: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       attributes: null,
     },
     {
-      name: "enum_input_output",
+      name: 'enum_input_output',
       inputs: [
         {
-          name: "loc",
-          concreteTypeId: "6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb",
+          name: 'loc',
+          concreteTypeId: '6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb',
         },
       ],
-      output: "6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb",
+      output: '6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb',
       attributes: null,
     },
     {
-      name: "get_storage",
+      name: 'get_storage',
       inputs: [
         {
-          name: "index",
-          concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'index',
+          concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
-      output: "29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef",
+      output: '29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "large_blob",
+      name: 'large_blob',
       inputs: [],
-      output: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      output: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       attributes: null,
     },
     {
-      name: "push_storage",
+      name: 'push_storage',
       inputs: [
         {
-          name: "value",
-          concreteTypeId: "29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef",
+          name: 'value',
+          concreteTypeId: '29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "struct_input_output",
+      name: 'struct_input_output',
       inputs: [
         {
-          name: "person",
-          concreteTypeId: "a6b272bcf0f572840e2cc1241bdcf8d42db51eeb1aead750c8e608160f83f926",
+          name: 'person',
+          concreteTypeId: 'a6b272bcf0f572840e2cc1241bdcf8d42db51eeb1aead750c8e608160f83f926',
         },
       ],
-      output: "a6b272bcf0f572840e2cc1241bdcf8d42db51eeb1aead750c8e608160f83f926",
+      output: 'a6b272bcf0f572840e2cc1241bdcf8d42db51eeb1aead750c8e608160f83f926',
       attributes: null,
     },
   ],
@@ -321,80 +321,80 @@ const abi = {
   messagesTypes: [],
   configurables: [
     {
-      name: "BOOL",
-      concreteTypeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      name: 'BOOL',
+      concreteTypeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       offset: 376832,
       indirect: false,
     },
     {
-      name: "U8",
-      concreteTypeId: "c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b",
+      name: 'U8',
+      concreteTypeId: 'c89951a24c6ca28c13fd1cfdc646b2b656d69e61a92b91023be7eb58eb914b6b',
       offset: 376952,
       indirect: false,
     },
     {
-      name: "U16",
-      concreteTypeId: "29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef",
+      name: 'U16',
+      concreteTypeId: '29881aad8730c5ab11d275376323d8e4ff4179aae8ccb6c13fe4902137e162ef',
       offset: 376896,
       indirect: false,
     },
     {
-      name: "U32",
-      concreteTypeId: "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc",
+      name: 'U32',
+      concreteTypeId: 'd7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc',
       offset: 376936,
       indirect: false,
     },
     {
-      name: "U64",
-      concreteTypeId: "d7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc",
+      name: 'U64',
+      concreteTypeId: 'd7649d428b9ff33d188ecbf38a7e4d8fd167fa01b2e10fe9a8f9308e52f1d7cc',
       offset: 376944,
       indirect: false,
     },
     {
-      name: "U256",
-      concreteTypeId: "1b5759d94094368cfd443019e7ca5ec4074300e544e5ea993a979f5da627261e",
+      name: 'U256',
+      concreteTypeId: '1b5759d94094368cfd443019e7ca5ec4074300e544e5ea993a979f5da627261e',
       offset: 376904,
       indirect: false,
     },
     {
-      name: "B256",
-      concreteTypeId: "7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b",
+      name: 'B256',
+      concreteTypeId: '7c5ee1cecf5f8eacd1284feb5f0bf2bdea533a51e2f0c9aabe9236d335989f3b',
       offset: 376800,
       indirect: false,
     },
     {
-      name: "CONFIGURABLE_STRUCT",
-      concreteTypeId: "75f7f7a06026cab5d7a70984d1fde56001e83505e3a091ff9722b92d7f56d8be",
+      name: 'CONFIGURABLE_STRUCT',
+      concreteTypeId: '75f7f7a06026cab5d7a70984d1fde56001e83505e3a091ff9722b92d7f56d8be',
       offset: 376856,
       indirect: false,
     },
     {
-      name: "CONFIGURABLE_ENUM",
-      concreteTypeId: "6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb",
+      name: 'CONFIGURABLE_ENUM',
+      concreteTypeId: '6966f221767e2951c5d68ba5e81e897449375a9f51f5e4c9e3b65f1dd7defabb',
       offset: 376840,
       indirect: false,
     },
     {
-      name: "ARRAY_BOOL",
-      concreteTypeId: "4926d35d1a5157936b0a29bc126b8aace6d911209a5c130e9b716b0c73643ea6",
+      name: 'ARRAY_BOOL',
+      concreteTypeId: '4926d35d1a5157936b0a29bc126b8aace6d911209a5c130e9b716b0c73643ea6',
       offset: 376768,
       indirect: false,
     },
     {
-      name: "ARRAY_U64",
-      concreteTypeId: "776fb5a3824169d6736138565fdc20aad684d9111266a5ff6d5c675280b7e199",
+      name: 'ARRAY_U64',
+      concreteTypeId: '776fb5a3824169d6736138565fdc20aad684d9111266a5ff6d5c675280b7e199',
       offset: 376776,
       indirect: false,
     },
     {
-      name: "TUPLE_BOOL_U64",
-      concreteTypeId: "c998ca9a5f221fe7b5c66ae70c8a9562b86d964408b00d17f883c906bc1fe4be",
+      name: 'TUPLE_BOOL_U64',
+      concreteTypeId: 'c998ca9a5f221fe7b5c66ae70c8a9562b86d964408b00d17f883c906bc1fe4be',
       offset: 376880,
       indirect: false,
     },
     {
-      name: "STR_4",
-      concreteTypeId: "94f0fa95c830be5e4f711963e83259fe7e8bc723278ab6ec34449e791a99b53a",
+      name: 'STR_4',
+      concreteTypeId: '94f0fa95c830be5e4f711963e83259fe7e8bc723278ab6ec34449e791a99b53a',
       offset: 376872,
       indirect: false,
     },

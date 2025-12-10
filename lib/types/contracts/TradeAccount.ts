@@ -10,7 +10,7 @@
   Fuel-Core version: 0.47.1
 */
 
-import { Contract as __Contract, Interface } from "fuels";
+import { Contract as __Contract, Interface } from 'fuels';
 import type {
   Provider,
   Account,
@@ -23,9 +23,9 @@ import type {
   InvokeFunction,
   StdString,
   StrSlice,
-} from "fuels";
+} from 'fuels';
 
-import type { Option, Enum, Vec } from "./common";
+import type { Option, Enum, Vec } from './common';
 
 export type IdentityInput = Enum<{ Address: AddressInput; ContractId: ContractIdInput }>;
 export type IdentityOutput = Enum<{ Address: AddressOutput; ContractId: ContractIdOutput }>;
@@ -498,202 +498,202 @@ export type WithdrawEventOutput = {
 };
 
 const abi = {
-  programType: "contract",
-  specVersion: "1.1",
-  encodingVersion: "1",
+  programType: 'contract',
+  specVersion: '1.1',
+  encodingVersion: '1',
   concreteTypes: [
     {
-      type: "()",
-      concreteTypeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      type: '()',
+      concreteTypeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
     },
     {
-      type: "bool",
-      concreteTypeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      type: 'bool',
+      concreteTypeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
     },
     {
-      type: "enum std::crypto::signature::Signature",
-      concreteTypeId: "2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39",
+      type: 'enum std::crypto::signature::Signature',
+      concreteTypeId: '2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39',
       metadataTypeId: 2,
     },
     {
-      type: "enum std::identity::Identity",
-      concreteTypeId: "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335",
+      type: 'enum std::identity::Identity',
+      concreteTypeId: 'ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335',
       metadataTypeId: 3,
     },
     {
-      type: "enum std::option::Option<enum std::crypto::signature::Signature>",
-      concreteTypeId: "8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40",
+      type: 'enum std::option::Option<enum std::crypto::signature::Signature>',
+      concreteTypeId: '8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40',
       metadataTypeId: 4,
-      typeArguments: ["2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39"],
+      typeArguments: ['2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39'],
     },
     {
-      type: "enum std::option::Option<struct contract_schema::trade_account::Session>",
-      concreteTypeId: "db4bc0201be00cc6d049122ba4e5eaf2e1a8d67e87ae531c85204a496c41add4",
+      type: 'enum std::option::Option<struct contract_schema::trade_account::Session>',
+      concreteTypeId: 'db4bc0201be00cc6d049122ba4e5eaf2e1a8d67e87ae531c85204a496c41add4',
       metadataTypeId: 4,
-      typeArguments: ["a59f4af5e00bdd0ab9aed213f6b7592136f986fe5f5224aa707f439dbd510aa9"],
+      typeArguments: ['a59f4af5e00bdd0ab9aed213f6b7592136f986fe5f5224aa707f439dbd510aa9'],
     },
     {
-      type: "str",
-      concreteTypeId: "8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a",
+      type: 'str',
+      concreteTypeId: '8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a',
     },
     {
-      type: "struct contract_libs::signature::IncrementNonceEvent",
-      concreteTypeId: "1f60fe48a54d08956985da0422f2d7d44834b7c4d4687f0376f26dce46fe44bf",
+      type: 'struct contract_libs::signature::IncrementNonceEvent',
+      concreteTypeId: '1f60fe48a54d08956985da0422f2d7d44834b7c4d4687f0376f26dce46fe44bf',
       metadataTypeId: 7,
     },
     {
-      type: "struct contract_schema::trade_account::CallContractArg",
-      concreteTypeId: "2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4",
+      type: 'struct contract_schema::trade_account::CallContractArg',
+      concreteTypeId: '2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4',
       metadataTypeId: 8,
     },
     {
-      type: "struct contract_schema::trade_account::FailedToValidateEvent",
-      concreteTypeId: "98fa03034b6a5a596d6121040d525eabb78d224d2411b6d5d0151727499bbd09",
+      type: 'struct contract_schema::trade_account::FailedToValidateEvent',
+      concreteTypeId: '98fa03034b6a5a596d6121040d525eabb78d224d2411b6d5d0151727499bbd09',
       metadataTypeId: 9,
     },
     {
-      type: "struct contract_schema::trade_account::Session",
-      concreteTypeId: "a59f4af5e00bdd0ab9aed213f6b7592136f986fe5f5224aa707f439dbd510aa9",
+      type: 'struct contract_schema::trade_account::Session',
+      concreteTypeId: 'a59f4af5e00bdd0ab9aed213f6b7592136f986fe5f5224aa707f439dbd510aa9',
       metadataTypeId: 10,
     },
     {
-      type: "struct contract_schema::trade_account::SessionContractCallEvent",
-      concreteTypeId: "55cb585aadd106832bdedaef0a231b5587db28871e2b12e5137ec4cb66b9b829",
+      type: 'struct contract_schema::trade_account::SessionContractCallEvent',
+      concreteTypeId: '55cb585aadd106832bdedaef0a231b5587db28871e2b12e5137ec4cb66b9b829',
       metadataTypeId: 11,
     },
     {
-      type: "struct contract_schema::trade_account::SessionCreatedEvent",
-      concreteTypeId: "6f9ef4e7a983e700685ab472ed2e625822ad32b8f04de92adc81ed60911e5e77",
+      type: 'struct contract_schema::trade_account::SessionCreatedEvent',
+      concreteTypeId: '6f9ef4e7a983e700685ab472ed2e625822ad32b8f04de92adc81ed60911e5e77',
       metadataTypeId: 12,
     },
     {
-      type: "struct contract_schema::trade_account::SessionRevokedEvent",
-      concreteTypeId: "2765c1864fc179c9ee1938cc4a28acedc0b1c76f0a63434b33149f432eb4e8c3",
+      type: 'struct contract_schema::trade_account::SessionRevokedEvent',
+      concreteTypeId: '2765c1864fc179c9ee1938cc4a28acedc0b1c76f0a63434b33149f432eb4e8c3',
       metadataTypeId: 13,
     },
     {
-      type: "struct contract_schema::trade_account::WithdrawEvent",
-      concreteTypeId: "0e9654327e3d67d706825c5e4e2df18533389b6566d8c1c298c7bd5b5e0c6da5",
+      type: 'struct contract_schema::trade_account::WithdrawEvent',
+      concreteTypeId: '0e9654327e3d67d706825c5e4e2df18533389b6566d8c1c298c7bd5b5e0c6da5',
       metadataTypeId: 14,
     },
     {
-      type: "struct std::asset_id::AssetId",
-      concreteTypeId: "c0710b6731b1dd59799cf6bef33eee3b3b04a2e40e80a0724090215bbf2ca974",
+      type: 'struct std::asset_id::AssetId',
+      concreteTypeId: 'c0710b6731b1dd59799cf6bef33eee3b3b04a2e40e80a0724090215bbf2ca974',
       metadataTypeId: 16,
     },
     {
-      type: "struct std::vec::Vec<struct contract_schema::trade_account::CallContractArg>",
-      concreteTypeId: "d5d0add462df804d0d75443e00c45391dcc2f0c5c02c439a798cc7549b528449",
+      type: 'struct std::vec::Vec<struct contract_schema::trade_account::CallContractArg>',
+      concreteTypeId: 'd5d0add462df804d0d75443e00c45391dcc2f0c5c02c439a798cc7549b528449',
       metadataTypeId: 27,
-      typeArguments: ["2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4"],
+      typeArguments: ['2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4'],
     },
     {
-      type: "u64",
-      concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      type: 'u64',
+      concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
     },
   ],
   metadataTypes: [
     {
-      type: "[_; 64]",
+      type: '[_; 64]',
       metadataTypeId: 0,
       components: [
         {
-          name: "__array_element",
+          name: '__array_element',
           typeId: 28,
         },
       ],
     },
     {
-      type: "b256",
+      type: 'b256',
       metadataTypeId: 1,
     },
     {
-      type: "enum std::crypto::signature::Signature",
+      type: 'enum std::crypto::signature::Signature',
       metadataTypeId: 2,
       components: [
         {
-          name: "Secp256k1",
+          name: 'Secp256k1',
           typeId: 21,
         },
         {
-          name: "Secp256r1",
+          name: 'Secp256r1',
           typeId: 22,
         },
         {
-          name: "Ed25519",
+          name: 'Ed25519',
           typeId: 20,
         },
       ],
     },
     {
-      type: "enum std::identity::Identity",
+      type: 'enum std::identity::Identity',
       metadataTypeId: 3,
       components: [
         {
-          name: "Address",
+          name: 'Address',
           typeId: 15,
         },
         {
-          name: "ContractId",
+          name: 'ContractId',
           typeId: 19,
         },
       ],
     },
     {
-      type: "enum std::option::Option",
+      type: 'enum std::option::Option',
       metadataTypeId: 4,
       components: [
         {
-          name: "None",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'None',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
         {
-          name: "Some",
+          name: 'Some',
           typeId: 5,
         },
       ],
       typeParameters: [5],
     },
     {
-      type: "generic T",
+      type: 'generic T',
       metadataTypeId: 5,
     },
     {
-      type: "raw untyped ptr",
+      type: 'raw untyped ptr',
       metadataTypeId: 6,
     },
     {
-      type: "struct contract_libs::signature::IncrementNonceEvent",
+      type: 'struct contract_libs::signature::IncrementNonceEvent',
       metadataTypeId: 7,
       components: [
         {
-          name: "nonce",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'nonce',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "struct contract_schema::trade_account::CallContractArg",
+      type: 'struct contract_schema::trade_account::CallContractArg',
       metadataTypeId: 8,
       components: [
         {
-          name: "contract_id",
+          name: 'contract_id',
           typeId: 19,
         },
         {
-          name: "function_selector",
+          name: 'function_selector',
           typeId: 17,
         },
         {
-          name: "call_params",
+          name: 'call_params',
           typeId: 23,
         },
         {
-          name: "call_data",
+          name: 'call_data',
           typeId: 4,
           typeArguments: [
             {
-              name: "",
+              name: '',
               typeId: 17,
             },
           ],
@@ -701,41 +701,41 @@ const abi = {
       ],
     },
     {
-      type: "struct contract_schema::trade_account::FailedToValidateEvent",
+      type: 'struct contract_schema::trade_account::FailedToValidateEvent',
       metadataTypeId: 9,
       components: [
         {
-          name: "account",
+          name: 'account',
           typeId: 3,
         },
         {
-          name: "reason",
+          name: 'reason',
           typeId: 24,
         },
         {
-          name: "timestamp",
+          name: 'timestamp',
           typeId: 25,
         },
       ],
     },
     {
-      type: "struct contract_schema::trade_account::Session",
+      type: 'struct contract_schema::trade_account::Session',
       metadataTypeId: 10,
       components: [
         {
-          name: "session_id",
+          name: 'session_id',
           typeId: 3,
         },
         {
-          name: "expiry",
+          name: 'expiry',
           typeId: 25,
         },
         {
-          name: "contract_ids",
+          name: 'contract_ids',
           typeId: 27,
           typeArguments: [
             {
-              name: "",
+              name: '',
               typeId: 19,
             },
           ],
@@ -743,1352 +743,1352 @@ const abi = {
       ],
     },
     {
-      type: "struct contract_schema::trade_account::SessionContractCallEvent",
+      type: 'struct contract_schema::trade_account::SessionContractCallEvent',
       metadataTypeId: 11,
       components: [
         {
-          name: "session_id",
+          name: 'session_id',
           typeId: 3,
         },
         {
-          name: "called_contract",
+          name: 'called_contract',
           typeId: 19,
         },
         {
-          name: "nonce",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'nonce',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "struct contract_schema::trade_account::SessionCreatedEvent",
+      type: 'struct contract_schema::trade_account::SessionCreatedEvent',
       metadataTypeId: 12,
       components: [
         {
-          name: "account",
+          name: 'account',
           typeId: 3,
         },
         {
-          name: "session",
+          name: 'session',
           typeId: 10,
         },
       ],
     },
     {
-      type: "struct contract_schema::trade_account::SessionRevokedEvent",
+      type: 'struct contract_schema::trade_account::SessionRevokedEvent',
       metadataTypeId: 13,
       components: [
         {
-          name: "account",
+          name: 'account',
           typeId: 3,
         },
         {
-          name: "session_id",
+          name: 'session_id',
           typeId: 3,
         },
       ],
     },
     {
-      type: "struct contract_schema::trade_account::WithdrawEvent",
+      type: 'struct contract_schema::trade_account::WithdrawEvent',
       metadataTypeId: 14,
       components: [
         {
-          name: "account",
+          name: 'account',
           typeId: 3,
         },
         {
-          name: "to",
+          name: 'to',
           typeId: 3,
         },
         {
-          name: "amount",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'amount',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
         {
-          name: "asset_id",
+          name: 'asset_id',
           typeId: 16,
         },
         {
-          name: "timestamp",
+          name: 'timestamp',
           typeId: 25,
         },
       ],
     },
     {
-      type: "struct std::address::Address",
+      type: 'struct std::address::Address',
       metadataTypeId: 15,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 1,
         },
       ],
     },
     {
-      type: "struct std::asset_id::AssetId",
+      type: 'struct std::asset_id::AssetId',
       metadataTypeId: 16,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 1,
         },
       ],
     },
     {
-      type: "struct std::bytes::Bytes",
+      type: 'struct std::bytes::Bytes',
       metadataTypeId: 17,
       components: [
         {
-          name: "buf",
+          name: 'buf',
           typeId: 18,
         },
         {
-          name: "len",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'len',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "struct std::bytes::RawBytes",
+      type: 'struct std::bytes::RawBytes',
       metadataTypeId: 18,
       components: [
         {
-          name: "ptr",
+          name: 'ptr',
           typeId: 6,
         },
         {
-          name: "cap",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'cap',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "struct std::contract_id::ContractId",
+      type: 'struct std::contract_id::ContractId',
       metadataTypeId: 19,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 1,
         },
       ],
     },
     {
-      type: "struct std::crypto::ed25519::Ed25519",
+      type: 'struct std::crypto::ed25519::Ed25519',
       metadataTypeId: 20,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 0,
         },
       ],
     },
     {
-      type: "struct std::crypto::secp256k1::Secp256k1",
+      type: 'struct std::crypto::secp256k1::Secp256k1',
       metadataTypeId: 21,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 0,
         },
       ],
     },
     {
-      type: "struct std::crypto::secp256r1::Secp256r1",
+      type: 'struct std::crypto::secp256r1::Secp256r1',
       metadataTypeId: 22,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 0,
         },
       ],
     },
     {
-      type: "struct std::low_level_call::CallParams",
+      type: 'struct std::low_level_call::CallParams',
       metadataTypeId: 23,
       components: [
         {
-          name: "coins",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'coins',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
         {
-          name: "asset_id",
+          name: 'asset_id',
           typeId: 16,
         },
         {
-          name: "gas",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'gas',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "struct std::string::String",
+      type: 'struct std::string::String',
       metadataTypeId: 24,
       components: [
         {
-          name: "bytes",
+          name: 'bytes',
           typeId: 17,
         },
       ],
     },
     {
-      type: "struct std::time::Time",
+      type: 'struct std::time::Time',
       metadataTypeId: 25,
       components: [
         {
-          name: "unix",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'unix',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
     },
     {
-      type: "struct std::vec::RawVec",
+      type: 'struct std::vec::RawVec',
       metadataTypeId: 26,
       components: [
         {
-          name: "ptr",
+          name: 'ptr',
           typeId: 6,
         },
         {
-          name: "cap",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'cap',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
       typeParameters: [5],
     },
     {
-      type: "struct std::vec::Vec",
+      type: 'struct std::vec::Vec',
       metadataTypeId: 27,
       components: [
         {
-          name: "buf",
+          name: 'buf',
           typeId: 26,
           typeArguments: [
             {
-              name: "",
+              name: '',
               typeId: 5,
             },
           ],
         },
         {
-          name: "len",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'len',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
       typeParameters: [5],
     },
     {
-      type: "u8",
+      type: 'u8',
       metadataTypeId: 28,
     },
   ],
   functions: [
     {
-      name: "call_contract",
+      name: 'call_contract',
       inputs: [
         {
-          name: "signature",
-          concreteTypeId: "8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40",
+          name: 'signature',
+          concreteTypeId: '8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40',
         },
         {
-          name: "call",
-          concreteTypeId: "2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4",
+          name: 'call',
+          concreteTypeId: '2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "doc-comment",
-          arguments: [" Executes a call to another contract on behalf of the trading account."],
+          name: 'doc-comment',
+          arguments: [' Executes a call to another contract on behalf of the trading account.'],
         },
         {
-          name: "doc-comment",
-          arguments: [" Allows the account to interact with other contracts (e.g., order books)."],
+          name: 'doc-comment',
+          arguments: [' Allows the account to interact with other contracts (e.g., order books).'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Arguments"],
+          name: 'doc-comment',
+          arguments: [' # Arguments'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `contract_id` - The contract to call"],
+          name: 'doc-comment',
+          arguments: [' * `contract_id` - The contract to call'],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `forward` - Optional assets to forward with the call"],
+          name: 'doc-comment',
+          arguments: [' * `forward` - Optional assets to forward with the call'],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `args` - Optional encoded arguments for the call"],
+          name: 'doc-comment',
+          arguments: [' * `args` - Optional encoded arguments for the call'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Returns"],
+          name: 'doc-comment',
+          arguments: [' # Returns'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `Bytes` - The encoded return value from the called contract"],
+          name: 'doc-comment',
+          arguments: [' * `Bytes` - The encoded return value from the called contract'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Verifies caller permissions (owner or valid session)"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Verifies caller permissions (owner or valid session)'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Security"],
+          name: 'doc-comment',
+          arguments: [' # Security'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Only callable by account owner or valid session key holder"],
+          name: 'doc-comment',
+          arguments: [' - Only callable by account owner or valid session key holder'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Validates forwarded amounts against account balance"],
+          name: 'doc-comment',
+          arguments: [' - Validates forwarded amounts against account balance'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Events"],
+          name: 'doc-comment',
+          arguments: [' # Events'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - May emit `FailedToValidateEvent` if session validation fails"],
+          name: 'doc-comment',
+          arguments: [' - May emit `FailedToValidateEvent` if session validation fails'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Reverts"],
+          name: 'doc-comment',
+          arguments: [' # Reverts'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If caller is not authorized (neither owner nor valid session)"],
+          name: 'doc-comment',
+          arguments: [' - If caller is not authorized (neither owner nor valid session)'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If insufficient balance for forwarded assets"],
+          name: 'doc-comment',
+          arguments: [' - If insufficient balance for forwarded assets'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If external call fails"],
+          name: 'doc-comment',
+          arguments: [' - If external call fails'],
         },
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "call_contracts",
+      name: 'call_contracts',
       inputs: [
         {
-          name: "signature",
-          concreteTypeId: "8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40",
+          name: 'signature',
+          concreteTypeId: '8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40',
         },
         {
-          name: "calls",
-          concreteTypeId: "d5d0add462df804d0d75443e00c45391dcc2f0c5c02c439a798cc7549b528449",
+          name: 'calls',
+          concreteTypeId: 'd5d0add462df804d0d75443e00c45391dcc2f0c5c02c439a798cc7549b528449',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "doc-comment",
+          name: 'doc-comment',
           arguments: [
-            " Executes multiple calls to other contracts on behalf of the trading account via the trading account owner.",
+            ' Executes multiple calls to other contracts on behalf of the trading account via the trading account owner.',
           ],
         },
         {
-          name: "doc-comment",
-          arguments: [" Allows the account to interact with other contracts (e.g., order books)."],
+          name: 'doc-comment',
+          arguments: [' Allows the account to interact with other contracts (e.g., order books).'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Arguments"],
+          name: 'doc-comment',
+          arguments: [' # Arguments'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `contract_id` - The contract to call"],
+          name: 'doc-comment',
+          arguments: [' * `contract_id` - The contract to call'],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `call_params` - Optional assets to forward with the call"],
+          name: 'doc-comment',
+          arguments: [' * `call_params` - Optional assets to forward with the call'],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `args` - Optional encoded arguments for the call"],
+          name: 'doc-comment',
+          arguments: [' * `args` - Optional encoded arguments for the call'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Returns"],
+          name: 'doc-comment',
+          arguments: [' # Returns'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `Bytes` - The encoded return value from the called contract"],
+          name: 'doc-comment',
+          arguments: [' * `Bytes` - The encoded return value from the called contract'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Verifies caller permissions (owner or valid session)"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Verifies caller permissions (owner or valid session)'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Security"],
+          name: 'doc-comment',
+          arguments: [' # Security'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Only callable by account owner or valid session key holder"],
+          name: 'doc-comment',
+          arguments: [' - Only callable by account owner or valid session key holder'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Validates forwarded amounts against account balance"],
+          name: 'doc-comment',
+          arguments: [' - Validates forwarded amounts against account balance'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Events"],
+          name: 'doc-comment',
+          arguments: [' # Events'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - May emit `FailedToValidateEvent` if session validation fails"],
+          name: 'doc-comment',
+          arguments: [' - May emit `FailedToValidateEvent` if session validation fails'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Reverts"],
+          name: 'doc-comment',
+          arguments: [' # Reverts'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If caller is not the trading account owner"],
+          name: 'doc-comment',
+          arguments: [' - If caller is not the trading account owner'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If insufficient balance for forwarded assets"],
+          name: 'doc-comment',
+          arguments: [' - If insufficient balance for forwarded assets'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If external call fails"],
+          name: 'doc-comment',
+          arguments: [' - If external call fails'],
         },
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "get_current_session",
+      name: 'get_current_session',
       inputs: [],
-      output: "db4bc0201be00cc6d049122ba4e5eaf2e1a8d67e87ae531c85204a496c41add4",
+      output: 'db4bc0201be00cc6d049122ba4e5eaf2e1a8d67e87ae531c85204a496c41add4',
       attributes: [
         {
-          name: "doc-comment",
-          arguments: [" Returns information about the current active session."],
+          name: 'doc-comment',
+          arguments: [' Returns information about the current active session.'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Returns"],
+          name: 'doc-comment',
+          arguments: [' # Returns'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `Option<Session>` - Session if a session exists, None otherwise"],
+          name: 'doc-comment',
+          arguments: [' * `Option<Session>` - Session if a session exists, None otherwise'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Current session data"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Current session data'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Note"],
+          name: 'doc-comment',
+          arguments: [' # Note'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Returns the session even if it has expired (caller should check expiry)"],
+          name: 'doc-comment',
+          arguments: [' - Returns the session even if it has expired (caller should check expiry)'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Returns None if no session has been set"],
+          name: 'doc-comment',
+          arguments: [' - Returns None if no session has been set'],
         },
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "get_nonce",
+      name: 'get_nonce',
       inputs: [],
-      output: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      output: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
       attributes: [
         {
-          name: "doc-comment",
-          arguments: [" Returns the current nonce value for replay protection."],
+          name: 'doc-comment',
+          arguments: [' Returns the current nonce value for replay protection.'],
         },
         {
-          name: "doc-comment",
-          arguments: [" Nonce increments with each session-authorized operation."],
+          name: 'doc-comment',
+          arguments: [' Nonce increments with each session-authorized operation.'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Returns"],
+          name: 'doc-comment',
+          arguments: [' # Returns'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `u64` - Current nonce value (starts at 0)"],
+          name: 'doc-comment',
+          arguments: [' * `u64` - Current nonce value (starts at 0)'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Current nonce from storage"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Current nonce from storage'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Note"],
+          name: 'doc-comment',
+          arguments: [' # Note'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Used to prevent replay attacks on session operations"],
+          name: 'doc-comment',
+          arguments: [' - Used to prevent replay attacks on session operations'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Increments automatically with each session call"],
+          name: 'doc-comment',
+          arguments: [' - Increments automatically with each session call'],
         },
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "session_call_contract",
+      name: 'session_call_contract',
       inputs: [
         {
-          name: "signature",
-          concreteTypeId: "2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39",
+          name: 'signature',
+          concreteTypeId: '2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39',
         },
         {
-          name: "call",
-          concreteTypeId: "2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4",
+          name: 'call',
+          concreteTypeId: '2e811073316cb5af9b64bcd703b0f5957a35112aa0f1f86782a8fd42b485c3d4',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "doc-comment",
-          arguments: [" Executes a single contract call using session key authorization."],
+          name: 'doc-comment',
+          arguments: [' Executes a single contract call using session key authorization.'],
         },
         {
-          name: "doc-comment",
+          name: 'doc-comment',
           arguments: [" Allows delegated operations without exposing the owner's private key."],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Arguments"],
+          name: 'doc-comment',
+          arguments: [' # Arguments'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `signature` - Session key signature proving authorization"],
+          name: 'doc-comment',
+          arguments: [' * `signature` - Session key signature proving authorization'],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `call` - The contract call details including target, selector, and parameters"],
+          name: 'doc-comment',
+          arguments: [' * `call` - The contract call details including target, selector, and parameters'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Current session for validation, current nonce"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Current session for validation, current nonce'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Writes: Increments nonce for replay protection"],
+          name: 'doc-comment',
+          arguments: [' - Writes: Increments nonce for replay protection'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Security"],
+          name: 'doc-comment',
+          arguments: [' # Security'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Validates signature against the session key"],
+          name: 'doc-comment',
+          arguments: [' - Validates signature against the session key'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Verifies session is active and not expired"],
+          name: 'doc-comment',
+          arguments: [' - Verifies session is active and not expired'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Uses nonce to prevent replay attacks"],
+          name: 'doc-comment',
+          arguments: [' - Uses nonce to prevent replay attacks'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Events"],
+          name: 'doc-comment',
+          arguments: [' # Events'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Emits `SessionContractCallEvent` for audit trail"],
+          name: 'doc-comment',
+          arguments: [' - Emits `SessionContractCallEvent` for audit trail'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Reverts"],
+          name: 'doc-comment',
+          arguments: [' # Reverts'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If signature is invalid"],
+          name: 'doc-comment',
+          arguments: [' - If signature is invalid'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If session is expired or revoked"],
+          name: 'doc-comment',
+          arguments: [' - If session is expired or revoked'],
         },
         {
-          name: "doc-comment",
+          name: 'doc-comment',
           arguments: [" - If recovered address doesn't match session_id"],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If external call fails"],
+          name: 'doc-comment',
+          arguments: [' - If external call fails'],
         },
         {
-          name: "storage",
-          arguments: ["read", "write"],
-        },
-      ],
-    },
-    {
-      name: "session_call_contracts",
-      inputs: [
-        {
-          name: "signature",
-          concreteTypeId: "2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39",
-        },
-        {
-          name: "calls",
-          concreteTypeId: "d5d0add462df804d0d75443e00c45391dcc2f0c5c02c439a798cc7549b528449",
-        },
-      ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
-      attributes: [
-        {
-          name: "doc-comment",
-          arguments: [" Executes multiple contract calls using session key authorization."],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" Enables batch operations for efficiency and atomicity."],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" # Arguments"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" * `signature` - Session key signature for the batch operation"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" * `calls` - Vector of contract calls to execute in sequence"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - Reads: Current session for validation, current nonce"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - Writes: Increments nonce once for the entire batch"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" # Security"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - Single signature validates the entire batch"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - All calls share the same nonce for atomicity"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - Session must be valid for all calls to execute"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" # Events"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - Emits `SessionContractCallEvent` for each call in the batch"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" # Note"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - Calls are executed sequentially in the order provided"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - If any call fails, subsequent calls may not execute"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" # Reverts"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [""],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - If signature validation fails"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - If session is invalid"],
-        },
-        {
-          name: "doc-comment",
-          arguments: [" - If any individual call fails"],
-        },
-        {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "set_session",
+      name: 'session_call_contracts',
       inputs: [
         {
-          name: "signature",
-          concreteTypeId: "8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40",
+          name: 'signature',
+          concreteTypeId: '2a32867dec49ed8ddf6b7d2ed19d53c626d3f593369b5dd82a317d7b300e1c39',
         },
         {
-          name: "session",
-          concreteTypeId: "db4bc0201be00cc6d049122ba4e5eaf2e1a8d67e87ae531c85204a496c41add4",
+          name: 'calls',
+          concreteTypeId: 'd5d0add462df804d0d75443e00c45391dcc2f0c5c02c439a798cc7549b528449',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "doc-comment",
-          arguments: [" Sets a new session identity for delegated operations."],
+          name: 'doc-comment',
+          arguments: [' Executes multiple contract calls using session key authorization.'],
         },
         {
-          name: "doc-comment",
+          name: 'doc-comment',
+          arguments: [' Enables batch operations for efficiency and atomicity.'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' # Arguments'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' * `signature` - Session key signature for the batch operation'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' * `calls` - Vector of contract calls to execute in sequence'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - Reads: Current session for validation, current nonce'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - Writes: Increments nonce once for the entire batch'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' # Security'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - Single signature validates the entire batch'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - All calls share the same nonce for atomicity'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - Session must be valid for all calls to execute'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' # Events'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - Emits `SessionContractCallEvent` for each call in the batch'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' # Note'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - Calls are executed sequentially in the order provided'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - If any call fails, subsequent calls may not execute'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' # Reverts'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [''],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - If signature validation fails'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - If session is invalid'],
+        },
+        {
+          name: 'doc-comment',
+          arguments: [' - If any individual call fails'],
+        },
+        {
+          name: 'storage',
+          arguments: ['read', 'write'],
+        },
+      ],
+    },
+    {
+      name: 'set_session',
+      inputs: [
+        {
+          name: 'signature',
+          concreteTypeId: '8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40',
+        },
+        {
+          name: 'session',
+          concreteTypeId: 'db4bc0201be00cc6d049122ba4e5eaf2e1a8d67e87ae531c85204a496c41add4',
+        },
+      ],
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
+      attributes: [
+        {
+          name: 'doc-comment',
+          arguments: [' Sets a new session identity for delegated operations.'],
+        },
+        {
+          name: 'doc-comment',
           arguments: [
-            " Only one session can be active at a time - setting a new session automatically revokes any existing session.",
+            ' Only one session can be active at a time - setting a new session automatically revokes any existing session.',
           ],
         },
         {
-          name: "doc-comment",
+          name: 'doc-comment',
           arguments: [" Sessions allow temporary access to trading functions without exposing the owner's keys."],
         },
         {
-          name: "doc-comment",
-          arguments: [" Sessions must specify at least one allowed contract for security."],
+          name: 'doc-comment',
+          arguments: [' Sessions must specify at least one allowed contract for security.'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Arguments"],
+          name: 'doc-comment',
+          arguments: [' # Arguments'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `session` - The new session to make active (pass None to revoke without replacement)"],
+          name: 'doc-comment',
+          arguments: [' * `session` - The new session to make active (pass None to revoke without replacement)'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Verifies caller is the account owner"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Verifies caller is the account owner'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Writes: Replaces any existing session with the new one"],
+          name: 'doc-comment',
+          arguments: [' - Writes: Replaces any existing session with the new one'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Events"],
+          name: 'doc-comment',
+          arguments: [' # Events'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Emits `SessionRevokedEvent` if a previous session existed"],
+          name: 'doc-comment',
+          arguments: [' - Emits `SessionRevokedEvent` if a previous session existed'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Emits `SessionCreatedEvent` if new session is created"],
+          name: 'doc-comment',
+          arguments: [' - Emits `SessionCreatedEvent` if new session is created'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Security"],
+          name: 'doc-comment',
+          arguments: [' # Security'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Automatically revokes any existing session before creating the new one"],
+          name: 'doc-comment',
+          arguments: [' - Automatically revokes any existing session before creating the new one'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Only one session can be active per account at any time"],
+          name: 'doc-comment',
+          arguments: [' - Only one session can be active per account at any time'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Sessions must specify at least one allowed contract ID"],
+          name: 'doc-comment',
+          arguments: [' - Sessions must specify at least one allowed contract ID'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Pass None to revoke without setting a new session"],
+          name: 'doc-comment',
+          arguments: [' - Pass None to revoke without setting a new session'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Reverts"],
+          name: 'doc-comment',
+          arguments: [' # Reverts'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If caller is not the account owner"],
+          name: 'doc-comment',
+          arguments: [' - If caller is not the account owner'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If expiry is in the past (when session is Some)"],
+          name: 'doc-comment',
+          arguments: [' - If expiry is in the past (when session is Some)'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If session has no allowed contracts (when session is Some)"],
+          name: 'doc-comment',
+          arguments: [' - If session has no allowed contracts (when session is Some)'],
         },
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "validate_session",
+      name: 'validate_session',
       inputs: [
         {
-          name: "session_id",
-          concreteTypeId: "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335",
+          name: 'session_id',
+          concreteTypeId: 'ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335',
         },
       ],
-      output: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      output: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       attributes: [
         {
-          name: "doc-comment",
-          arguments: [" Validates if a session identity is currently active."],
+          name: 'doc-comment',
+          arguments: [' Validates if a session identity is currently active.'],
         },
         {
-          name: "doc-comment",
+          name: 'doc-comment',
           arguments: [" Checks both if this is the current session and if it hasn't expired."],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Arguments"],
+          name: 'doc-comment',
+          arguments: [' # Arguments'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `session_id` - The session Identity to validate"],
+          name: 'doc-comment',
+          arguments: [' * `session_id` - The session Identity to validate'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Returns"],
+          name: 'doc-comment',
+          arguments: [' # Returns'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `bool` - True if this is the current session and not expired, false otherwise"],
+          name: 'doc-comment',
+          arguments: [' * `bool` - True if this is the current session and not expired, false otherwise'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Current session identity and expiry time"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Current session identity and expiry time'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Note"],
+          name: 'doc-comment',
+          arguments: [' # Note'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
+          name: 'doc-comment',
           arguments: [" - Returns false if the provided identity doesn't match the current session"],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Returns false if the current session has expired"],
+          name: 'doc-comment',
+          arguments: [' - Returns false if the current session has expired'],
         },
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "withdraw",
+      name: 'withdraw',
       inputs: [
         {
-          name: "signature",
-          concreteTypeId: "8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40",
+          name: 'signature',
+          concreteTypeId: '8c8a9aeea8dc1a1ac1f1fe31c77823653152feda3fa93cd494eedbf84395ca40',
         },
         {
-          name: "to",
-          concreteTypeId: "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335",
+          name: 'to',
+          concreteTypeId: 'ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335',
         },
         {
-          name: "amount",
-          concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'amount',
+          concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
         {
-          name: "asset_id",
-          concreteTypeId: "c0710b6731b1dd59799cf6bef33eee3b3b04a2e40e80a0724090215bbf2ca974",
+          name: 'asset_id',
+          concreteTypeId: 'c0710b6731b1dd59799cf6bef33eee3b3b04a2e40e80a0724090215bbf2ca974',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "doc-comment",
-          arguments: [" Withdraws assets from the trading account to a specified recipient."],
+          name: 'doc-comment',
+          arguments: [' Withdraws assets from the trading account to a specified recipient.'],
         },
         {
-          name: "doc-comment",
-          arguments: [" Only the account owner can withdraw funds."],
+          name: 'doc-comment',
+          arguments: [' Only the account owner can withdraw funds.'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Arguments"],
+          name: 'doc-comment',
+          arguments: [' # Arguments'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `to` - The recipient Identity for the withdrawal"],
+          name: 'doc-comment',
+          arguments: [' * `to` - The recipient Identity for the withdrawal'],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `amount` - The amount to withdraw"],
+          name: 'doc-comment',
+          arguments: [' * `amount` - The amount to withdraw'],
         },
         {
-          name: "doc-comment",
-          arguments: [" * `asset_id` - The asset to withdraw"],
+          name: 'doc-comment',
+          arguments: [' * `asset_id` - The asset to withdraw'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Storage Access"],
+          name: 'doc-comment',
+          arguments: [' # Storage Access'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Reads: Verifies caller is owner and checks balance"],
+          name: 'doc-comment',
+          arguments: [' - Reads: Verifies caller is owner and checks balance'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Writes: Updates the balance after withdrawal"],
+          name: 'doc-comment',
+          arguments: [' - Writes: Updates the balance after withdrawal'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Events"],
+          name: 'doc-comment',
+          arguments: [' # Events'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - Emits `WithdrawEvent` with withdrawal details"],
+          name: 'doc-comment',
+          arguments: [' - Emits `WithdrawEvent` with withdrawal details'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" # Reverts"],
+          name: 'doc-comment',
+          arguments: [' # Reverts'],
         },
         {
-          name: "doc-comment",
-          arguments: [""],
+          name: 'doc-comment',
+          arguments: [''],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If caller is not the account owner"],
+          name: 'doc-comment',
+          arguments: [' - If caller is not the account owner'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If insufficient balance"],
+          name: 'doc-comment',
+          arguments: [' - If insufficient balance'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If amount is zero"],
+          name: 'doc-comment',
+          arguments: [' - If amount is zero'],
         },
         {
-          name: "doc-comment",
-          arguments: [" - If transfer fails"],
+          name: 'doc-comment',
+          arguments: [' - If transfer fails'],
         },
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
   ],
   loggedTypes: [
     {
-      logId: "2261086600904378517",
-      concreteTypeId: "1f60fe48a54d08956985da0422f2d7d44834b7c4d4687f0376f26dce46fe44bf",
+      logId: '2261086600904378517',
+      concreteTypeId: '1f60fe48a54d08956985da0422f2d7d44834b7c4d4687f0376f26dce46fe44bf',
     },
     {
-      logId: "10098701174489624218",
-      concreteTypeId: "8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a",
+      logId: '10098701174489624218',
+      concreteTypeId: '8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a',
     },
     {
-      logId: "11023126350627756633",
-      concreteTypeId: "98fa03034b6a5a596d6121040d525eabb78d224d2411b6d5d0151727499bbd09",
+      logId: '11023126350627756633',
+      concreteTypeId: '98fa03034b6a5a596d6121040d525eabb78d224d2411b6d5d0151727499bbd09',
     },
     {
-      logId: "6182132059982595715",
-      concreteTypeId: "55cb585aadd106832bdedaef0a231b5587db28871e2b12e5137ec4cb66b9b829",
+      logId: '6182132059982595715',
+      concreteTypeId: '55cb585aadd106832bdedaef0a231b5587db28871e2b12e5137ec4cb66b9b829',
     },
     {
-      logId: "8043135260348901120",
-      concreteTypeId: "6f9ef4e7a983e700685ab472ed2e625822ad32b8f04de92adc81ed60911e5e77",
+      logId: '8043135260348901120',
+      concreteTypeId: '6f9ef4e7a983e700685ab472ed2e625822ad32b8f04de92adc81ed60911e5e77',
     },
     {
-      logId: "2838887922734823881",
-      concreteTypeId: "2765c1864fc179c9ee1938cc4a28acedc0b1c76f0a63434b33149f432eb4e8c3",
+      logId: '2838887922734823881',
+      concreteTypeId: '2765c1864fc179c9ee1938cc4a28acedc0b1c76f0a63434b33149f432eb4e8c3',
     },
     {
-      logId: "1051120138880640983",
-      concreteTypeId: "0e9654327e3d67d706825c5e4e2df18533389b6566d8c1c298c7bd5b5e0c6da5",
+      logId: '1051120138880640983',
+      concreteTypeId: '0e9654327e3d67d706825c5e4e2df18533389b6566d8c1c298c7bd5b5e0c6da5',
     },
   ],
   messagesTypes: [],
@@ -2098,12 +2098,12 @@ const abi = {
 
 const storageSlots: StorageSlot[] = [
   {
-    key: "01d66960d3120f08228f6113a5f43d715a03ec130422f4b1920c8ede5c377bc2",
-    value: "0000000000000000000000000000000000000000000000000000000000000000",
+    key: '01d66960d3120f08228f6113a5f43d715a03ec130422f4b1920c8ede5c377bc2',
+    value: '0000000000000000000000000000000000000000000000000000000000000000',
   },
   {
-    key: "01d66960d3120f08228f6113a5f43d715a03ec130422f4b1920c8ede5c377bc3",
-    value: "0000000000000000000000000000000000000000000000000000000000000000",
+    key: '01d66960d3120f08228f6113a5f43d715a03ec130422f4b1920c8ede5c377bc3',
+    value: '0000000000000000000000000000000000000000000000000000000000000000',
   },
 ];
 

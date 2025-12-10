@@ -1,5 +1,5 @@
-import type { ConfigurationRestAPI, RestApiResponse } from "../types";
-import { sendRequest } from "../utils/httpRequest";
+import type { ConfigurationRestAPI, RestApiResponse } from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class HealthApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -9,6 +9,6 @@ export class HealthApi {
   }
 
   public async getHealth(): Promise<RestApiResponse<string>> {
-    return await sendRequest<string>(this.configuration, "/health", "GET", {});
+    return await sendRequest<string>(this.configuration, '/health', 'GET', {});
   }
 }

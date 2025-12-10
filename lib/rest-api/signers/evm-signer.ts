@@ -1,1 +1,1 @@
-import { Wallet } from "ethers";
+import { Wallet } from 'ethers';

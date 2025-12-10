@@ -1,19 +1,19 @@
-import { Account, BN, Address, FunctionInvocationScope, concat, BigNumberCoder, hexlify } from "fuels";
-import { bn } from "fuels";
+import { Account, BN, Address, FunctionInvocationScope, concat, BigNumberCoder, hexlify } from 'fuels';
+import { bn } from 'fuels';
 
-import { createCallToSign, getContract, getAddress, createCallContractArg, removeBits } from "./utils/o2-encoders";
+import { createCallToSign, getContract, getAddress, createCallContractArg, removeBits } from './utils/o2-encoders';
 
-import { TradeAccount } from "../types";
+import { TradeAccount } from '../types';
 import {
   BigInterish,
   API_CreateSessionRequest,
   SessionSigner,
   TradeAccountManagerConfig,
   API_SessionCallContractRequest,
-} from "./types";
-import { IdentityInput, SessionInput } from "../types/contracts/TradeAccount";
+} from './types';
+import { IdentityInput, SessionInput } from '../types/contracts/TradeAccount';
 
-const GAS_LIMIT_DEFAULT = bn("18446744073709551615");
+const GAS_LIMIT_DEFAULT = bn('18446744073709551615');
 
 export class TradeAccountManager {
   readonly account: Account;
@@ -27,7 +27,7 @@ export class TradeAccountManager {
   constructor(config: TradeAccountManagerConfig) {
     this.account = config.account;
     if (!config.tradeAccountId) {
-      throw new Error("tradeAccountId must be defined");
+      throw new Error('tradeAccountId must be defined');
     }
     this.contract = new TradeAccount(config.tradeAccountId, this.account);
     this.signer = config.signer;
@@ -61,7 +61,7 @@ export class TradeAccountManager {
   async recoverSession() {
     const { value } = await this.contract.functions.get_current_session().get();
     if (!value) {
-      throw new Error("Session not found");
+      throw new Error('Session not found');
     }
     this.session = value as SessionInput;
     return this.session;
@@ -88,11 +88,11 @@ export class TradeAccountManager {
 
   async signBytesWithSession(bytes: Uint8Array, length?: number) {
     if (!this.signer) {
-      throw new Error("Session not initialized");
+      throw new Error('Session not initialized');
     }
-    const byteToSign = [new BigNumberCoder("u64").encode(this.nonce)];
+    const byteToSign = [new BigNumberCoder('u64').encode(this.nonce)];
     if (length) {
-      byteToSign.push(new BigNumberCoder("u64").encode(length));
+      byteToSign.push(new BigNumberCoder('u64').encode(length));
     }
     byteToSign.push(bytes);
     return this.signer.sign(concat(byteToSign));
@@ -101,7 +101,7 @@ export class TradeAccountManager {
   async api_CreateSessionParams(contract_ids: string[], expiry?: BigInterish): Promise<API_CreateSessionRequest> {
     // Required
     if (!contract_ids || contract_ids.length === 0) {
-      throw new Error("session must specify at least one allowed contract");
+      throw new Error('session must specify at least one allowed contract');
     }
     // Format
     const session = {
@@ -115,7 +115,7 @@ export class TradeAccountManager {
     const bytesToSign = await createCallToSign(
       this.nonce,
       chainId,
-      this.contract.functions.set_session(undefined, session),
+      this.contract.functions.set_session(undefined, session)
     );
     return {
       nonce: this.nonce.toString(),
@@ -134,10 +134,10 @@ export class TradeAccountManager {
   }
 
   async api_SessionCallContractsParams(
-    invocationScopes: Array<FunctionInvocationScope<any>>,
+    invocationScopes: Array<FunctionInvocationScope<any>>
   ): Promise<API_SessionCallContractRequest> {
     if (!this.session) {
-      throw new Error("Session not initialized");
+      throw new Error('Session not initialized');
     }
     const callContracts = invocationScopes.map((call) => createCallContractArg(call, this.defaultGasLimit));
     const bytesToSign = concat(callContracts.map((call) => call.callContractArgBytes));

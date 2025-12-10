@@ -10,7 +10,7 @@
   Fuel-Core version: 0.47.1
 */
 
-import { Contract as __Contract, Interface } from "fuels";
+import { Contract as __Contract, Interface } from 'fuels';
 import type {
   Provider,
   Account,
@@ -21,39 +21,39 @@ import type {
   FunctionFragment,
   InvokeFunction,
   StrSlice,
-} from "fuels";
+} from 'fuels';
 
-import type { Option, Enum, Vec, Result } from "./common";
+import type { Option, Enum, Vec, Result } from './common';
 
 export enum AccessErrorInput {
-  NotOwner = "NotOwner",
+  NotOwner = 'NotOwner',
 }
 export enum AccessErrorOutput {
-  NotOwner = "NotOwner",
+  NotOwner = 'NotOwner',
 }
 export type IdentityInput = Enum<{ Address: AddressInput; ContractId: ContractIdInput }>;
 export type IdentityOutput = Enum<{ Address: AddressOutput; ContractId: ContractIdOutput }>;
 export enum InitializationErrorInput {
-  CannotReinitialized = "CannotReinitialized",
+  CannotReinitialized = 'CannotReinitialized',
 }
 export enum InitializationErrorOutput {
-  CannotReinitialized = "CannotReinitialized",
+  CannotReinitialized = 'CannotReinitialized',
 }
 export enum OrderBookRegistryErrorInput {
-  MarketAlreadyHasOrderBook = "MarketAlreadyHasOrderBook",
-  InvalidPair = "InvalidPair",
+  MarketAlreadyHasOrderBook = 'MarketAlreadyHasOrderBook',
+  InvalidPair = 'InvalidPair',
 }
 export enum OrderBookRegistryErrorOutput {
-  MarketAlreadyHasOrderBook = "MarketAlreadyHasOrderBook",
-  InvalidPair = "InvalidPair",
+  MarketAlreadyHasOrderBook = 'MarketAlreadyHasOrderBook',
+  InvalidPair = 'InvalidPair',
 }
 export enum PauseErrorInput {
-  Paused = "Paused",
-  NotPaused = "NotPaused",
+  Paused = 'Paused',
+  NotPaused = 'NotPaused',
 }
 export enum PauseErrorOutput {
-  Paused = "Paused",
-  NotPaused = "NotPaused",
+  Paused = 'Paused',
+  NotPaused = 'NotPaused',
 }
 export type StateInput = Enum<{ Uninitialized: undefined; Initialized: IdentityInput; Revoked: undefined }>;
 export type StateOutput = Enum<{ Uninitialized: void; Initialized: IdentityOutput; Revoked: void }>;
@@ -84,399 +84,399 @@ export type OrderBookRegistryConfigurables = Partial<{
 }>;
 
 const abi = {
-  programType: "contract",
-  specVersion: "1.1",
-  encodingVersion: "1",
+  programType: 'contract',
+  specVersion: '1.1',
+  encodingVersion: '1',
   concreteTypes: [
     {
-      type: "()",
-      concreteTypeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      type: '()',
+      concreteTypeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
     },
     {
-      type: "bool",
-      concreteTypeId: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      type: 'bool',
+      concreteTypeId: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
     },
     {
-      type: "enum contract_schema::register::OrderBookRegistryError",
-      concreteTypeId: "a402fedf24df875544e3196895d350e4a0691784d6f1fa235ccc1ceb400f906d",
+      type: 'enum contract_schema::register::OrderBookRegistryError',
+      concreteTypeId: 'a402fedf24df875544e3196895d350e4a0691784d6f1fa235ccc1ceb400f906d',
       metadataTypeId: 1,
     },
     {
-      type: "enum ownership::errors::InitializationError",
-      concreteTypeId: "b1fddf488ccb9e63d11888b2750bbd1280a1ae1c49f2d6637fd4cf1e930d1468",
+      type: 'enum ownership::errors::InitializationError',
+      concreteTypeId: 'b1fddf488ccb9e63d11888b2750bbd1280a1ae1c49f2d6637fd4cf1e930d1468',
       metadataTypeId: 2,
     },
     {
-      type: "enum pausable::errors::PauseError",
-      concreteTypeId: "455b46a49016f5c03c18ce54b969ea3d0d33c9b00263b3dcc36aa8da27558b8a",
+      type: 'enum pausable::errors::PauseError',
+      concreteTypeId: '455b46a49016f5c03c18ce54b969ea3d0d33c9b00263b3dcc36aa8da27558b8a',
       metadataTypeId: 3,
     },
     {
-      type: "enum src5::AccessError",
-      concreteTypeId: "f1247475d0d1466599267010f088190f8664dd31663a40c5d5e525d8e64b995d",
+      type: 'enum src5::AccessError',
+      concreteTypeId: 'f1247475d0d1466599267010f088190f8664dd31663a40c5d5e525d8e64b995d',
       metadataTypeId: 4,
     },
     {
-      type: "enum src5::State",
-      concreteTypeId: "287a382c1e0b1f11d12a422e77a248d27761327cd17515cc6e6369d528cf31ca",
+      type: 'enum src5::State',
+      concreteTypeId: '287a382c1e0b1f11d12a422e77a248d27761327cd17515cc6e6369d528cf31ca',
       metadataTypeId: 5,
     },
     {
-      type: "enum std::identity::Identity",
-      concreteTypeId: "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335",
+      type: 'enum std::identity::Identity',
+      concreteTypeId: 'ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335',
       metadataTypeId: 6,
     },
     {
-      type: "enum std::option::Option<struct std::contract_id::ContractId>",
-      concreteTypeId: "0d79387ad3bacdc3b7aad9da3a96f4ce60d9a1b6002df254069ad95a3931d5c8",
+      type: 'enum std::option::Option<struct std::contract_id::ContractId>',
+      concreteTypeId: '0d79387ad3bacdc3b7aad9da3a96f4ce60d9a1b6002df254069ad95a3931d5c8',
       metadataTypeId: 7,
-      typeArguments: ["29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54"],
+      typeArguments: ['29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54'],
     },
     {
-      type: "enum std::result::Result<(),enum contract_schema::register::OrderBookRegistryError>",
-      concreteTypeId: "4f9d1a6ad00b5c9a76c6a358104e097715b50eec8afdab4cc90ea27261c90886",
+      type: 'enum std::result::Result<(),enum contract_schema::register::OrderBookRegistryError>',
+      concreteTypeId: '4f9d1a6ad00b5c9a76c6a358104e097715b50eec8afdab4cc90ea27261c90886',
       metadataTypeId: 8,
       typeArguments: [
-        "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
-        "a402fedf24df875544e3196895d350e4a0691784d6f1fa235ccc1ceb400f906d",
+        '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
+        'a402fedf24df875544e3196895d350e4a0691784d6f1fa235ccc1ceb400f906d',
       ],
     },
     {
-      type: "str",
-      concreteTypeId: "8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a",
+      type: 'str',
+      concreteTypeId: '8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a',
     },
     {
-      type: "struct contract_schema::register::MarketId",
-      concreteTypeId: "d505e838729acb45c6a96ca01b8be77346b1745c2b4b75054b643090c14c5e3d",
+      type: 'struct contract_schema::register::MarketId',
+      concreteTypeId: 'd505e838729acb45c6a96ca01b8be77346b1745c2b4b75054b643090c14c5e3d',
       metadataTypeId: 12,
     },
     {
-      type: "struct contract_schema::register::OrderBookRegistered",
-      concreteTypeId: "83a4a092e6d65babd76387275d7d3f529d7825e78faac406fde4e68c85445d53",
+      type: 'struct contract_schema::register::OrderBookRegistered',
+      concreteTypeId: '83a4a092e6d65babd76387275d7d3f529d7825e78faac406fde4e68c85445d53',
       metadataTypeId: 13,
     },
     {
-      type: "struct contract_schema::register::Page<struct contract_schema::register::OrderBookRegistered>",
-      concreteTypeId: "f91a6db5e0223aee888c2193747e47eac9b3ee8ae3b38f8221116761dc4f9874",
+      type: 'struct contract_schema::register::Page<struct contract_schema::register::OrderBookRegistered>',
+      concreteTypeId: 'f91a6db5e0223aee888c2193747e47eac9b3ee8ae3b38f8221116761dc4f9874',
       metadataTypeId: 14,
-      typeArguments: ["83a4a092e6d65babd76387275d7d3f529d7825e78faac406fde4e68c85445d53"],
+      typeArguments: ['83a4a092e6d65babd76387275d7d3f529d7825e78faac406fde4e68c85445d53'],
     },
     {
-      type: "struct ownership::events::OwnershipSet",
-      concreteTypeId: "8c0d2488561c35a28ef795bb8bcc4c43999cdd1e3ecbd10c226e0a68660c54d4",
+      type: 'struct ownership::events::OwnershipSet',
+      concreteTypeId: '8c0d2488561c35a28ef795bb8bcc4c43999cdd1e3ecbd10c226e0a68660c54d4',
       metadataTypeId: 15,
     },
     {
-      type: "struct ownership::events::OwnershipTransferred",
-      concreteTypeId: "a2a2643e0252b510328c0323a0ea60724fb4cb3309a2322ab31b27566ff9a79d",
+      type: 'struct ownership::events::OwnershipTransferred',
+      concreteTypeId: 'a2a2643e0252b510328c0323a0ea60724fb4cb3309a2322ab31b27566ff9a79d',
       metadataTypeId: 16,
     },
     {
-      type: "struct pausable::events::PauseEvent",
-      concreteTypeId: "692983a9aba767e36b5014d3eb842447c736e341cc3b30fcb051b1f5a3d5f80a",
+      type: 'struct pausable::events::PauseEvent',
+      concreteTypeId: '692983a9aba767e36b5014d3eb842447c736e341cc3b30fcb051b1f5a3d5f80a',
       metadataTypeId: 17,
     },
     {
-      type: "struct pausable::events::UnpauseEvent",
-      concreteTypeId: "0026d386ad84e75b525bec3e7c8b6a63df3fcd108a8c4b26438c8a7a2e2c218b",
+      type: 'struct pausable::events::UnpauseEvent',
+      concreteTypeId: '0026d386ad84e75b525bec3e7c8b6a63df3fcd108a8c4b26438c8a7a2e2c218b',
       metadataTypeId: 18,
     },
     {
-      type: "struct std::contract_id::ContractId",
-      concreteTypeId: "29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54",
+      type: 'struct std::contract_id::ContractId',
+      concreteTypeId: '29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54',
       metadataTypeId: 21,
     },
     {
-      type: "u64",
-      concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+      type: 'u64',
+      concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
     },
   ],
   metadataTypes: [
     {
-      type: "b256",
+      type: 'b256',
       metadataTypeId: 0,
     },
     {
-      type: "enum contract_schema::register::OrderBookRegistryError",
+      type: 'enum contract_schema::register::OrderBookRegistryError',
       metadataTypeId: 1,
       components: [
         {
-          name: "MarketAlreadyHasOrderBook",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'MarketAlreadyHasOrderBook',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
         {
-          name: "InvalidPair",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'InvalidPair',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
       ],
     },
     {
-      type: "enum ownership::errors::InitializationError",
+      type: 'enum ownership::errors::InitializationError',
       metadataTypeId: 2,
       components: [
         {
-          name: "CannotReinitialized",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'CannotReinitialized',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
       ],
     },
     {
-      type: "enum pausable::errors::PauseError",
+      type: 'enum pausable::errors::PauseError',
       metadataTypeId: 3,
       components: [
         {
-          name: "Paused",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'Paused',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
         {
-          name: "NotPaused",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'NotPaused',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
       ],
     },
     {
-      type: "enum src5::AccessError",
+      type: 'enum src5::AccessError',
       metadataTypeId: 4,
       components: [
         {
-          name: "NotOwner",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'NotOwner',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
       ],
     },
     {
-      type: "enum src5::State",
+      type: 'enum src5::State',
       metadataTypeId: 5,
       components: [
         {
-          name: "Uninitialized",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'Uninitialized',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
         {
-          name: "Initialized",
+          name: 'Initialized',
           typeId: 6,
         },
         {
-          name: "Revoked",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'Revoked',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
       ],
     },
     {
-      type: "enum std::identity::Identity",
+      type: 'enum std::identity::Identity',
       metadataTypeId: 6,
       components: [
         {
-          name: "Address",
+          name: 'Address',
           typeId: 19,
         },
         {
-          name: "ContractId",
+          name: 'ContractId',
           typeId: 21,
         },
       ],
     },
     {
-      type: "enum std::option::Option",
+      type: 'enum std::option::Option',
       metadataTypeId: 7,
       components: [
         {
-          name: "None",
-          typeId: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+          name: 'None',
+          typeId: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
         },
         {
-          name: "Some",
+          name: 'Some',
           typeId: 10,
         },
       ],
       typeParameters: [10],
     },
     {
-      type: "enum std::result::Result",
+      type: 'enum std::result::Result',
       metadataTypeId: 8,
       components: [
         {
-          name: "Ok",
+          name: 'Ok',
           typeId: 10,
         },
         {
-          name: "Err",
+          name: 'Err',
           typeId: 9,
         },
       ],
       typeParameters: [10, 9],
     },
     {
-      type: "generic E",
+      type: 'generic E',
       metadataTypeId: 9,
     },
     {
-      type: "generic T",
+      type: 'generic T',
       metadataTypeId: 10,
     },
     {
-      type: "raw untyped ptr",
+      type: 'raw untyped ptr',
       metadataTypeId: 11,
     },
     {
-      type: "struct contract_schema::register::MarketId",
+      type: 'struct contract_schema::register::MarketId',
       metadataTypeId: 12,
       components: [
         {
-          name: "base_asset",
+          name: 'base_asset',
           typeId: 20,
         },
         {
-          name: "quote_asset",
+          name: 'quote_asset',
           typeId: 20,
         },
       ],
     },
     {
-      type: "struct contract_schema::register::OrderBookRegistered",
+      type: 'struct contract_schema::register::OrderBookRegistered',
       metadataTypeId: 13,
       components: [
         {
-          name: "contract_id",
+          name: 'contract_id',
           typeId: 21,
         },
         {
-          name: "market_id",
+          name: 'market_id',
           typeId: 12,
         },
       ],
     },
     {
-      type: "struct contract_schema::register::Page",
+      type: 'struct contract_schema::register::Page',
       metadataTypeId: 14,
       components: [
         {
-          name: "items",
+          name: 'items',
           typeId: 23,
           typeArguments: [
             {
-              name: "",
+              name: '',
               typeId: 10,
             },
           ],
         },
         {
-          name: "page",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'page',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
         {
-          name: "total",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'total',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
       typeParameters: [10],
     },
     {
-      type: "struct ownership::events::OwnershipSet",
+      type: 'struct ownership::events::OwnershipSet',
       metadataTypeId: 15,
       components: [
         {
-          name: "new_owner",
+          name: 'new_owner',
           typeId: 6,
         },
       ],
     },
     {
-      type: "struct ownership::events::OwnershipTransferred",
+      type: 'struct ownership::events::OwnershipTransferred',
       metadataTypeId: 16,
       components: [
         {
-          name: "new_owner",
+          name: 'new_owner',
           typeId: 6,
         },
         {
-          name: "previous_owner",
+          name: 'previous_owner',
           typeId: 6,
         },
       ],
     },
     {
-      type: "struct pausable::events::PauseEvent",
+      type: 'struct pausable::events::PauseEvent',
       metadataTypeId: 17,
       components: [
         {
-          name: "caller",
+          name: 'caller',
           typeId: 6,
         },
       ],
     },
     {
-      type: "struct pausable::events::UnpauseEvent",
+      type: 'struct pausable::events::UnpauseEvent',
       metadataTypeId: 18,
       components: [
         {
-          name: "caller",
+          name: 'caller',
           typeId: 6,
         },
       ],
     },
     {
-      type: "struct std::address::Address",
+      type: 'struct std::address::Address',
       metadataTypeId: 19,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 0,
         },
       ],
     },
     {
-      type: "struct std::asset_id::AssetId",
+      type: 'struct std::asset_id::AssetId',
       metadataTypeId: 20,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 0,
         },
       ],
     },
     {
-      type: "struct std::contract_id::ContractId",
+      type: 'struct std::contract_id::ContractId',
       metadataTypeId: 21,
       components: [
         {
-          name: "bits",
+          name: 'bits',
           typeId: 0,
         },
       ],
     },
     {
-      type: "struct std::vec::RawVec",
+      type: 'struct std::vec::RawVec',
       metadataTypeId: 22,
       components: [
         {
-          name: "ptr",
+          name: 'ptr',
           typeId: 11,
         },
         {
-          name: "cap",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'cap',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
       typeParameters: [10],
     },
     {
-      type: "struct std::vec::Vec",
+      type: 'struct std::vec::Vec',
       metadataTypeId: 23,
       components: [
         {
-          name: "buf",
+          name: 'buf',
           typeId: 22,
           typeArguments: [
             {
-              name: "",
+              name: '',
               typeId: 10,
             },
           ],
         },
         {
-          name: "len",
-          typeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'len',
+          typeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
       typeParameters: [10],
@@ -484,172 +484,172 @@ const abi = {
   ],
   functions: [
     {
-      name: "get_order_book",
+      name: 'get_order_book',
       inputs: [
         {
-          name: "market_id",
-          concreteTypeId: "d505e838729acb45c6a96ca01b8be77346b1745c2b4b75054b643090c14c5e3d",
+          name: 'market_id',
+          concreteTypeId: 'd505e838729acb45c6a96ca01b8be77346b1745c2b4b75054b643090c14c5e3d',
         },
       ],
-      output: "0d79387ad3bacdc3b7aad9da3a96f4ce60d9a1b6002df254069ad95a3931d5c8",
+      output: '0d79387ad3bacdc3b7aad9da3a96f4ce60d9a1b6002df254069ad95a3931d5c8',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "get_order_books",
+      name: 'get_order_books',
       inputs: [
         {
-          name: "page",
-          concreteTypeId: "1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0",
+          name: 'page',
+          concreteTypeId: '1506e6f44c1d6291cdf46395a8e573276a4fa79e8ace3fc891e092ef32d1b0a0',
         },
       ],
-      output: "f91a6db5e0223aee888c2193747e47eac9b3ee8ae3b38f8221116761dc4f9874",
+      output: 'f91a6db5e0223aee888c2193747e47eac9b3ee8ae3b38f8221116761dc4f9874',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "register_order_book",
+      name: 'register_order_book',
       inputs: [
         {
-          name: "contract_id",
-          concreteTypeId: "29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54",
+          name: 'contract_id',
+          concreteTypeId: '29c10735d33b5159f0c71ee1dbd17b36a3e69e41f00fab0d42e1bd9f428d8a54',
         },
         {
-          name: "market_id",
-          concreteTypeId: "d505e838729acb45c6a96ca01b8be77346b1745c2b4b75054b643090c14c5e3d",
+          name: 'market_id',
+          concreteTypeId: 'd505e838729acb45c6a96ca01b8be77346b1745c2b4b75054b643090c14c5e3d',
         },
       ],
-      output: "4f9d1a6ad00b5c9a76c6a358104e097715b50eec8afdab4cc90ea27261c90886",
+      output: '4f9d1a6ad00b5c9a76c6a358104e097715b50eec8afdab4cc90ea27261c90886',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "initialize",
+      name: 'initialize',
       inputs: [],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "transfer_ownership",
+      name: 'transfer_ownership',
       inputs: [
         {
-          name: "new_owner",
-          concreteTypeId: "ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335",
+          name: 'new_owner',
+          concreteTypeId: 'ab7cd04e05be58e3fc15d424c2c4a57f824a2a2d97d67252440a3925ebdc1335',
         },
       ],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read", "write"],
-        },
-      ],
-    },
-    {
-      name: "owner",
-      inputs: [],
-      output: "287a382c1e0b1f11d12a422e77a248d27761327cd17515cc6e6369d528cf31ca",
-      attributes: [
-        {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read', 'write'],
         },
       ],
     },
     {
-      name: "is_paused",
+      name: 'owner',
       inputs: [],
-      output: "b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903",
+      output: '287a382c1e0b1f11d12a422e77a248d27761327cd17515cc6e6369d528cf31ca',
       attributes: [
         {
-          name: "storage",
-          arguments: ["read"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "pause",
+      name: 'is_paused',
       inputs: [],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: 'b760f44fa5965c2474a3b471467a22c43185152129295af588b022ae50b50903',
       attributes: [
         {
-          name: "storage",
-          arguments: ["write"],
+          name: 'storage',
+          arguments: ['read'],
         },
       ],
     },
     {
-      name: "unpause",
+      name: 'pause',
       inputs: [],
-      output: "2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d",
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
       attributes: [
         {
-          name: "storage",
-          arguments: ["write"],
+          name: 'storage',
+          arguments: ['write'],
+        },
+      ],
+    },
+    {
+      name: 'unpause',
+      inputs: [],
+      output: '2e38e77b22c314a449e91fafed92a43826ac6aa403ae6a8acb6cf58239fbaf5d',
+      attributes: [
+        {
+          name: 'storage',
+          arguments: ['write'],
         },
       ],
     },
   ],
   loggedTypes: [
     {
-      logId: "17376141311665587813",
-      concreteTypeId: "f1247475d0d1466599267010f088190f8664dd31663a40c5d5e525d8e64b995d",
+      logId: '17376141311665587813',
+      concreteTypeId: 'f1247475d0d1466599267010f088190f8664dd31663a40c5d5e525d8e64b995d',
     },
     {
-      logId: "4997665884103701952",
-      concreteTypeId: "455b46a49016f5c03c18ce54b969ea3d0d33c9b00263b3dcc36aa8da27558b8a",
+      logId: '4997665884103701952',
+      concreteTypeId: '455b46a49016f5c03c18ce54b969ea3d0d33c9b00263b3dcc36aa8da27558b8a',
     },
     {
-      logId: "9485883267947584427",
-      concreteTypeId: "83a4a092e6d65babd76387275d7d3f529d7825e78faac406fde4e68c85445d53",
+      logId: '9485883267947584427',
+      concreteTypeId: '83a4a092e6d65babd76387275d7d3f529d7825e78faac406fde4e68c85445d53',
     },
     {
-      logId: "12825652816513834595",
-      concreteTypeId: "b1fddf488ccb9e63d11888b2750bbd1280a1ae1c49f2d6637fd4cf1e930d1468",
+      logId: '12825652816513834595',
+      concreteTypeId: 'b1fddf488ccb9e63d11888b2750bbd1280a1ae1c49f2d6637fd4cf1e930d1468',
     },
     {
-      logId: "10091762507985991074",
-      concreteTypeId: "8c0d2488561c35a28ef795bb8bcc4c43999cdd1e3ecbd10c226e0a68660c54d4",
+      logId: '10091762507985991074',
+      concreteTypeId: '8c0d2488561c35a28ef795bb8bcc4c43999cdd1e3ecbd10c226e0a68660c54d4',
     },
     {
-      logId: "10098701174489624218",
-      concreteTypeId: "8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a",
+      logId: '10098701174489624218',
+      concreteTypeId: '8c25cb3686462e9a86d2883c5688a22fe738b0bbc85f458d2d2b5f3f667c6d5a',
     },
     {
-      logId: "11719039397861176592",
-      concreteTypeId: "a2a2643e0252b510328c0323a0ea60724fb4cb3309a2322ab31b27566ff9a79d",
+      logId: '11719039397861176592',
+      concreteTypeId: 'a2a2643e0252b510328c0323a0ea60724fb4cb3309a2322ab31b27566ff9a79d',
     },
     {
-      logId: "7577732612780156899",
-      concreteTypeId: "692983a9aba767e36b5014d3eb842447c736e341cc3b30fcb051b1f5a3d5f80a",
+      logId: '7577732612780156899',
+      concreteTypeId: '692983a9aba767e36b5014d3eb842447c736e341cc3b30fcb051b1f5a3d5f80a',
     },
     {
-      logId: "10928624505251675",
-      concreteTypeId: "0026d386ad84e75b525bec3e7c8b6a63df3fcd108a8c4b26438c8a7a2e2c218b",
+      logId: '10928624505251675',
+      concreteTypeId: '0026d386ad84e75b525bec3e7c8b6a63df3fcd108a8c4b26438c8a7a2e2c218b',
     },
   ],
   messagesTypes: [],
   configurables: [
     {
-      name: "INITIAL_OWNER",
-      concreteTypeId: "287a382c1e0b1f11d12a422e77a248d27761327cd17515cc6e6369d528cf31ca",
+      name: 'INITIAL_OWNER',
+      concreteTypeId: '287a382c1e0b1f11d12a422e77a248d27761327cd17515cc6e6369d528cf31ca',
       offset: 22024,
       indirect: false,
     },

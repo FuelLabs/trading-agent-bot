@@ -1,6 +1,6 @@
-import globalAxios from "axios";
-import { AxiosResponse, AxiosError, RawAxiosRequestConfig } from "axios";
-import type { AxiosRequestArgs, ConfigurationRestAPI, RestApiResponse } from "../types";
+import globalAxios from 'axios';
+import { AxiosResponse, AxiosError, RawAxiosRequestConfig } from 'axios';
+import type { AxiosRequestArgs, ConfigurationRestAPI, RestApiResponse } from '../types';
 
 /**
  * Delays execution for a specified number of milliseconds.
@@ -13,7 +13,7 @@ async function delay(ms: number): Promise<void> {
  * Determines whether a request should be retried based on the error.
  */
 const shouldRetryRequest = function (error: AxiosError | object, method?: string, retriesLeft?: number): boolean {
-  const isRetriableMethod = ["GET", "DELETE"].includes(method ?? "");
+  const isRetriableMethod = ['GET', 'DELETE'].includes(method ?? '');
   const status = (error as AxiosError)?.response?.status ?? 0;
   const isRetriableStatus = [500, 502, 503, 504].includes(status);
   const isNetworkError = !(error as AxiosError)?.response;
@@ -36,22 +36,22 @@ const toPathString = function (url: URL) {
  */
 const httpRequestFunction = async function <T>(
   axiosArgs: AxiosRequestArgs,
-  configuration?: ConfigurationRestAPI,
+  configuration?: ConfigurationRestAPI
 ): Promise<RestApiResponse<T>> {
   const axiosRequestArgs = {
     ...axiosArgs.options,
-    url: (globalAxios.defaults?.baseURL ? "" : (configuration?.basePath ?? "")) + axiosArgs.url,
+    url: (globalAxios.defaults?.baseURL ? '' : (configuration?.basePath ?? '')) + axiosArgs.url,
   };
 
   const retries = configuration?.retries ?? 0;
   const backoff = configuration?.backoff ?? 300; // Default backoff
-  let lastError: any = new Error("Request failed after all retries.");
+  let lastError: any = new Error('Request failed after all retries.');
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
       const response: AxiosResponse<string> = await globalAxios.request({
         ...axiosRequestArgs,
-        responseType: "text", // Always get raw text to handle parsing manually
+        responseType: 'text', // Always get raw text to handle parsing manually
       });
 
       return {
@@ -94,9 +94,9 @@ const httpRequestFunction = async function <T>(
 export const sendRequest = async function <T>(
   configuration: ConfigurationRestAPI,
   endpoint: string,
-  method: "GET" | "POST" | "DELETE" | "PUT" | "PATCH",
+  method: 'GET' | 'POST' | 'DELETE' | 'PUT' | 'PATCH',
   params: Record<string, unknown> = {},
-  options: { ownerId?: string } = {},
+  options: { ownerId?: string } = {}
 ): Promise<RestApiResponse<T>> {
   const localVarUrlObj = new URL(endpoint, configuration?.basePath);
   const localVarRequestOptions: RawAxiosRequestConfig = {
@@ -104,7 +104,7 @@ export const sendRequest = async function <T>(
     ...configuration?.baseOptions,
   };
 
-  if (method === "GET" || method === "DELETE") {
+  if (method === 'GET' || method === 'DELETE') {
     localVarRequestOptions.params = params;
   } else {
     localVarRequestOptions.data = params;
@@ -114,7 +114,7 @@ export const sendRequest = async function <T>(
   if (options.ownerId) {
     localVarRequestOptions.headers = {
       ...localVarRequestOptions.headers,
-      "O2-Owner-Id": options.ownerId,
+      'O2-Owner-Id': options.ownerId,
     };
   }
 
@@ -123,6 +123,6 @@ export const sendRequest = async function <T>(
       url: toPathString(localVarUrlObj),
       options: localVarRequestOptions,
     },
-    configuration,
+    configuration
   );
 };

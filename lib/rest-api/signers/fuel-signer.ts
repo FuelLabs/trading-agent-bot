@@ -1,7 +1,7 @@
-import { Signer, sha256, arrayify } from "fuels";
-import type { B256Address, Address } from "fuels";
-import { SessionSigner } from "../types";
-import { SignatureInput } from "../../types/contracts/TradeAccount";
+import { Signer, sha256, arrayify } from 'fuels';
+import type { B256Address, Address } from 'fuels';
+import { SessionSigner } from '../types';
+import { SignatureInput } from '../../types/contracts/TradeAccount';
 
 export class FuelSessionSigner implements SessionSigner {
   private signer: Signer;

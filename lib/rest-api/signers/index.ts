@@ -1,1 +1,1 @@
-export * from "./fuel-signer";
+export * from './fuel-signer';

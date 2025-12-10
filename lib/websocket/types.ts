@@ -1,10 +1,10 @@
-import type { Trade, Identity, DepthOrder, Order, OrderBookBalance } from "../types";
+import type { Trade, Identity, DepthOrder, Order, OrderBookBalance } from '../types';
 
 export enum SubscriptionFrequency {
-  HundredMillis = "100ms",
-  FiveHundredMillis = "500ms",
-  OneSecond = "1s",
-  ThreeSecond = "3s",
+  HundredMillis = '100ms',
+  FiveHundredMillis = '500ms',
+  OneSecond = '1s',
+  ThreeSecond = '3s',
 }
 
 // ------- Subscription Params -------
@@ -35,7 +35,7 @@ export interface SubscribeDepthViewParams {
 // ------- Subscription Responses -------
 
 export interface BalanceUpdate {
-  action: "subscribe_balances";
+  action: 'subscribe_balances';
   balance: Array<{
     order_books: Record<string, OrderBookBalance>;
     identity: Identity;
@@ -49,7 +49,7 @@ export interface BalanceUpdate {
 }
 
 export interface TradeUpdate {
-  action: "subscribe_trades";
+  action: 'subscribe_trades';
   trades: Trade[];
   market_id: string;
   onchain_timestamp: string;
@@ -57,14 +57,14 @@ export interface TradeUpdate {
 }
 
 export interface OrderUpdate {
-  action: "subscribe_orders";
+  action: 'subscribe_orders';
   orders: Order[];
   onchain_timestamp: string;
   seen_timestamp: string;
 }
 
 export interface DepthUpdate {
-  action: "subscribe_depth";
+  action: 'subscribe_depth';
   view: {
     precision: number;
     buys: DepthOrder[];
@@ -74,7 +74,7 @@ export interface DepthUpdate {
 }
 
 export interface DepthViewUpdate {
-  action: "subscribe_depth_view";
+  action: 'subscribe_depth_view';
   view: {
     precision: number;
     buys: DepthOrder[];

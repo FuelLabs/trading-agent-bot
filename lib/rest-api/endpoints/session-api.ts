@@ -3,8 +3,8 @@ import type {
   RestApiResponse,
   SessionSubmitTransactionRequest,
   SessionSubmitTransactionResponse,
-} from "../types";
-import { sendRequest } from "../utils/httpRequest";
+} from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class SessionApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -15,14 +15,14 @@ export class SessionApi {
 
   public async sessionSubmitTransaction(
     requestParameters: SessionSubmitTransactionRequest,
-    ownerId: string,
+    ownerId: string
   ): Promise<RestApiResponse<SessionSubmitTransactionResponse>> {
     const response = await sendRequest<SessionSubmitTransactionResponse>(
       this.configuration,
-      "/v1/session/actions",
-      "POST",
-      {  ...requestParameters },
-      { ownerId: ownerId },
+      '/v1/session/actions',
+      'POST',
+      { ...requestParameters },
+      { ownerId: ownerId }
     );
     return response;
   }

@@ -5,8 +5,8 @@ import type {
   GetTradesResponse,
   GetTradesByAccountRequest,
   GetTradesByAccountResponse,
-} from "../types";
-import { sendRequest } from "../utils/httpRequest";
+} from '../types';
+import { sendRequest } from '../utils/httpRequest';
 
 export class TradesApi {
   private readonly configuration: ConfigurationRestAPI;
@@ -25,11 +25,11 @@ export class TradesApi {
 
     // Construct the full endpoint path with the query string.
     const endpointWithParams = `/v1/trades?${params.toString()}`;
-    return await sendRequest<GetTradesResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetTradesResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 
   public async getTradesByAccount(
-    requestParameters: GetTradesByAccountRequest,
+    requestParameters: GetTradesByAccountRequest
   ): Promise<RestApiResponse<GetTradesByAccountResponse>> {
     const params = new URLSearchParams();
     for (const key in requestParameters) {
@@ -40,6 +40,6 @@ export class TradesApi {
 
     // Construct the full endpoint path with the query string.
     const endpointWithParams = `/v1/trades_by_account?${params.toString()}`;
-    return await sendRequest<GetTradesByAccountResponse>(this.configuration, endpointWithParams, "GET", {});
+    return await sendRequest<GetTradesByAccountResponse>(this.configuration, endpointWithParams, 'GET', {});
   }
 }
