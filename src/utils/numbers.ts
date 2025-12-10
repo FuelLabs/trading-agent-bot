@@ -18,7 +18,7 @@ export function scaleUpAndTruncateToInt(amount: Decimal, decimals: number, maxPr
 /**
  * Calculates the order quantity respecting the base asset's max_precision and scaling up decimals. We will assume that the quantityInQuote and the price are not scaled up.
  *
- * @param quantityInQuote - The order value in the quote asset in Decimal. Should not be scaled up. 
+ * @param quantityInQuote - The order value in the quote asset in Decimal. Should not be scaled up.
  * @param price - The price of the asset in Decimal. Should not be scaled up.
  * @param baseDecimals - The number of decimals for the base asset.
  * @param baseMaxPrecision - The maximum allowed precision for the base asset.
@@ -28,9 +28,8 @@ export function calculateBaseQuantity(
   quantityInQuote: Decimal,
   price: Decimal,
   baseDecimals: number,
-  baseMaxPrecision: number,
+  baseMaxPrecision: number
 ): Decimal {
-
   // Calculate the quantity in the base asset.
   const quantityInBase = quantityInQuote.div(price);
 

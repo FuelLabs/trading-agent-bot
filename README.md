@@ -1,4 +1,3 @@
-
 # Volume Mining Bot
 
 This bot is designed to generate trading volume on the O2 platform.
@@ -8,12 +7,12 @@ This bot is designed to generate trading volume on the O2 platform.
 The bot operates as follows:
 
 - Every `order_pairs_interval_seconds`:
-   - Fetch the current price for the O2 market from Bitget.
-   - Calculate the buy price: `buy_price = bitget_price * (1 + price_adjustment_factor)`.
-   - Calculate the sell price: `sell_price = bitget_price * (1 - price_adjustment_factor)`.
-   - Place a buy order at the calculated buy price.
-   - Wait for `order_interval_seconds`.
-   - Place a sell order at the calculated sell price.
+  - Fetch the current price for the O2 market from Bitget.
+  - Calculate the buy price: `buy_price = bitget_price * (1 + price_adjustment_factor)`.
+  - Calculate the sell price: `sell_price = bitget_price * (1 - price_adjustment_factor)`.
+  - Place a buy order at the calculated buy price.
+  - Wait for `order_interval_seconds`.
+  - Place a sell order at the calculated sell price.
 
 ## Setup
 
