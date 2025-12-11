@@ -6,6 +6,7 @@ import { BotConfig, MarketConfig } from './types/config';
 import Decimal from 'decimal.js';
 import { OrderSide } from '../lib/index';
 import { scaleUpAndTruncateToInt, calculateBaseQuantity } from './utils/numbers';
+import { shortenAxiosError } from '../lib/rest-api/utils/httpRequest';
 
 // Constants
 const USDC_USDT_SYMBOL = 'USDC/USDT'; // Symbol for USDC/USDT pair on Bitget
@@ -99,7 +100,7 @@ const config: BotConfig = loadConfig(configPath);
         );
       } catch (err) {
         logger.error(
-          { err },
+          { error: shortenAxiosError(err) },
           `Buy order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Trying the sell anyways.`
         );
       }
@@ -121,7 +122,10 @@ const config: BotConfig = loadConfig(configPath);
           `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity} with latency ${Date.now() - start} ms`
         );
       } catch (err) {
-        logger.error({ err }, `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
+        logger.error(
+          { error: shortenAxiosError(err) },
+          `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`
+        );
       }
       if (!sellOrderSuccess) {
         logger.error(`Sell order unsuccessful for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`);
