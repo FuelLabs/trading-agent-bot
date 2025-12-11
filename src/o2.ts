@@ -1,7 +1,7 @@
-import { RestAPI } from '../lib/o2-connector-ts/src/rest-api/client';
-import { FuelSessionSigner } from '../lib/o2-connector-ts/src/rest-api/signers/fuel-signer';
-import { OrderType, OrderSide, MarketResponse as Market } from '../lib/o2-connector-ts/src/rest-api/types';
-import type { Account } from '../lib/o2-connector-ts/node_modules/fuels';
+import { RestAPI } from '../lib/rest-api/client';
+import { FuelSessionSigner } from '../lib/rest-api/signers/fuel-signer';
+import { OrderType, OrderSide, MarketResponse as Market } from '../lib/rest-api/types';
+import type { Account } from 'fuels';
 import { MarketConfig } from './types/config';
 import { Wallet, Provider } from 'fuels';
 import pino from 'pino';

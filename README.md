@@ -16,22 +16,14 @@ The bot operates as follows:
 
 ## Setup
 
-This project uses the [o2-connector-ts](https://github.com/fuel-infrastructure/o2-connector-ts) library as a git submodule, located in `lib/o2-connector-ts`.
-
-After cloning this repository, initialize and update the submodules:
-
-```sh
-git submodule update --init --recursive
-```
-
-Next, add a `config.yaml` file to the root directory. Use `config.example.yaml` as a template for your configuration.
+Add a `config.yaml` file to the root directory. Use `config.example.yaml` as a template for your configuration.
 
 ## Running Locally
 
-1. Install all dependencies for both the main project and the submodule:
+1. Install all dependencies for the project:
 
    ```sh
-   pnpm run install:all
+   pnpm install
    ```
 
 2. Build the project:
