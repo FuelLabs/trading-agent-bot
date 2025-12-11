@@ -131,25 +131,24 @@ export function shortenAxiosError(err: unknown) {
   if (!isAxiosError(err)) return err;
 
   const axiosError = err as AxiosError;
-  let parsedData: any;
   let errorReason: string | undefined;
 
-  // Parse the response data if it's a JSON string
-  if (typeof axiosError.response?.data === 'string') {
+  const responseData = axiosError.response?.data;
+  if (typeof responseData === 'string') {
     try {
-      // Extract just the revert reason, not the full receipt dump
-      errorReason = JSON.parse(axiosError.response.data).reason?.split(',')[0];
+      // Extract just the revert reason, ignoring the receipts
+      errorReason = JSON.parse(responseData).reason?.split(',')[0];
     } catch {
-      errorReason = axiosError.response.data.slice(0, 200);
+      errorReason = responseData;
     }
-  } else {
-    parsedData = axiosError.response?.data;
+  } else if (responseData && typeof responseData === 'object') {
+    errorReason = JSON.stringify(responseData);
   }
 
   return {
     status: axiosError.message,
     request: `${axiosError.config?.method?.toUpperCase()} ${axiosError.config?.url}`,
-    body: JSON.parse(axiosError.config?.data),
+    body: axiosError.config?.data,
     reason: errorReason,
   };
 }
