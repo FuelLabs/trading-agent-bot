@@ -56,7 +56,7 @@ export class O2Client {
         {
           CreateOrder: {
             side,
-            order_type: OrderType.Spot,
+            order_type: OrderType.FillOrKill,
             price,
             quantity,
           },
