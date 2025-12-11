@@ -10,6 +10,7 @@ COPY package.json tsconfig.json ./
 RUN pnpm install
 
 COPY src ./src
+COPY lib ./lib
 
 RUN pnpm run build
 
