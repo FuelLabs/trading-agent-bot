@@ -22,5 +22,6 @@ o2:
     bitget_symbol: ETH/USDC # Corresponding Bitget trading symbol. This is used to determine the price of orders on O2. NOTE: Format should always be `BASE/QUOTE`.
     convert_to_usdc: false # Whether to convert the Bitget price quotation to USDC. This is useful for O2 assets that do not have a USDC pair on Bitget. Ex. To get the price of FUEL/USDC we need to fetch the price of FUEL/USDT and USDT/USDC from Bitget as FUEL/USDC is not supported.
     price_adjustment_factor: 0.1 # A factor to adjust the price fetched from Bitget. For example, a value of 0.05 increases the order buy price by 5% and decreases the order sell price by 5%.
+    order_type: Spot # Order type for trading. Available options: Spot, FillOrKill.
   account:
     private_key: '<YOUR_PRIVATE_KEY_HERE>' # Private key of a wallet with funds on O2.

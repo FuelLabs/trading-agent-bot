@@ -1,3 +1,5 @@
+import { OrderType } from '../../lib/rest-api/types';
+
 export interface GeneralConfig {
   log_level: string;
   network_url: string;
@@ -14,6 +16,7 @@ export interface MarketConfig {
   bitget_symbol: string;
   convert_to_usdc: boolean;
   price_adjustment_factor: number;
+  order_type: OrderType;
 }
 
 export interface O2AccountConfig {
