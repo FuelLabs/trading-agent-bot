@@ -100,7 +100,7 @@ const config: BotConfig = loadConfig(configPath);
         );
       } catch (err) {
         logger.error(
-          { error: shortenAxiosError(err) },
+          { err: shortenAxiosError(err) },
           `Buy order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}. Trying the sell anyways.`
         );
       }
@@ -123,7 +123,7 @@ const config: BotConfig = loadConfig(configPath);
         );
       } catch (err) {
         logger.error(
-          { error: shortenAxiosError(err) },
+          { err: shortenAxiosError(err) },
           `Sell order failed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}`
         );
       }
