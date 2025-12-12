@@ -44,7 +44,13 @@ export class O2Client {
     return markets.find((m: Market) => m.market_id === marketConfig.market_id);
   }
 
-  async placeOrder(market: Market, price: string, quantity: string, side: OrderSide, orderType: OrderType): Promise<boolean> {
+  async placeOrder(
+    market: Market,
+    price: string,
+    quantity: string,
+    side: OrderSide,
+    orderType: OrderType
+  ): Promise<boolean> {
     if (!this.initialized) {
       this.logger.error('O2Client not initialized. Call init() before using this method.');
       throw new Error('O2Client not initialized');
