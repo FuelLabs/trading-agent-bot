@@ -1,7 +1,7 @@
 services:
-  volume-mining-bot:
+  trading-agent-bot:
     build: .
-    container_name: volume-mining-bot
+    container_name: trading-agent-bot
     restart: unless-stopped
     environment:
       - CONFIG_PATH=/app/config.yaml
