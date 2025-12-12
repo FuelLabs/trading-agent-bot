@@ -16,7 +16,7 @@ o2:
     contract_id: '0x9ad52fb8a2be1c4603dfeeb8118a922c8cfafa8f260eeb41d68ade8d442be65b' # Contract ID of the market
     base_symbol: ETH # Base symbol for the market.
     quote_symbol: USDC # Quote symbol for the market.
-    reciprocal_rate: false # If true, use the inverse price (1/price) instead of the regular price. Useful for inverse pairs.
+    reciprocal_rate: false # If true, use the inverse price (1/price) instead of the regular price. Useful for inverse pairs e.g. USDC/USDT -> USDT/USDC.
     order_usdc_value: 10 # Value of each buy/sell order in terms of USDC.
     order_interval_seconds: 1 # Interval between a single buy and sell order, in seconds.
     order_pairs_interval_seconds: 2.5 # Interval between multiple buy & sell order pairs, in seconds.
