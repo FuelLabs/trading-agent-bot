@@ -1,5 +1,5 @@
 import globalAxios from 'axios';
-import { AxiosResponse, AxiosError, RawAxiosRequestConfig } from 'axios';
+import { isAxiosError, AxiosResponse, AxiosError, RawAxiosRequestConfig } from 'axios';
 import type { AxiosRequestArgs, ConfigurationRestAPI, RestApiResponse } from '../types';
 
 /**
@@ -126,3 +126,29 @@ export const sendRequest = async function <T>(
     configuration
   );
 };
+
+export function shortenAxiosError(err: unknown) {
+  if (!isAxiosError(err)) return err;
+
+  const axiosError = err as AxiosError;
+  let errorReason: string | undefined;
+
+  const responseData = axiosError.response?.data;
+  if (typeof responseData === 'string') {
+    try {
+      // Extract just the revert reason, ignoring the receipts
+      errorReason = JSON.parse(responseData).reason?.split(',')[0];
+    } catch {
+      errorReason = responseData;
+    }
+  } else if (responseData && typeof responseData === 'object') {
+    errorReason = JSON.stringify(responseData);
+  }
+
+  return {
+    status: axiosError.message,
+    request: `${axiosError.config?.method?.toUpperCase()} ${axiosError.config?.url}`,
+    body: axiosError.config?.data,
+    reason: errorReason,
+  };
+}
