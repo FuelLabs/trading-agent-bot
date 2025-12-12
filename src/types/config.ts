@@ -12,6 +12,7 @@ export interface MarketConfig {
   order_interval_seconds: number;
   order_pairs_interval_seconds: number;
   bitget_symbol: string;
+  reciprocal_rate: boolean;
   convert_to_usdc: boolean;
   price_adjustment_factor: number;
 }

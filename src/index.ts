@@ -57,6 +57,12 @@ const config: BotConfig = loadConfig(configPath);
           price = price.div(usdc_usdt_price);
         }
 
+        // If reciprocal_rate is enabled, use the inverse price (1/price)
+        if (marketConfig.reciprocal_rate) {
+          logger.debug(`Applying reciprocal rate: 1/${price} = ${new Decimal(1).div(price)}`);
+          price = new Decimal(1).div(price);
+        }
+
         logger.info(`Fetched Bitget price for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}: ${price}`);
       } catch (err) {
         logger.error(
