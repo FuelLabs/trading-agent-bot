@@ -1,5 +1,5 @@
 {
-  "name": "volume-mining-bot",
+  "name": "trading-agent-bot",
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {

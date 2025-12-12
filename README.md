@@ -1,6 +1,4 @@
-# Volume Mining Bot
-
-This bot is designed to generate trading volume on the O2 platform.
+# Trading Agent Bot
 
 ## Overview
 
