@@ -123,7 +123,13 @@ const config: BotConfig = loadConfig(configPath);
       let sellOrderSuccess = false;
       try {
         const start = Date.now();
-        sellOrderSuccess = await o2Client.placeOrder(market, sellPrice, quantity, OrderSide.Sell, marketConfig.order_type);
+        sellOrderSuccess = await o2Client.placeOrder(
+          market,
+          sellPrice,
+          quantity,
+          OrderSide.Sell,
+          marketConfig.order_type
+        );
         logger.info(
           `Sell order placed for ${marketConfig.base_symbol}/${marketConfig.quote_symbol}; price ${sellPrice}, quantity ${quantity} with latency ${Date.now() - start} ms`
         );
