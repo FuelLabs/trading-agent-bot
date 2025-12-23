@@ -39,7 +39,6 @@ export const executeWithRetry = async function <T>(
   onSuccess?: () => void
 ): Promise<RestApiResponse<T>> {
   let lastError: any = new Error('Request failed after all retries.');
-  let previousErrorReason: string | undefined;
 
   for (let attempt = 0; attempt <= configuration.retries; attempt++) {
     try {
