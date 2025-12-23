@@ -1,25 +1,6 @@
 import globalAxios from 'axios';
-import { isAxiosError, AxiosResponse, AxiosError, RawAxiosRequestConfig } from 'axios';
-import type { AxiosRequestArgs, ConfigurationRestAPI, RestApiResponse } from '../types';
-
-/**
- * Delays execution for a specified number of milliseconds.
- */
-async function delay(ms: number): Promise<void> {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-/**
- * Determines whether a request should be retried based on the error.
- */
-const shouldRetryRequest = function (error: AxiosError | object, method?: string, retriesLeft?: number): boolean {
-  const isRetriableMethod = ['GET', 'DELETE'].includes(method ?? '');
-  const status = (error as AxiosError)?.response?.status ?? 0;
-  const isRetriableStatus = [500, 502, 503, 504].includes(status);
-  const isNetworkError = !(error as AxiosError)?.response;
-
-  return (retriesLeft ?? 0) > 0 && isRetriableMethod && (isRetriableStatus || isNetworkError);
-};
+import { isAxiosError, AxiosError, AxiosResponse, RawAxiosRequestConfig } from 'axios';
+import type { ConfigurationRestAPI, RestApiResponse } from '../types';
 
 /**
  * Converts a URL object to a full path string, including pathname, search parameters, and hash.
@@ -32,55 +13,69 @@ const toPathString = function (url: URL) {
 };
 
 /**
- * The core HTTP request function with retry and backoff logic.
+ * Delays execution for a specified number of milliseconds.
  */
-const httpRequestFunction = async function <T>(
-  axiosArgs: AxiosRequestArgs,
-  configuration?: ConfigurationRestAPI
+const delay = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+
+/**
+ * Flag to prevent recursive error handler calls.
+ * Set to true when inside an error handler to prevent infinite loops.
+ */
+let isInErrorHandler = false;
+
+/**
+ * Executes a request with retry logic that rebuilds the request on each attempt.
+ * This is essential for requests that include nonce or session signatures, which
+ * become stale if the error handler updates the nonce/session state.
+ *
+ * @param buildAndExecute - Function that builds and executes the request with fresh state
+ * @param configuration - REST API configuration containing retry settings and error handler
+ * @param onSuccess - Optional callback to run after successful execution
+ * @returns The response from the successful request
+ */
+export const executeWithRetry = async function <T>(
+  buildAndExecute: () => Promise<RestApiResponse<T>>,
+  configuration: ConfigurationRestAPI,
+  onSuccess?: () => void
 ): Promise<RestApiResponse<T>> {
-  const axiosRequestArgs = {
-    ...axiosArgs.options,
-    url: (globalAxios.defaults?.baseURL ? '' : (configuration?.basePath ?? '')) + axiosArgs.url,
-  };
-
-  const retries = configuration?.retries ?? 0;
-  const backoff = configuration?.backoff ?? 300; // Default backoff
   let lastError: any = new Error('Request failed after all retries.');
+  let previousErrorReason: string | undefined;
 
-  for (let attempt = 0; attempt <= retries; attempt++) {
+  for (let attempt = 0; attempt <= configuration.retries; attempt++) {
     try {
-      const response: AxiosResponse<string> = await globalAxios.request({
-        ...axiosRequestArgs,
-        responseType: 'text', // Always get raw text to handle parsing manually
-      });
+      const response = await buildAndExecute();
+      onSuccess?.();
+      return response;
+    } catch (err) {
+      configuration.logger.warn(`Request failed with error: ${(shortenAxiosError(err) as any).reason}`);
 
-      return {
-        data: async (): Promise<T> => {
-          try {
-            return JSON.parse(response.data) as T;
-          } catch (err) {
-            // Provide a more descriptive error
-            throw new Error(`Failed to parse JSON response: ${err}. Response body: "${response.data}"`);
-          }
-        },
-        status: response.status,
-      };
-    } catch (error) {
-      lastError = error;
-      const axiosError = error as AxiosError;
-      const retriesLeft = retries - attempt;
+      lastError = err;
+      const retriesLeft = configuration.retries - attempt;
+      let shouldRetry = false;
 
-      if (shouldRetryRequest(axiosError, axiosRequestArgs?.method, retriesLeft)) {
-        if (retriesLeft > 0) {
-          await delay(backoff * (attempt + 1)); // Increase backoff duration with each attempt
+      // Try custom error handler only if not already inside an error handler
+      // This prevents recursive error handler calls during recovery operations
+      if (configuration?.errorHandler && !isInErrorHandler) {
+        isInErrorHandler = true;
+        try {
+          shouldRetry = await configuration.errorHandler(err);
+        } finally {
+          isInErrorHandler = false;
         }
-      } else {
-        throw axiosError; // If not retriable, throw immediately
       }
+
+      // Retry if error handler indicates retry and we have retries left
+      if (shouldRetry && retriesLeft > 0) {
+        configuration.logger?.warn(`Retrying request (attempt ${attempt + 1}/${configuration.retries + 1})`);
+        await delay(configuration.backoff * (attempt + 1));
+        continue; // Rebuild and retry with fresh state
+      }
+
+      throw err;
     }
   }
 
-  throw lastError; // Throw the last captured error if all retries fail
+  throw lastError;
 };
 
 /**
@@ -118,37 +113,35 @@ export const sendRequest = async function <T>(
     };
   }
 
-  return httpRequestFunction<T>(
-    {
-      url: toPathString(localVarUrlObj),
-      options: localVarRequestOptions,
+  // Send HTTP request
+  const url = (globalAxios.defaults?.baseURL ? '' : (configuration?.basePath ?? '')) + toPathString(localVarUrlObj);
+  const response: AxiosResponse<string> = await globalAxios.request({
+    ...localVarRequestOptions,
+    url,
+    responseType: 'text',
+  });
+
+  return {
+    data: async (): Promise<T> => {
+      try {
+        return JSON.parse(response.data) as T;
+      } catch (err) {
+        throw new Error(`Failed to parse JSON response: ${err}. Response body: "${response.data}"`);
+      }
     },
-    configuration
-  );
+    status: response.status,
+  };
 };
 
 export function shortenAxiosError(err: unknown) {
   if (!isAxiosError(err)) return err;
 
   const axiosError = err as AxiosError;
-  let errorReason: string | undefined;
-
-  const responseData = axiosError.response?.data;
-  if (typeof responseData === 'string') {
-    try {
-      // Extract just the revert reason, ignoring the receipts
-      errorReason = JSON.parse(responseData).reason?.split(',')[0];
-    } catch {
-      errorReason = responseData;
-    }
-  } else if (responseData && typeof responseData === 'object') {
-    errorReason = JSON.stringify(responseData);
-  }
-
+  const responseData = JSON.stringify(axiosError?.response?.data || '');
   return {
     status: axiosError.message,
     request: `${axiosError.config?.method?.toUpperCase()} ${axiosError.config?.url}`,
     body: axiosError.config?.data,
-    reason: errorReason,
+    reason: responseData,
   };
 }

@@ -20,6 +20,7 @@ export class TradeAccountManager {
   readonly signer: SessionSigner;
   readonly contract: TradeAccount;
   readonly defaultGasLimit: BN;
+  readonly contractIds?: string[];
 
   private _nonce: BN = bn(0);
   private session!: SessionInput;
@@ -32,6 +33,7 @@ export class TradeAccountManager {
     this.contract = new TradeAccount(config.tradeAccountId, this.account);
     this.signer = config.signer;
     this.defaultGasLimit = config.defaultGasLimit ? bn(config.defaultGasLimit.toString()) : GAS_LIMIT_DEFAULT;
+    this.contractIds = config.contractIds;
   }
 
   get nonce(): BN {

@@ -1,6 +1,6 @@
 import { RestAPI } from '../lib/rest-api/client';
 import { FuelSessionSigner } from '../lib/rest-api/signers/fuel-signer';
-import { OrderType, OrderSide, MarketResponse as Market } from '../lib/rest-api/types';
+import { OrderType, OrderSide, MarketResponse as Market, ConfigurationRestAPI } from '../lib/rest-api/types';
 import type { Account } from 'fuels';
 import { MarketConfig } from './types/config';
 import { Wallet, Provider } from 'fuels';
@@ -15,7 +15,7 @@ export class O2Client {
   private logger: pino.Logger;
 
   constructor(baseUrl: string, networkUrl: string, logger: pino.Logger) {
-    this.client = new RestAPI({ basePath: baseUrl });
+    this.client = new RestAPI(new ConfigurationRestAPI({ basePath: baseUrl }));
     this.provider = new Provider(networkUrl);
     this.logger = logger;
   }
