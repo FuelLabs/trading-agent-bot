@@ -12,7 +12,7 @@ import { OrdersApi } from './endpoints/orders-api';
 import { OrderApi } from './endpoints/order-api';
 import { TradeAccountManager } from './trade-account';
 
-import { sendRequest } from './utils/httpRequest';
+import { sendRequest, executeWithRetry } from './utils/httpRequest';
 import { encodeActions } from './utils/o2-encoders';
 
 import { OrderBook } from '../types/contracts/OrderBook';
@@ -68,48 +68,58 @@ export class RestAPI {
   private orderApi: OrderApi;
 
   constructor(configuration: ConfigurationRestAPI) {
-    this.configuration = configuration;
+    this.configuration = new ConfigurationRestAPI(configuration);
 
     // API
-    this.accountApi = new AccountApi(configuration);
-    this.sessionApi = new SessionApi(configuration);
-    this.marketApi = new MarketApi(configuration);
-    this.barsApi = new BarsApi(configuration);
-    this.healthApi = new HealthApi(configuration);
-    this.balanceApi = new BalanceApi(configuration);
-    this.tradesApi = new TradesApi(configuration);
-    this.depthApi = new DepthApi(configuration);
-    this.ordersApi = new OrdersApi(configuration);
-    this.orderApi = new OrderApi(configuration);
+    this.accountApi = new AccountApi(this.configuration);
+    this.sessionApi = new SessionApi(this.configuration);
+    this.marketApi = new MarketApi(this.configuration);
+    this.barsApi = new BarsApi(this.configuration);
+    this.healthApi = new HealthApi(this.configuration);
+    this.balanceApi = new BalanceApi(this.configuration);
+    this.tradesApi = new TradesApi(this.configuration);
+    this.depthApi = new DepthApi(this.configuration);
+    this.ordersApi = new OrdersApi(this.configuration);
+    this.orderApi = new OrderApi(this.configuration);
   }
 
   /**
    * Initializes trade account manager by setting up trade account contract, fetching nonce, and creating a 30-day session.
    * @param tradeAccountManager - Trade account manager configuration.
+   * @param errorHandler - Optional custom error handler factory. Receives tradeAccountManager and restApi, returns error handler function. If not provided, uses default handler for nonce and session errors.
    */
-  public async initTradeAccountManager(tradeAccountManager: TradeAccountManagerConfig) {
+  public async initTradeAccountManager(
+    tradeAccountManagerConfig: TradeAccountManagerConfig,
+    errorHandler?: (tradeAccountManager: TradeAccountManager, restApi: RestAPI) => (error: any) => Promise<boolean>
+  ) {
     // Create TradeAccountId if not passed
-    if (!tradeAccountManager.tradeAccountId) {
+    if (!tradeAccountManagerConfig.tradeAccountId) {
       const responseTradeAccount = await this.createTradingAccount({
-        address: tradeAccountManager.account.address.toString(),
+        address: tradeAccountManagerConfig.account.address.toString(),
       });
-      tradeAccountManager.tradeAccountId = (await responseTradeAccount.data()).trade_account_id;
-      if (!tradeAccountManager.contractIds) {
-        tradeAccountManager.contractIds = [];
+      tradeAccountManagerConfig.tradeAccountId = (await responseTradeAccount.data()).trade_account_id;
+      if (!tradeAccountManagerConfig.contractIds) {
+        tradeAccountManagerConfig.contractIds = [];
       }
-      tradeAccountManager.contractIds.push(tradeAccountManager.tradeAccountId);
+      tradeAccountManagerConfig.contractIds.push(tradeAccountManagerConfig.tradeAccountId);
     }
 
-    this.tradeAccountManager = new TradeAccountManager(tradeAccountManager);
+    this.tradeAccountManager = new TradeAccountManager(tradeAccountManagerConfig);
+    // Setup error handler for automatic recovery
+    if (errorHandler) {
+      this.configuration.errorHandler = errorHandler(this.tradeAccountManager, this);
+    } else {
+      this.configuration.errorHandler = createDefaultErrorHandler(this.tradeAccountManager, this);
+    }
 
     await this.tradeAccountManager.fetchNonce();
     await this.tradeAccountManager.recoverSession();
 
     const expiry = Date.now() + 30 * 24 * 60 * 60 * 1000; // 30 days
-    if (!tradeAccountManager.contractIds) {
+    if (!tradeAccountManagerConfig.contractIds) {
       throw new Error('contractIds must be defined');
     }
-    await this.createSession({ contractIds: tradeAccountManager.contractIds, expiry });
+    await this.createSession({ contractIds: tradeAccountManagerConfig.contractIds, expiry });
   }
 
   /**
@@ -138,7 +148,7 @@ export class RestAPI {
   public async createTradingAccount(
     requestParameters: CreateTradingAccountRequest
   ): Promise<RestApiResponse<CreateTradingAccountResponse>> {
-    return await this.accountApi.createTradingAccount(requestParameters);
+    return executeWithRetry(async () => this.accountApi.createTradingAccount(requestParameters), this.configuration);
   }
 
   /**
@@ -146,14 +156,21 @@ export class RestAPI {
    * @param requestParameters - The orderbooks the trading account is allowed to trade in.
    */
   public async createSession(requestParameters: CreateSessionRequest): Promise<RestApiResponse<SessionInput>> {
-    const params = await this.tradeAccountManager.api_CreateSessionParams(
-      requestParameters.contractIds,
-      requestParameters.expiry
+    return executeWithRetry(
+      async () => {
+        // Build params with fresh nonce
+        const params = await this.tradeAccountManager.api_CreateSessionParams(
+          requestParameters.contractIds,
+          requestParameters.expiry
+        );
+
+        const session = await this.accountApi.createSession(params, this.tradeAccountManager.ownerAddress.toString());
+        this.tradeAccountManager.setSession(await session.data());
+        return session;
+      },
+      this.configuration,
+      () => this.tradeAccountManager.incrementNonce()
     );
-    let session = await this.accountApi.createSession(params, this.tradeAccountManager.ownerAddress.toString());
-    this.tradeAccountManager.setSession(await session.data());
-    this.tradeAccountManager.incrementNonce();
-    return session;
   }
 
   /**
@@ -165,50 +182,54 @@ export class RestAPI {
   public async sessionSubmitTransaction(
     requestParameters: SessionActionBatch
   ): Promise<RestApiResponse<SessionSubmitTransactionResponse>> {
-    // Convert actions to contract calls
-    const encodedActions = await encodeActions(
-      this.tradeAccountManager.identity,
-      new OrderBook(requestParameters.market.contract_id, this.tradeAccountManager.account),
-      {
-        baseAssetId: requestParameters.market.base.asset as B256Address,
-        quoteAssetId: requestParameters.market.quote.asset as B256Address,
-        baseDecimals: requestParameters.market.base.decimals,
-        quoteDecimals: requestParameters.market.quote.decimals,
-      },
-      requestParameters.actions,
-      this.tradeAccountManager.defaultGasLimit
-    );
-
-    // Convert to API readable
-    const payload = await this.tradeAccountManager.api_SessionCallContractsParams(encodedActions.invokeScopes);
-    const response = await this.sessionApi.sessionSubmitTransaction(
-      {
-        actions: [
+    return executeWithRetry(
+      async () => {
+        // Convert actions to contract calls
+        const encodedActions = await encodeActions(
+          this.tradeAccountManager.identity,
+          new OrderBook(requestParameters.market.contract_id, this.tradeAccountManager.account),
           {
-            market_id: requestParameters.market.market_id as MarketId,
-            actions: encodedActions.actions,
+            baseAssetId: requestParameters.market.base.asset as B256Address,
+            quoteAssetId: requestParameters.market.quote.asset as B256Address,
+            baseDecimals: requestParameters.market.base.decimals,
+            quoteDecimals: requestParameters.market.quote.decimals,
           },
-        ],
-        signature: payload.signature,
-        nonce: payload.nonce,
-        trade_account_id: payload.trade_account_id,
-        session_id: payload.session_id,
-        variable_outputs: payload.variable_outputs,
-        min_gas_limit: payload.min_gas_limit,
-        collect_orders: true,
-      },
-      this.tradeAccountManager.ownerAddress.toString()
-    );
+          requestParameters.actions,
+          this.tradeAccountManager.defaultGasLimit
+        );
 
-    this.tradeAccountManager.incrementNonce();
-    return response;
+        // Convert to API readable with fresh nonce and session
+        const payload = await this.tradeAccountManager.api_SessionCallContractsParams(encodedActions.invokeScopes);
+
+        return this.sessionApi.sessionSubmitTransaction(
+          {
+            actions: [
+              {
+                market_id: requestParameters.market.market_id as MarketId,
+                actions: encodedActions.actions,
+              },
+            ],
+            signature: payload.signature,
+            nonce: payload.nonce,
+            trade_account_id: payload.trade_account_id,
+            session_id: payload.session_id,
+            variable_outputs: payload.variable_outputs,
+            min_gas_limit: payload.min_gas_limit,
+            collect_orders: true,
+          },
+          this.tradeAccountManager.ownerAddress.toString()
+        );
+      },
+      this.configuration,
+      () => this.tradeAccountManager.incrementNonce()
+    );
   }
 
   /**
    * Retreives all markets.
    */
   public async getMarkets(): Promise<RestApiResponse<MarketsResponse>> {
-    return await this.marketApi.getMarkets();
+    return executeWithRetry(async () => this.marketApi.getMarkets(), this.configuration);
   }
 
   /**
@@ -216,7 +237,7 @@ export class RestAPI {
    * @param requestParameters - The market ID to get ticker for.
    */
   public async getTicker(requestParameters: GetTickerRequest): Promise<RestApiResponse<GetTickerResponse>> {
-    return await this.marketApi.getTicker(requestParameters);
+    return executeWithRetry(async () => this.marketApi.getTicker(requestParameters), this.configuration);
   }
 
   /**
@@ -224,7 +245,7 @@ export class RestAPI {
    * @param requestParameters - The market ID to get summary for.
    */
   public async getSummary(requestParameters: GetSummaryRequest): Promise<RestApiResponse<GetSummaryResponse>> {
-    return await this.marketApi.getSummary(requestParameters);
+    return executeWithRetry(async () => this.marketApi.getSummary(requestParameters), this.configuration);
   }
 
   /**
@@ -232,14 +253,14 @@ export class RestAPI {
    * @param requestParameters - The range of the candles.
    */
   public async getBars(requestParameters: GetBarsRequest): Promise<RestApiResponse<GetBarsResponse>> {
-    return await this.barsApi.getBars(requestParameters);
+    return executeWithRetry(async () => this.barsApi.getBars(requestParameters), this.configuration);
   }
 
   /**
    * Health check.
    */
   public async getHealth(): Promise<RestApiResponse<string>> {
-    return await this.healthApi.getHealth();
+    return executeWithRetry(async () => this.healthApi.getHealth(), this.configuration);
   }
 
   /**
@@ -247,10 +268,12 @@ export class RestAPI {
    * @param requestParameters - The asset ID and contract address.
    */
   public async getBalance(requestParameters: GetBalanceRequest): Promise<RestApiResponse<GetBalanceResponse>> {
-    if (requestParameters.contract === undefined) {
-      requestParameters.contract = this.tradeAccountManager.contractId.toString();
-    }
-    return await this.balanceApi.getBalance(requestParameters);
+    return executeWithRetry(async () => {
+      if (requestParameters.contract === undefined) {
+        requestParameters.contract = this.tradeAccountManager.contractId.toString();
+      }
+      return this.balanceApi.getBalance(requestParameters);
+    }, this.configuration);
   }
 
   /**
@@ -258,7 +281,7 @@ export class RestAPI {
    * @param requestParameters - The market ID, direction, and count of trades to retrieve.
    */
   public async getTrades(requestParameters: GetTradesRequest): Promise<RestApiResponse<GetTradesResponse>> {
-    return await this.tradesApi.getTrades(requestParameters);
+    return executeWithRetry(async () => this.tradesApi.getTrades(requestParameters), this.configuration);
   }
 
   /**
@@ -268,10 +291,12 @@ export class RestAPI {
   public async getTradesByAccount(
     requestParameters: GetTradesByAccountRequest
   ): Promise<RestApiResponse<GetTradesByAccountResponse>> {
-    if (requestParameters.contract === undefined) {
-      requestParameters.contract = this.tradeAccountManager.contractId.toString();
-    }
-    return await this.tradesApi.getTradesByAccount(requestParameters);
+    return executeWithRetry(async () => {
+      if (requestParameters.contract === undefined) {
+        requestParameters.contract = this.tradeAccountManager.contractId.toString();
+      }
+      return this.tradesApi.getTradesByAccount(requestParameters);
+    }, this.configuration);
   }
 
   /**
@@ -279,7 +304,7 @@ export class RestAPI {
    * @param requestParameters - The market ID and precision for depth aggregation.
    */
   public async getDepth(requestParameters: GetDepthRequest): Promise<RestApiResponse<GetDepthResponse>> {
-    return await this.depthApi.getDepth(requestParameters);
+    return executeWithRetry(async () => this.depthApi.getDepth(requestParameters), this.configuration);
   }
 
   /**
@@ -287,10 +312,12 @@ export class RestAPI {
    * @param requestParameters - The market ID, filters for orders and optional contract address.
    */
   public async getOrders(requestParameters: GetOrdersRequest): Promise<RestApiResponse<GetOrdersResponse>> {
-    if (requestParameters.contract === undefined) {
-      requestParameters.contract = this.tradeAccountManager.contractId.toString();
-    }
-    return await this.ordersApi.getOrders(requestParameters);
+    return executeWithRetry(async () => {
+      if (requestParameters.contract === undefined) {
+        requestParameters.contract = this.tradeAccountManager.contractId.toString();
+      }
+      return this.ordersApi.getOrders(requestParameters);
+    }, this.configuration);
   }
 
   /**
@@ -298,6 +325,48 @@ export class RestAPI {
    * @param requestParameters - The order ID and market ID.
    */
   public async getOrder(requestParameters: GetOrderRequest): Promise<RestApiResponse<GetOrderResponse>> {
-    return await this.orderApi.getOrder(requestParameters);
+    return executeWithRetry(async () => this.orderApi.getOrder(requestParameters), this.configuration);
   }
+}
+
+/**
+ * Default error handler for automatic recovery of nonce and session errors.
+ * @param tradeAccountManager - Trade account manager instance.
+ * @param restApi - RestAPI instance for creating new sessions.
+ * @returns Error handler function that returns true if error was handled and should retry.
+ */
+export function createDefaultErrorHandler(
+  tradeAccountManager: TradeAccountManager,
+  restApi: RestAPI
+): (error: any) => Promise<boolean> {
+  return async (error: any) => {
+    const errorMessage = JSON.stringify(error?.response?.data || '');
+
+    // Fetch nonce from on-chain and retry the request
+    if (
+      errorMessage.includes('Nonce in the request') &&
+      errorMessage.includes('is less than the nonce in the database')
+    ) {
+      await tradeAccountManager.fetchNonce();
+      return true;
+    }
+
+    // Handle invalid sessions
+    if (
+      errorMessage.includes('Invalid session address') ||
+      errorMessage.includes('11023126350627756633') // Temporary: specific error code for invalid session
+    ) {
+      await tradeAccountManager.fetchNonce();
+      await tradeAccountManager.recoverSession();
+      const expiry = Date.now() + 30 * 24 * 60 * 60 * 1000; // 30 days
+
+      await restApi.createSession({
+        contractIds: tradeAccountManager.contractIds as string[],
+        expiry,
+      });
+      return true;
+    }
+
+    return false;
+  };
 }

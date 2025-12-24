@@ -10,6 +10,16 @@ import type { Trade, Identity, DepthOrder, Order, OrderBookBalance } from '../ty
 // ------- General Rest API -------
 
 /**
+ * Logger interface for logging warnings and errors
+ */
+export interface Logger {
+  warn(message: string, ...args: any[]): void;
+  error(message: string, ...args: any[]): void;
+  info?(message: string, ...args: any[]): void;
+  debug?(message: string, ...args: any[]): void;
+}
+
+/**
  * Represents the arguments for an Axios request.
  * @property {string} url - The URL for the request.
  * @property {RawAxiosRequestConfig} options - The options for the Axios request.
@@ -44,15 +54,15 @@ export class ConfigurationRestAPI {
    * @type {number}
    * @memberof ConfigurationRestAPI
    */
-  timeout?: number;
+  timeout: number;
 
   /**
    * number of retry attempts for failed requests
-   * @default 1
+   * @default 3
    * @type {number}
    * @memberof ConfigurationRestAPI
    */
-  retries?: number;
+  retries: number;
 
   /**
    * delay between retry attempts in milliseconds
@@ -60,7 +70,7 @@ export class ConfigurationRestAPI {
    * @type {number}
    * @memberof ConfigurationRestAPI
    */
-  backoff?: number;
+  backoff: number;
 
   /**
    * base options for axios calls
@@ -68,12 +78,33 @@ export class ConfigurationRestAPI {
    * @memberof ConfigurationRestAPI
    * @internal
    */
-  baseOptions?: Record<string, unknown>;
+  baseOptions: Record<string, unknown>;
 
-  constructor(param: ConfigurationRestAPI) {
+  /**
+   * logger for warnings and errors
+   * defaults to console if not provided
+   * @type {Logger}
+   * @memberof ConfigurationRestAPI
+   */
+  logger: Logger;
+
+  /**
+   * custom error handler for API errors
+   * receives the error and a retry function
+   * should return true if the error was handled and request should be retried
+   * @type {((error: any) => Promise<boolean>) | undefined}
+   * @memberof ConfigurationRestAPI
+   * @internal
+   */
+  errorHandler?: (error: any) => Promise<boolean>;
+
+  constructor(param: Partial<ConfigurationRestAPI> = {}) {
     this.basePath = param.basePath;
-    this.retries = param.retries ?? 1;
+    this.retries = param.retries ?? 3;
     this.timeout = param.timeout ?? 1000;
+    this.backoff = param.backoff ?? 1000;
+    this.errorHandler = param.errorHandler;
+    this.logger = param.logger ?? console;
 
     this.baseOptions = {
       headers: {
