@@ -22,6 +22,7 @@ export interface MarketConfig {
 
 export interface O2AccountConfig {
   private_key: string;
+  account_type: string;
 }
 
 export interface O2Config {

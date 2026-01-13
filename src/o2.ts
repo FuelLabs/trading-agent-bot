@@ -5,6 +5,8 @@ import type { Account } from 'fuels';
 import { MarketConfig } from './types/config';
 import { Wallet, Provider } from 'fuels';
 import pino from 'pino';
+import { EvmAccountAdapter, padTo32Bytes } from './utils/evm';
+import { Wallet as EvmWallet } from "ethers";
 
 export class O2Client {
   private client: RestAPI;
@@ -20,10 +22,24 @@ export class O2Client {
     this.logger = logger;
   }
 
-  async init(privateKey: string, contractId: string) {
+  async init(privateKey: string, accountType: string, contractId: string) {
     if (!this.initialized) {
       await this.provider.init();
-      this.wallet = Wallet.fromPrivateKey(privateKey, this.provider);
+
+      if (accountType === "evm") {
+        const evmWallet = new EvmWallet(privateKey);
+        this.wallet = new EvmAccountAdapter({ provider: this.provider, evmWallet });
+
+        this.logger.info({ address: padTo32Bytes(evmWallet.address.toString()) }, "using evm wallet with padded address");
+      } else if (accountType === "fuel") {
+        let fuelWallet = Wallet.fromPrivateKey(privateKey, this.provider);
+        this.wallet = fuelWallet;
+
+        this.logger.info({ address: fuelWallet.address.toString() }, "using fuel wallet with address");
+      } else {
+        throw new Error(`Unsupported account type: ${accountType}`);
+      }
+      
       this.signer = new FuelSessionSigner();
       await this.client.initTradeAccountManager({
         account: this.wallet as Account,
