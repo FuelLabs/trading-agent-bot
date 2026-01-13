@@ -26,4 +26,4 @@ o2:
     order_type: Spot # Order type for trading. Available options: Spot, FillOrKill.
   account:
     private_key: '<YOUR_PRIVATE_KEY_HERE>' # Private key of a wallet with funds on O2.
-    account_type: 'fuel' # Supported accountType: evm or fuel
+    account_type: 'fuel' # Supported: evm or fuel
